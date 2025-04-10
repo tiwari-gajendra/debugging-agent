@@ -1,0 +1,216 @@
+2025-04-10 23:14:41,856 - debug_agent_cli - ERROR - Missing required environment variables: OPENAI_API_KEY
+2025-04-10 23:14:41,856 - debug_agent_cli - ERROR - Please set these variables in your .env file
+2025-04-10 23:18:08,164 - debug_agent_cli - INFO - Starting forecasting pipeline
+2025-04-10 23:18:08,164 - debug_agent_cli - INFO - Forecasting complete. Found 2 potential service anomalies
+2025-04-10 23:18:08,164 - debug_agent_cli - INFO - Alert prediction complete. Found 2 potential alert patterns
+2025-04-10 23:18:11,474 - debug_agent_cli - INFO - Starting real-time debugging for issue: DEV-12345
+2025-04-10 23:56:11,655 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-10 23:56:36,829 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-10 23:56:50,439 - matplotlib.font_manager - WARNING - Matplotlib is building the font cache; this may take a moment.
+2025-04-10 23:56:54,491 - matplotlib.font_manager - INFO - Failed to extract font properties from /System/Library/PrivateFrameworks/FontServices.framework/Resources/Reserved/PingFangUI.ttc: Can not load face (locations (loca) table missing; error code 0x90)
+2025-04-10 23:56:54,494 - matplotlib.font_manager - INFO - Failed to extract font properties from /System/Library/Fonts/Apple Color Emoji.ttc: Could not set the fontsize (invalid pixel size; error code 0x17)
+2025-04-10 23:56:54,519 - matplotlib.font_manager - INFO - Failed to extract font properties from /System/Library/Fonts/ZitherIndiaNarrow.otf: Can not load face (SFNT font table missing; error code 0x8e)
+2025-04-10 23:56:54,566 - matplotlib.font_manager - INFO - Failed to extract font properties from /System/Library/Fonts/ZitherIndia.otf: Can not load face (SFNT font table missing; error code 0x8e)
+2025-04-10 23:56:54,632 - matplotlib.font_manager - INFO - Failed to extract font properties from /System/Library/Fonts/Supplemental/NISC18030.ttf: Could not set the fontsize (invalid pixel size; error code 0x17)
+2025-04-10 23:56:54,636 - matplotlib.font_manager - INFO - Failed to extract font properties from /System/Library/Fonts/LastResort.otf: tuple indices must be integers or slices, not str
+2025-04-10 23:56:54,685 - matplotlib.font_manager - INFO - generated new fontManager
+2025-04-10 23:56:54,782 - prophet.plot - ERROR - Importing plotly failed. Interactive plots will not work.
+2025-04-10 23:57:25,766 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-10 23:57:26,826 - prophet.plot - ERROR - Importing plotly failed. Interactive plots will not work.
+2025-04-10 23:57:43,806 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-10 23:57:43,806 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-10 23:57:43,806 - src.main - INFO - Using LLM provider: openai
+2025-04-10 23:57:43,837 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-10 23:57:43,837 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-10 23:57:43,837 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-10 23:57:43,837 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-10 23:57:43,837 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-10 23:58:12,806 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-10 23:58:13,823 - prophet.plot - ERROR - Importing plotly failed. Interactive plots will not work.
+2025-04-10 23:58:14,510 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-10 23:58:14,510 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-10 23:58:14,510 - src.main - INFO - Using LLM provider: openai
+2025-04-10 23:58:14,540 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-10 23:58:14,540 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-10 23:58:14,540 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-10 23:58:14,540 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-10 23:58:14,540 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-11 00:04:03,972 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:04:15,672 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:04:25,422 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:05:30,112 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:05:55,076 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:06:13,192 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:06:28,286 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:06:47,094 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:06:47,094 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:06:47,094 - src.main - INFO - Using LLM provider: openai
+2025-04-11 00:06:47,126 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-11 00:06:47,126 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-11 00:06:47,126 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-11 00:06:47,127 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-11 00:06:47,127 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-11 00:06:47,138 - LiteLLM - INFO - 
+LiteLLM completion() model= gpt-4; provider = openai
+2025-04-11 00:06:49,734 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-04-11 00:06:49,744 - root - ERROR - LiteLLM call failed: litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-test1****6789. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-04-11 00:07:20,989 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:07:23,136 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:07:23,136 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:07:23,136 - src.main - INFO - Using LLM provider: ollama
+2025-04-11 00:07:23,138 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-11 00:07:23,138 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-11 00:07:23,138 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-11 00:07:23,139 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-11 00:07:23,139 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-11 00:07:23,153 - root - ERROR - LiteLLM call failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=llama3
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2025-04-11 00:07:52,964 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:07:55,230 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:07:55,230 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:07:55,230 - src.main - INFO - Using LLM provider: ollama
+2025-04-11 00:07:55,260 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-11 00:07:55,261 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-11 00:07:55,261 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-11 00:07:55,261 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-11 00:07:55,261 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-11 00:07:55,277 - root - ERROR - LiteLLM call failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=llama3
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2025-04-11 00:08:16,444 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:08:18,030 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:08:18,030 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:08:18,031 - src.main - INFO - Using LLM provider: ollama
+2025-04-11 00:08:18,059 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-11 00:08:18,059 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-11 00:08:18,059 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-11 00:08:18,059 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-11 00:08:18,059 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-11 00:08:18,067 - LiteLLM - INFO - 
+LiteLLM completion() model= llama3; provider = ollama
+2025-04-11 00:08:18,091 - root - ERROR - LiteLLM call failed: litellm.APIConnectionError: OllamaException - [Errno 61] Connection refused
+2025-04-11 00:09:47,938 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:09:49,942 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:09:49,942 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:09:49,942 - src.main - INFO - Using LLM provider: ollama
+2025-04-11 00:09:49,971 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-11 00:09:49,971 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-11 00:09:49,971 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-11 00:09:49,971 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-11 00:09:49,971 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-11 00:09:49,987 - root - ERROR - LiteLLM call failed: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-r1:8b
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2025-04-11 00:10:08,752 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:10:10,286 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:10:10,286 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:10:10,286 - src.main - INFO - Using LLM provider: ollama
+2025-04-11 00:10:10,314 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-11 00:10:10,314 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-11 00:10:10,314 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-11 00:10:10,314 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-11 00:10:10,314 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-11 00:10:10,323 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:11:13,238 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:11:13,249 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:11:13,290 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:11:13,290 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:11:13,309 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:11:13,320 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:11:13,343 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:12:53,926 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:12:53,929 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:12:53,939 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:12:53,957 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:12:53,984 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:13:21,774 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:13:21,775 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:13:21,782 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:13:21,801 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:13:21,822 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:15:58,138 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:16:00,254 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:16:00,254 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:16:00,254 - src.main - INFO - Using LLM provider: ollama
+2025-04-11 00:16:00,285 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-11 00:16:00,285 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-11 00:16:00,285 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-11 00:16:00,285 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-11 00:16:00,285 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-11 00:16:00,297 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:16:48,944 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:16:48,953 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:16:48,990 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:16:48,990 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:16:49,004 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:16:49,017 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:16:49,040 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:17:59,822 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:17:59,826 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:17:59,844 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:17:59,872 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:17:59,893 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:18:43,920 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:18:43,926 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:18:43,964 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:18:43,993 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:18:44,026 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:19:24,157 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:19:24,162 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:19:24,180 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:19:24,196 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:19:24,223 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:20:06,619 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:20:06,621 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:20:06,648 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:20:06,669 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:28:16,550 - httpx - INFO - HTTP Request: GET https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json "HTTP/1.1 200 OK"
+2025-04-11 00:28:18,922 - debug_agent_cli - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:28:18,922 - src.main - INFO - Starting real-time debugging for issue: TEST-123
+2025-04-11 00:28:18,922 - src.main - INFO - Using LLM provider: ollama
+2025-04-11 00:28:18,952 - src.realtime.context_builder - INFO - Initializing ContextBuilder with log source loki
+2025-04-11 00:28:18,952 - src.realtime.debug_plan_creator - INFO - Initializing DebugPlanCreator
+2025-04-11 00:28:18,953 - src.realtime.executor - INFO - Initializing Executor (AWS enabled: False)
+2025-04-11 00:28:18,953 - src.realtime.analyzer - INFO - Initializing Analyzer
+2025-04-11 00:28:18,953 - src.realtime.document_generator - INFO - Initializing DocumentGenerator with format: html
+2025-04-11 00:28:18,964 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:28:54,811 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:28:54,814 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:28:54,840 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:28:54,840 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:28:54,849 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:28:54,866 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:28:54,886 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:29:49,162 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:29:49,165 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:29:49,180 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:29:49,207 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:29:49,229 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:30:29,027 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:30:29,034 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:30:29,058 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:30:29,079 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:30:29,109 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:31:05,033 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:31:05,036 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:31:05,051 - LiteLLM - INFO - 
+LiteLLM completion() model= deepseek-r1:8b; provider = ollama
+2025-04-11 00:31:05,067 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:31:05,087 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:31:39,119 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2025-04-11 00:31:39,123 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-04-11 00:31:39,137 - src.main - INFO - Debugging process completed
+2025-04-11 00:31:39,137 - src.main - INFO - Results available at: https://debug-reports.example.com/TEST-123
+2025-04-11 00:31:39,154 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"
+2025-04-11 00:31:39,176 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/show "HTTP/1.1 200 OK"

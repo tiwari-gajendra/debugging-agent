@@ -1,0 +1,6122 @@
+[
+  {
+    "timestamp": "2025-04-11T00:44:23.830086",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 0"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.830100",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 1"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.830104",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 2"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.830108",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 3"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.830110",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 4"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830112",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 5"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.830113",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 6"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830115",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 7"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.830124",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 8"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830126",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 9"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.830127",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 10"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830129",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 11"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.830131",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 12"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.830132",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 13"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.830134",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 14"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.830136",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 15"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830137",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 16"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.830139",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 17"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830141",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 18"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.830142",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 19"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830144",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 20"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830145",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 21"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.830147",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 22"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.830148",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 23"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.830150",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 24"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830152",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 25"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830153",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 26"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.830155",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 27"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.830156",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 28"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.830158",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 29"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.830159",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 30"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.830161",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 31"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.830163",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 32"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.830164",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 33"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830166",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 34"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.830167",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 35"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830169",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 36"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.830170",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 37"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830172",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 38"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830173",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 39"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830175",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 40"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830177",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 41"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.830178",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 42"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830180",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 43"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830181",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 44"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830183",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 45"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830184",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 46"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830186",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 47"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830187",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 48"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830189",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 49"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.830190",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 50"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.830192",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 51"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830193",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 52"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830195",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 53"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.830197",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 54"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830198",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 55"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830200",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 56"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830202",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 57"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830207",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 58"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.830209",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 59"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.830211",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 60"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.830212",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 61"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830214",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 62"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830215",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 63"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.830217",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 64"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.830219",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 65"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.830220",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 66"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.830222",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 67"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.830223",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 68"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.830225",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 69"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830226",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 70"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830228",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 71"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.830230",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 72"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.830231",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 73"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.830233",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 74"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.830234",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 75"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.830236",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 76"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830238",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 77"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830239",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 78"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830241",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 79"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.830242",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 80"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.830244",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 81"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830245",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 82"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830247",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 83"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.830248",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 84"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830250",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 85"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830251",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 86"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.830253",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 87"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830255",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 88"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830256",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 89"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830258",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 90"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830259",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 91"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.830261",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 92"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.830262",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 93"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.830264",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 94"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830265",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 95"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830267",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 96"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.830269",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 97"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.830270",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 98"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.830272",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 99"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830273",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 100"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830275",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 101"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.830276",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 102"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.830278",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 103"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.830279",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 104"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.830281",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 105"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.830283",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 106"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.830284",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 107"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.830286",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 108"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830288",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 109"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.830289",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 110"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.830291",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 111"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830292",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 112"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.830294",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 113"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830295",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 114"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.830297",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 115"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830299",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 116"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830300",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 117"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830302",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 118"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830303",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 119"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830305",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 120"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.830308",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 121"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830309",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 122"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.830312",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 123"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.830314",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 124"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830315",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 125"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.830317",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 126"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.830318",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 127"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.830320",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 128"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830322",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 129"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830323",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 130"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.830325",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 131"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830326",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 132"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830328",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 133"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.830329",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 134"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.830331",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 135"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830332",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 136"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.830334",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 137"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.830335",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 138"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.830337",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 139"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.830339",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 140"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.830340",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 141"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.830372",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 142"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.830374",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 143"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830376",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 144"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.830377",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 145"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830379",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 146"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.830380",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 147"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.830382",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 148"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.830383",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 149"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.830385",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 150"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.830386",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 151"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830388",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 152"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.830390",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 153"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.830391",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 154"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830393",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 155"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.830394",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 156"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.830396",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 157"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830397",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 158"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830399",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 159"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.830400",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 160"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.830402",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 161"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830404",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 162"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830405",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 163"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830407",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 164"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.830408",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 165"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830410",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 166"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.830411",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 167"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830413",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 168"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830414",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 169"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.830416",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 170"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.830417",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 171"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.830419",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 172"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830421",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 173"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830422",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 174"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.830423",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 175"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830425",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 176"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.830426",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 177"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.830428",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 178"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.830430",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 179"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.830431",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 180"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.830433",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 181"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.830435",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 182"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.830436",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 183"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.830437",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 184"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.830439",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 185"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830442",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 186"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.830443",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 187"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.830445",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 188"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.830446",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 189"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.830448",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 190"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830450",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 191"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.830451",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 192"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.830453",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 193"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.830454",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 194"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.830456",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 195"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.830457",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 196"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.830459",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 197"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830460",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 198"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830462",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 199"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.830463",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 200"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830465",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 201"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.830467",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 202"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830468",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 203"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.830470",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 204"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.830471",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 205"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830473",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 206"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.830474",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 207"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830476",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 208"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830477",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 209"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830479",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 210"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830480",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 211"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830482",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 212"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.830483",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 213"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.830485",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 214"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.830486",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 215"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830488",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 216"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830490",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 217"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.830491",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 218"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830493",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 219"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830494",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 220"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.830496",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 221"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830497",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 222"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.830499",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 223"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.830500",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 224"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830502",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 225"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.830503",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 226"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830505",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 227"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.830506",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 228"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.830508",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 229"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.830510",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 230"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.830511",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 231"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830513",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 232"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.830514",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 233"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830516",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 234"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.830517",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 235"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.830519",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 236"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.830521",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 237"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830522",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 238"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.830524",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 239"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830525",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 240"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830527",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 241"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.830528",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 242"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.830530",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 243"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830531",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 244"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.830533",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 245"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.830534",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 246"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.830536",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 247"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830538",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 248"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.830540",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 249"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.830542",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 250"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830543",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 251"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.830545",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 252"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.830546",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 253"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830548",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 254"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830550",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 255"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.830551",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 256"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830553",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 257"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.830554",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 258"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.830556",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 259"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830558",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 260"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.830559",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 261"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.830561",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 262"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.830562",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 263"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830564",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 264"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830566",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 265"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830567",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 266"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830569",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 267"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830570",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 268"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.830572",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 269"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830573",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 270"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.830575",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 271"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.830577",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 272"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.830578",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 273"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830580",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 274"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830581",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 275"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830583",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 276"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830584",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 277"
+  },
+  {
+    "timestamp": "2025-04-11T00:12:23.830586",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 278"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.830587",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 279"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830589",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 280"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.830591",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 281"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.830592",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 282"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.830594",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 283"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.830595",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 284"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830597",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 285"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.830598",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 286"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.830600",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 287"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830602",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 288"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830603",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 289"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.830605",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 290"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.830606",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 291"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.830608",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 292"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830609",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 293"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.830611",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 294"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830612",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 295"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830614",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 296"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830616",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 297"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830617",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 298"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.830619",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 299"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830620",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 300"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830622",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 301"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.830623",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 302"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.830625",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 303"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830626",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 304"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830628",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 305"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.830630",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 306"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.830631",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 307"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830633",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 308"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.830634",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 309"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830636",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 310"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.830637",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 311"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.830639",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 312"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.830641",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 313"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830643",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 314"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830644",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 315"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.830646",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 316"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830648",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 317"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.830649",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 318"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830651",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 319"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.830652",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 320"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.830654",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 321"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.830655",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 322"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830657",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 323"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830659",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 324"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830660",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 325"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.830662",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 326"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.830664",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 327"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830666",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 328"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830667",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 329"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830669",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 330"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830670",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 331"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.830672",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 332"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830673",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 333"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.830675",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 334"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.830677",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 335"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830678",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 336"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830680",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 337"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830681",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 338"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830683",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 339"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.830684",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 340"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.830686",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 341"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830688",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 342"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.830689",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 343"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830691",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 344"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.830692",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 345"
+  },
+  {
+    "timestamp": "2025-04-11T00:12:23.830694",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 346"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830695",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 347"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830697",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 348"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830698",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 349"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.830700",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 350"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.830701",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 351"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.830703",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 352"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.830705",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 353"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.830706",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 354"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.830708",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 355"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.830709",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 356"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.830711",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 357"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830713",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 358"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.830714",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 359"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830716",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 360"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830717",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 361"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.830719",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 362"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.830720",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 363"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830722",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 364"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830723",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 365"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830725",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 366"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.830726",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 367"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830728",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 368"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830730",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 369"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.830731",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 370"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830733",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 371"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830735",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 372"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830736",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 373"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830738",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 374"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.830740",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 375"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830742",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 376"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830744",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 377"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830745",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 378"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.830747",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 379"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830748",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 380"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830750",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 381"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.830751",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 382"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.830753",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 383"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830754",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 384"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.830756",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 385"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830757",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 386"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.830759",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 387"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830761",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 388"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830762",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 389"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.830764",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 390"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.830765",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 391"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830767",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 392"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.830768",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 393"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830770",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 394"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.830771",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 395"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830773",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 396"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.830774",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 397"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830776",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 398"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.830778",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 399"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830779",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 400"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.830781",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 401"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830782",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 402"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830784",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 403"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.830785",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 404"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.830787",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 405"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830789",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 406"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.830790",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 407"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830792",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 408"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.830793",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 409"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830795",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 410"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830796",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 411"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830798",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 412"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830799",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 413"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.830801",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 414"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.830802",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 415"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830804",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 416"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830805",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 417"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830807",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 418"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.830808",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 419"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.830810",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 420"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.830811",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 421"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.830813",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 422"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.830815",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 423"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830816",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 424"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.830818",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 425"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.830819",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 426"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830821",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 427"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830823",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 428"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830824",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 429"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.830826",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 430"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.830829",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 431"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.830831",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 432"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.830833",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 433"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830835",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 434"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.830837",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 435"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830839",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 436"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830841",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 437"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.830844",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 438"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830846",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 439"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830848",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 440"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.830850",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 441"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.830852",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 442"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.830854",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 443"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830856",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 444"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830857",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 445"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.830859",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 446"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.830861",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 447"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.830862",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 448"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.830864",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 449"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.830866",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 450"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.830867",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 451"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.830869",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 452"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830871",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 453"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.830873",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 454"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.830874",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 455"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830876",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 456"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.830878",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 457"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830880",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 458"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.830882",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 459"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.830883",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 460"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830885",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 461"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.830887",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 462"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.830888",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 463"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.830890",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 464"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.830892",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 465"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.830893",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 466"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.830895",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 467"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830897",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 468"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.830899",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 469"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.830900",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 470"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.830902",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 471"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830904",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 472"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830905",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 473"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.830907",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 474"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.830909",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 475"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830910",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 476"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.830912",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 477"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830914",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 478"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830915",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 479"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.830917",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 480"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.830919",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 481"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830920",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 482"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830922",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 483"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.830924",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 484"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.830925",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 485"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.830927",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 486"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.830929",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 487"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.830930",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 488"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830932",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 489"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.830934",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 490"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.830935",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 491"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.830937",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 492"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.830939",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 493"
+  },
+  {
+    "timestamp": "2025-04-11T00:12:23.830940",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 494"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830942",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 495"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.830944",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 496"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.830946",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 497"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.830947",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 498"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.830949",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 499"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.830951",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 500"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.830953",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 501"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.830956",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 502"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830958",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 503"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830959",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 504"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.830961",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 505"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830963",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 506"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830964",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 507"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830966",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 508"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.830968",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 509"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.830970",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 510"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.830971",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 511"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.830973",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 512"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830975",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 513"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.830977",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 514"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.830978",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 515"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.830980",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 516"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.830981",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 517"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.830983",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 518"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.830985",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 519"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.830986",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 520"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.830988",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 521"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.830989",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 522"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.830991",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 523"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.830993",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 524"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.830994",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 525"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.830996",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 526"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.830997",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 527"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.830999",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 528"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.831000",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 529"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.831002",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 530"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.831004",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 531"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.831006",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 532"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.831007",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 533"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.831009",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 534"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.831010",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 535"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.831012",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 536"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831013",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 537"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.831015",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 538"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831016",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 539"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.831018",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 540"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831020",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 541"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831021",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 542"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.831023",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 543"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.831024",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 544"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.831026",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 545"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831028",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 546"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.831029",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 547"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831031",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 548"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.831032",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 549"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831034",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 550"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831035",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 551"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.831037",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 552"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831038",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 553"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.831040",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 554"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.831041",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 555"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.831043",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 556"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.831044",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 557"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.831046",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 558"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.831047",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 559"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.831049",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 560"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.831050",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 561"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831052",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 562"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.831053",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 563"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.831055",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 564"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831057",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 565"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.831058",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 566"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.831061",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 567"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.831064",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 568"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.831066",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 569"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.831068",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 570"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831070",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 571"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.831072",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 572"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831074",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 573"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.831077",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 574"
+  },
+  {
+    "timestamp": "2025-04-11T00:12:23.831079",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 575"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.831081",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 576"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831082",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 577"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831084",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 578"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831087",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 579"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.831089",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 580"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.831091",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 581"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.831093",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 582"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.831095",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 583"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.831097",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 584"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.831099",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 585"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.831102",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 586"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.831104",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 587"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.831106",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 588"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.831108",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 589"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831110",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 590"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.831112",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 591"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.831113",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 592"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.831115",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 593"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831117",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 594"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.831119",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 595"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831120",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 596"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831122",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 597"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.831124",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 598"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.831125",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 599"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.831127",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 600"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.831129",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 601"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.831130",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 602"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831132",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 603"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831134",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 604"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831135",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 605"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.831137",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 606"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831139",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 607"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831140",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 608"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831142",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 609"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.831144",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 610"
+  },
+  {
+    "timestamp": "2025-04-10T23:50:23.831146",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 611"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831147",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 612"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831149",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 613"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.831151",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 614"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.831152",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 615"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831154",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 616"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.831156",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 617"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.831157",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 618"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.831159",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 619"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.831161",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 620"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.831163",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 621"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.831164",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 622"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.831166",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 623"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831168",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 624"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831170",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 625"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.831171",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 626"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.831173",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 627"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831175",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 628"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.831177",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 629"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831179",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 630"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.831181",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 631"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.831183",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 632"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.831184",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 633"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831186",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 634"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.831188",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 635"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.831190",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 636"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831191",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 637"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.831193",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 638"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.831195",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 639"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831196",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 640"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.831198",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 641"
+  },
+  {
+    "timestamp": "2025-04-11T00:46:23.831199",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 642"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.831201",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 643"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831203",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 644"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831204",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 645"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831206",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 646"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.831207",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 647"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.831209",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 648"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.831210",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 649"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.831212",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 650"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.831214",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 651"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831215",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 652"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.831217",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 653"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.831218",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 654"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.831220",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 655"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.831221",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 656"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831223",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 657"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831225",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 658"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.831226",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 659"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.831228",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 660"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831229",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 661"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.831231",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 662"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831232",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 663"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.831234",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 664"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831235",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 665"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.831237",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 666"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831238",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 667"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.831240",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 668"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831242",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 669"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831243",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 670"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.831245",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 671"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831246",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 672"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.831248",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 673"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.831250",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 674"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.831251",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 675"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831253",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 676"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.831254",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 677"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.831256",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 678"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831258",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 679"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831259",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 680"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831261",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 681"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.831262",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 682"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.831264",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 683"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.831265",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 684"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831267",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 685"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.831268",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 686"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831270",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 687"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.831271",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 688"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.831273",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 689"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.831275",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 690"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831276",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 691"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.831278",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 692"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.831279",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 693"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.831281",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 694"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.831282",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 695"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.831285",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 696"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.831286",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 697"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.831288",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 698"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831289",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 699"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831291",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 700"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.831292",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 701"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.831294",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 702"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.831296",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 703"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831297",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 704"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.831299",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 705"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.831300",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 706"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.831302",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 707"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.831303",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 708"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831305",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 709"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.831306",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 710"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.831308",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 711"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831309",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 712"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831311",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 713"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831312",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 714"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.831314",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 715"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.831316",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 716"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831317",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 717"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.831319",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 718"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.831320",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 719"
+  },
+  {
+    "timestamp": "2025-04-11T00:39:23.831322",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 720"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831323",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 721"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.831325",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 722"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831326",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 723"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831328",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 724"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.831329",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 725"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831331",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 726"
+  },
+  {
+    "timestamp": "2025-04-11T00:01:23.831333",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 727"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.831334",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 728"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.831336",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 729"
+  },
+  {
+    "timestamp": "2025-04-11T00:13:23.831337",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 730"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831339",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 731"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831340",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 732"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831342",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 733"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.831343",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 734"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.831346",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 735"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.831347",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 736"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.831349",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 737"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.831350",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 738"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.831352",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 739"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.831354",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 740"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831355",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 741"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.831357",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 742"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.831358",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 743"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.831360",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 744"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.831361",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 745"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831363",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 746"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831364",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 747"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831366",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 748"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.831368",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 749"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.831369",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 750"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.831371",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 751"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831372",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 752"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831374",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 753"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.831376",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 754"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831377",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 755"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831380",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 756"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.831381",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 757"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831383",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 758"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.831385",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 759"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.831386",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 760"
+  },
+  {
+    "timestamp": "2025-04-11T00:12:23.831388",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 761"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.831389",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 762"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831391",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 763"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.831392",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 764"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.831394",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 765"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831396",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 766"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.831397",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 767"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831399",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 768"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831400",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 769"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831402",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 770"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.831403",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 771"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.831405",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 772"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.831407",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 773"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.831408",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 774"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831409",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 775"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831411",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 776"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831412",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 777"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.831414",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 778"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.831416",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 779"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831417",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 780"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831419",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 781"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831420",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 782"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.831422",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 783"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831423",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 784"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831425",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 785"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.831426",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 786"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831428",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 787"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831429",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 788"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.831431",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 789"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831432",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 790"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831434",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 791"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.831435",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 792"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.831437",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 793"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.831439",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 794"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.831440",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 795"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.831442",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 796"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.831443",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 797"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831445",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 798"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.831446",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 799"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831448",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 800"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.831449",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 801"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.831451",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 802"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831452",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 803"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831454",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 804"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831456",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 805"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.831457",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 806"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831459",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 807"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.831460",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 808"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831462",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 809"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.831464",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 810"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831465",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 811"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.831467",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 812"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.831468",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 813"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831470",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 814"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.831471",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 815"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.831473",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 816"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.831474",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 817"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.831476",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 818"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.831478",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 819"
+  },
+  {
+    "timestamp": "2025-04-11T00:12:23.831479",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 820"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.831481",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 821"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.831482",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 822"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831485",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 823"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.831486",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 824"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831488",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 825"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.831489",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 826"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.831491",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 827"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831493",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 828"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831495",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 829"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831497",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 830"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.831499",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 831"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831501",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 832"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.831503",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 833"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.831506",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 834"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831508",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 835"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.831510",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 836"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.831512",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 837"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.831514",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 838"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831516",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 839"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831518",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 840"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831519",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 841"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.831521",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 842"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831523",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 843"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.831525",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 844"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831527",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 845"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.831528",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 846"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831530",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 847"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831532",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 848"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831533",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 849"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831535",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 850"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.831537",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 851"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.831538",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 852"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831540",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 853"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831542",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 854"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831543",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 855"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.831545",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 856"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.831547",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 857"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.831548",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 858"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831550",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 859"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.831552",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 860"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831554",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 861"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.831555",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 862"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831557",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 863"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.831559",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 864"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831560",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 865"
+  },
+  {
+    "timestamp": "2025-04-11T00:36:23.831562",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 866"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.831564",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 867"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.831566",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 868"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831567",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 869"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831569",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 870"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.831571",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 871"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831572",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 872"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.831574",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 873"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.831576",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 874"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831577",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 875"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.831579",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 876"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.831581",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 877"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.831583",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 878"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.831584",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 879"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.831586",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 880"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.831588",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 881"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831589",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 882"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.831595",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 883"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.831596",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 884"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.831598",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 885"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.831600",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 886"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831602",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 887"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.831603",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 888"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.831605",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 889"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.831607",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 890"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831608",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 891"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.831610",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 892"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831612",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 893"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.831613",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 894"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.831615",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 895"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831617",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 896"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831619",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 897"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.831620",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 898"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.831622",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 899"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831624",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 900"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831625",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 901"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831627",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 902"
+  },
+  {
+    "timestamp": "2025-04-11T00:37:23.831628",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 903"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.831630",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 904"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831632",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 905"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.831633",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 906"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.831635",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 907"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.831637",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 908"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.831638",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 909"
+  },
+  {
+    "timestamp": "2025-04-11T00:21:23.831640",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 910"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831642",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 911"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.831643",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 912"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831645",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 913"
+  },
+  {
+    "timestamp": "2025-04-11T00:05:23.831647",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 914"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.831648",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 915"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831650",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 916"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831652",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 917"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.831654",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 918"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831655",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 919"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.831657",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 920"
+  },
+  {
+    "timestamp": "2025-04-11T00:43:23.831659",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 921"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.831660",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 922"
+  },
+  {
+    "timestamp": "2025-04-11T00:00:23.831662",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 923"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.831664",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 924"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831666",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 925"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831667",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 926"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.831669",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 927"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.831671",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 928"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.831672",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 929"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831674",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 930"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831676",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 931"
+  },
+  {
+    "timestamp": "2025-04-11T00:24:23.831677",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 932"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.831679",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 933"
+  },
+  {
+    "timestamp": "2025-04-11T00:02:23.831681",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 934"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.831682",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 935"
+  },
+  {
+    "timestamp": "2025-04-10T23:54:23.831684",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 936"
+  },
+  {
+    "timestamp": "2025-04-10T23:56:23.831686",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 937"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831688",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 938"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.831690",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 939"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831692",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 940"
+  },
+  {
+    "timestamp": "2025-04-11T00:25:23.831694",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 941"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.831695",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 942"
+  },
+  {
+    "timestamp": "2025-04-11T00:30:23.831697",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 943"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.831699",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 944"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831700",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 945"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.831702",
+    "level": "WARN",
+    "service": "user-service",
+    "message": "Log message 946"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.831704",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 947"
+  },
+  {
+    "timestamp": "2025-04-11T00:20:23.831705",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 948"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.831707",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 949"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.831709",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 950"
+  },
+  {
+    "timestamp": "2025-04-11T00:38:23.831711",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 951"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.831713",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 952"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831715",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 953"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.831717",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 954"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.831718",
+    "level": "INFO",
+    "service": "payment-service",
+    "message": "Log message 955"
+  },
+  {
+    "timestamp": "2025-04-11T00:27:23.831720",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 956"
+  },
+  {
+    "timestamp": "2025-04-11T00:34:23.831722",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 957"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.831724",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 958"
+  },
+  {
+    "timestamp": "2025-04-11T00:28:23.831725",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 959"
+  },
+  {
+    "timestamp": "2025-04-11T00:40:23.831727",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 960"
+  },
+  {
+    "timestamp": "2025-04-11T00:07:23.831729",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 961"
+  },
+  {
+    "timestamp": "2025-04-11T00:31:23.831730",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 962"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831732",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 963"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.831734",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 964"
+  },
+  {
+    "timestamp": "2025-04-10T23:49:23.831735",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 965"
+  },
+  {
+    "timestamp": "2025-04-11T00:44:23.831737",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 966"
+  },
+  {
+    "timestamp": "2025-04-11T00:19:23.831739",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 967"
+  },
+  {
+    "timestamp": "2025-04-10T23:55:23.831741",
+    "level": "DEBUG",
+    "service": "payment-service",
+    "message": "Log message 968"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831743",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 969"
+  },
+  {
+    "timestamp": "2025-04-10T23:51:23.831745",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 970"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.831747",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 971"
+  },
+  {
+    "timestamp": "2025-04-11T00:35:23.831749",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 972"
+  },
+  {
+    "timestamp": "2025-04-11T00:45:23.831752",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Log message 973"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.831754",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 974"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.831756",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 975"
+  },
+  {
+    "timestamp": "2025-04-11T00:03:23.831758",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 976"
+  },
+  {
+    "timestamp": "2025-04-10T23:48:23.831760",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 977"
+  },
+  {
+    "timestamp": "2025-04-10T23:58:23.831762",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 978"
+  },
+  {
+    "timestamp": "2025-04-10T23:57:23.831764",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 979"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.831766",
+    "level": "INFO",
+    "service": "user-service",
+    "message": "Log message 980"
+  },
+  {
+    "timestamp": "2025-04-11T00:42:23.831768",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 981"
+  },
+  {
+    "timestamp": "2025-04-11T00:47:23.831770",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 982"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.831772",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 983"
+  },
+  {
+    "timestamp": "2025-04-11T00:33:23.831775",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 984"
+  },
+  {
+    "timestamp": "2025-04-11T00:23:23.831777",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 985"
+  },
+  {
+    "timestamp": "2025-04-11T00:32:23.831779",
+    "level": "ERROR",
+    "service": "user-service",
+    "message": "Log message 986"
+  },
+  {
+    "timestamp": "2025-04-11T00:29:23.831781",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 987"
+  },
+  {
+    "timestamp": "2025-04-10T23:59:23.831783",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 988"
+  },
+  {
+    "timestamp": "2025-04-11T00:48:23.831785",
+    "level": "DEBUG",
+    "service": "api-gateway",
+    "message": "Log message 989"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831787",
+    "level": "DEBUG",
+    "service": "auth-service",
+    "message": "Log message 990"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831788",
+    "level": "WARN",
+    "service": "payment-service",
+    "message": "Log message 991"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.831790",
+    "level": "INFO",
+    "service": "api-gateway",
+    "message": "Log message 992"
+  },
+  {
+    "timestamp": "2025-04-11T00:26:23.831791",
+    "level": "DEBUG",
+    "service": "user-service",
+    "message": "Log message 993"
+  },
+  {
+    "timestamp": "2025-04-11T00:22:23.831793",
+    "level": "WARN",
+    "service": "api-gateway",
+    "message": "Log message 994"
+  },
+  {
+    "timestamp": "2025-04-11T00:06:23.831795",
+    "level": "ERROR",
+    "service": "payment-service",
+    "message": "Log message 995"
+  },
+  {
+    "timestamp": "2025-04-11T00:41:23.831796",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 996"
+  },
+  {
+    "timestamp": "2025-04-11T00:04:23.831798",
+    "level": "WARN",
+    "service": "auth-service",
+    "message": "Log message 997"
+  },
+  {
+    "timestamp": "2025-04-10T23:53:23.831799",
+    "level": "INFO",
+    "service": "auth-service",
+    "message": "Log message 998"
+  },
+  {
+    "timestamp": "2025-04-10T23:52:23.831801",
+    "level": "ERROR",
+    "service": "api-gateway",
+    "message": "Log message 999"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831803",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831804",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:15:23.831806",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831807",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:08:23.831808",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.831810",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.831811",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831812",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831813",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:09:23.831815",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831816",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831818",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:11:23.831819",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:14:23.831820",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:18:23.831821",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:12:23.831823",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:16:23.831824",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:12:23.831825",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:10:23.831826",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  },
+  {
+    "timestamp": "2025-04-11T00:17:23.831827",
+    "level": "ERROR",
+    "service": "auth-service",
+    "message": "Authentication failure: token validation error (ref: TEST-123)"
+  }
+]

@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: debugging-agents
+Version: 0.1.0
+Summary: AI-powered debugging and forecasting system
+Home-page: https://github.com/yourusername/debugging-agents
+Author: Debugging Agents Team
+Author-email: debug@example.com
+Requires-Python: >=3.10
+Requires-Dist: requests
+Requires-Dist: langchain
+Requires-Dist: openai
+Requires-Dist: boto3
+Requires-Dist: python-dotenv
+Dynamic: author
+Dynamic: author-email
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
