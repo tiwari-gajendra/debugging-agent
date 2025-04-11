@@ -7,8 +7,10 @@ import os
 import sys
 import argparse
 import logging
+import yaml
 from datetime import datetime
 from dotenv import load_dotenv
+from logging.handlers import RotatingFileHandler
 
 # Get the path to the project root
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -18,16 +20,100 @@ project_root = os.path.dirname(script_dir)
 logs_dir = os.path.join(project_root, "logs")
 os.makedirs(logs_dir, exist_ok=True)
 
-# Set up logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(os.path.join(logs_dir, "debug_agent.log")),
-        logging.StreamHandler()
-    ]
-)
+# Ensure config directory exists
+config_dir = os.path.join(project_root, "config")
+os.makedirs(config_dir, exist_ok=True)
+
+# Define default logging config
+default_logging_config = {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "date_format": "%Y-%m-%d %H:%M:%S",
+    "handlers": {
+        "file": "logs/debug_agent.log",
+        "console": True,
+        "rotation": {
+            "enabled": True,
+            "max_bytes": 10485760,  # 10MB
+            "backup_count": 5
+        }
+    },
+    "settings": {
+        "module_levels": {
+            "httpx": "WARNING",
+            "matplotlib": "WARNING",
+            "urllib3": "WARNING",
+            "langchain": "INFO",
+            "src.realtime": "DEBUG"
+        }
+    }
+}
+
+# Load logging config from file or use default
+logging_config_path = os.path.join(config_dir, "logging.yaml")
+if os.path.exists(logging_config_path):
+    try:
+        with open(logging_config_path, 'r') as file:
+            logging_config = yaml.safe_load(file)
+    except Exception as e:
+        print(f"Error loading logging config: {e}. Using default.")
+        logging_config = default_logging_config
+else:
+    # Create default config file
+    try:
+        with open(logging_config_path, 'w') as file:
+            yaml.dump(default_logging_config, file)
+        logging_config = default_logging_config
+    except Exception as e:
+        print(f"Error creating default logging config: {e}. Using default in memory.")
+        logging_config = default_logging_config
+
+# Configure root logger
+root_logger = logging.getLogger()
+root_logger.setLevel(getattr(logging, logging_config.get("level", "INFO")))
+
+# Clear any existing handlers
+for handler in root_logger.handlers[:]:
+    root_logger.removeHandler(handler)
+
+# Create formatters
+log_format = logging_config.get("format", "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+date_format = logging_config.get("date_format", "%Y-%m-%d %H:%M:%S")
+formatter = logging.Formatter(log_format, datefmt=date_format)
+
+# Add file handler with rotation if enabled
+if logging_config.get("handlers", {}).get("file"):
+    file_path = os.path.join(project_root, logging_config["handlers"]["file"])
+    
+    rotation_config = logging_config.get("handlers", {}).get("rotation", {})
+    if rotation_config.get("enabled", False):
+        file_handler = RotatingFileHandler(
+            file_path,
+            maxBytes=rotation_config.get("max_bytes", 10485760),
+            backupCount=rotation_config.get("backup_count", 5)
+        )
+    else:
+        file_handler = logging.FileHandler(file_path)
+    
+    file_handler.setFormatter(formatter)
+    root_logger.addHandler(file_handler)
+
+# Add console handler
+if logging_config.get("handlers", {}).get("console", True):
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(formatter)
+    root_logger.addHandler(console_handler)
+
+# Set specific module log levels
+module_levels = logging_config.get("settings", {}).get("module_levels", {})
+for module, level in module_levels.items():
+    module_logger = logging.getLogger(module)
+    module_logger.setLevel(getattr(logging, level))
+
+# Get our application logger
 logger = logging.getLogger("debug_agent_cli")
+logger.info("Logging initialized with configuration from: " + 
+           (logging_config_path if os.path.exists(logging_config_path) else "default settings"))
 
 # Load environment variables
 load_dotenv()
@@ -99,9 +185,12 @@ def debug_command(args):
         issue_id = args.issue_id
         logger.info(f"Starting real-time debugging for issue: {issue_id}")
         
+        # Use model if specified, otherwise use llm_provider
+        llm_identifier = args.model or args.llm_provider
+        
         try:
             # Run the debugging process
-            result = run_realtime_debugging(issue_id, llm_provider=args.llm_provider)
+            result = run_realtime_debugging(issue_id, llm_provider_or_model=llm_identifier)
             
             # Print results summary
             print(f"\nDebugging Complete!")
@@ -163,6 +252,8 @@ def main():
                              help='Open document in browser when done')
     debug_parser.add_argument('--llm-provider', type=str, choices=['openai', 'ollama', 'bedrock'],
                              help='LLM provider to use (default: from .env)')
+    debug_parser.add_argument('--model', type=str, 
+                             help='Specific model name to use (e.g., claude-3-sonnet, gpt-4-turbo)')
     
     # Info command
     info_parser = subparsers.add_parser('info', help='Display system information')

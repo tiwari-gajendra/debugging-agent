@@ -1,8 +1,10 @@
 import os
 import argparse
 import logging
+import yaml
 from dotenv import load_dotenv
 import sys
+from logging.handlers import RotatingFileHandler
 
 # Import components
 from src.coordination.crew_manager import DebugCrew
@@ -18,9 +20,6 @@ from src.utils.llm_factory import LLMFactory
 # Load environment variables
 load_dotenv()
 
-# Set up logging
-logging_level = os.getenv('LOG_LEVEL', 'INFO')
-
 # Get the path to the project root (one level up from src directory)
 src_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(src_dir)
@@ -29,14 +28,12 @@ project_root = os.path.dirname(src_dir)
 logs_dir = os.path.join(project_root, "logs")
 os.makedirs(logs_dir, exist_ok=True)
 
-logging.basicConfig(
-    level=getattr(logging, logging_level),
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(os.path.join(logs_dir, "debug_agent.log")),
-        logging.StreamHandler()
-    ]
-)
+# Ensure config directory exists
+config_dir = os.path.join(project_root, "config")
+os.makedirs(config_dir, exist_ok=True)
+
+# Let debug_agent_cli.py handle the logging configuration to ensure consistency
+# We'll just get a logger here and start using it
 logger = logging.getLogger(__name__)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -56,26 +53,26 @@ def setup_forecasting_pipeline():
     
     return service_anomalies, alert_predictions
 
-def run_realtime_debugging(issue_id=None, llm_provider=None):
+def run_realtime_debugging(issue_id=None, llm_provider_or_model=None):
     """
     Run the real-time debugging pipeline
     
     Args:
         issue_id: The ID of the issue to debug
-        llm_provider: The LLM provider to use (defaults to env var LLM_PROVIDER)
+        llm_provider_or_model: The LLM provider or model name to use (defaults to env var LLM_PROVIDER)
     
     Returns:
         Dictionary with debugging results
     """
     logger.info(f"Starting real-time debugging for issue: {issue_id}")
     
-    # Use specified provider or default from env
-    provider = llm_provider or os.getenv('LLM_PROVIDER', 'openai')
-    logger.info(f"Using LLM provider: {provider}")
+    # Use specified provider/model or default from env
+    provider_or_model = llm_provider_or_model or os.getenv('LLM_PROVIDER', 'openai')
+    logger.info(f"Using LLM provider/model: {provider_or_model}")
     
     try:
         # Initialize the Crew
-        debug_crew = DebugCrew(llm_provider=provider)
+        debug_crew = DebugCrew(llm_provider_or_model=provider_or_model)
         
         # Initialize agents
         context_builder = ContextBuilder()
@@ -135,7 +132,7 @@ def main():
     
     if args.mode in ['debug', 'both']:
         if args.issue_id:
-            run_realtime_debugging(args.issue_id, llm_provider=args.llm_provider)
+            run_realtime_debugging(args.issue_id, llm_provider_or_model=args.llm_provider)
         else:
             logger.error("Error: Issue ID required for debugging mode")
             return

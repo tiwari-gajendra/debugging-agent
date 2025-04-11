@@ -60,6 +60,43 @@ debug-agent forecast --verbose
 
 For detailed CLI usage instructions, see [CLI Guide](docs/cli_guide.md).
 
+## Model Switching
+
+The system now supports easy switching between different LLM models:
+
+```bash
+# Use a specific model by name
+debug-agent debug YOUR-ISSUE-123 --model claude-3-sonnet
+
+# Or use a provider with its default model
+debug-agent debug YOUR-ISSUE-123 --llm-provider bedrock
+```
+
+Available models include:
+
+- **OpenAI Models**: `gpt-4`, `gpt-4-turbo`, `gpt-3.5-turbo`
+- **Bedrock Models**: `claude-3-sonnet`, `claude-3-haiku`, `llama3-70b`
+- **Ollama Models**: `llama3`, `mistral` (local models)
+
+You can add custom models programmatically:
+
+```python
+from src.utils.llm_factory import LLMFactory
+
+# Register a custom model
+LLMFactory.register_custom_model(
+    name="my-custom-model",
+    provider="bedrock",
+    model_id="anthropic.claude-3-opus-20240229-v1:0",
+    options={"max_tokens": 4000}
+)
+
+# Then use it from the CLI
+# debug-agent debug ISSUE-123 --model my-custom-model
+```
+
+For more details, see [Usage Guide](docs/usage_guide.md).
+
 ## Project Structure
 
 ```

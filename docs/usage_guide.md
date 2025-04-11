@@ -283,6 +283,86 @@ export LLM_MODEL=gpt-4-turbo
 python debug_agent_cli.py debug --issue-id COMPLEX-ISSUE
 ```
 
+## Using Different Models
+
+The Debugging Agents system now includes a model registry that makes it easy to switch between different models. This allows you to quickly change which AI model powers your debugging agents.
+
+### Available Models
+
+The system comes with several pre-registered models:
+
+#### OpenAI Models
+- `gpt-4` - OpenAI's GPT-4 base model
+- `gpt-4-turbo` - OpenAI's faster GPT-4 Turbo model 
+- `gpt-3.5-turbo` - OpenAI's more economical GPT-3.5 model
+
+#### Ollama Models (local)
+- `llama3` - Meta's Llama 3 model via Ollama
+- `mistral` - Mistral AI's model via Ollama
+
+#### Bedrock Models
+- `claude-3-sonnet` - Anthropic's Claude 3 Sonnet model
+- `claude-3-haiku` - Anthropic's Claude 3 Haiku model (faster)
+- `llama3-70b` - Meta's Llama 3 70B model on AWS Bedrock
+
+### Switching Models
+
+You can switch models in several ways:
+
+#### 1. Command Line
+
+```bash
+# Use a specific model by name
+debug-agent debug YOUR-ISSUE-123 --model claude-3-sonnet
+
+# Or use a provider with its default model
+debug-agent debug YOUR-ISSUE-123 --llm-provider bedrock
+```
+
+#### 2. Environment Variables
+
+```bash
+# Set in .env file or export in shell
+LLM_PROVIDER=bedrock  # Use default Bedrock model
+MODEL_NAME=claude-3-sonnet  # Or specify exact model
+```
+
+#### 3. Programmatic Usage
+
+```python
+from src.utils.llm_factory import LLMFactory
+from src.coordination.crew_manager import DebugCrew
+
+# Initialize with a specific model name
+crew = DebugCrew("claude-3-sonnet")
+
+# Or use a provider with default model
+crew = DebugCrew("bedrock")
+
+# Register a custom model if needed
+LLMFactory.register_custom_model(
+    name="my-custom-model",
+    provider="bedrock",
+    model_id="anthropic.claude-3-opus-20240229-v1:0",
+    options={"max_tokens": 4000}
+)
+
+# Then use it
+crew = DebugCrew("my-custom-model")
+```
+
+### Listing Available Models
+
+To see all available models:
+
+```python
+from src.utils.llm_factory import LLMFactory
+
+# List all registered models and their providers
+models = LLMFactory.list_available_models()
+print(models)
+```
+
 ## References
 
 - [Architecture Document](architecture.md) - System architecture overview

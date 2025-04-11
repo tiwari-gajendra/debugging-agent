@@ -13,11 +13,24 @@ venv/
 # .env.*
 
 # Jupyter Notebook checkpoints
-# .ipynb_checkpoints/
+.ipynb_checkpoints/
 
 # macOS system files
 .DS_Store
 
 # Logs and temporary files
-# *.log
-# *.tmp
+*.log
+logs/
+*.tmp
+
+# Test files
+test.py
+
+# Build artifacts
+*.egg-info/
+build/
+dist/
+
+# Cache directories
+__pycache__/
+.pytest_cache/
