@@ -1,30 +1,17 @@
-# Logging configuration for Debugging Agents
-level: INFO
-format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-date_format: "%Y-%m-%d %H:%M:%S"
-
-# Handler configuration
+date_format: '%Y-%m-%d %H:%M:%S'
+format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 handlers:
-  # Main log file
-  file: "logs/debug_agent.log"
-  # Enable console output
   console: true
-  # Rotation settings for file handler
+  file: logs/debug_agent.log
   rotation:
-    enabled: true
-    max_bytes: 10485760  # 10MB
     backup_count: 5
-
-# Additional logging parameters
+    enabled: true
+    max_bytes: 10485760
+level: INFO
 settings:
-  # Log metrics and events to separate file
-  metrics_log: "logs/metrics.log"
-  # Log HTTP requests to separate file
-  http_log: "logs/http_requests.log"
-  # Set specific log levels for modules
   module_levels:
     httpx: WARNING
-    matplotlib: WARNING
-    urllib3: WARNING
     langchain: INFO
-    src.realtime: DEBUG 
+    matplotlib: WARNING
+    src.realtime: DEBUG
+    urllib3: WARNING
