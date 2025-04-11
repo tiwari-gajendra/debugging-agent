@@ -36,3 +36,8 @@ dist/
 # Cache directories
 __pycache__/
 .pytest_cache/
+
+# Generated content
+*/config/
+data/reports/
+data/plots/
