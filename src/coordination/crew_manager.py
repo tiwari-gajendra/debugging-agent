@@ -4,7 +4,9 @@ Debug Crew Manager - Manages crew of debugging agents.
 
 import os
 import sys
+import json
 import logging
+import httpx
 from typing import List, Dict, Any, Optional
 from crewai import Agent, Task, Crew, Process
 from dotenv import load_dotenv
@@ -34,20 +36,48 @@ class DebugCrew:
         
         logger.info(f"Initializing DebugCrew with LLM provider: {self.provider}")
         
-        # Create an LLM instance
-        self.llm = LLMProvider.create_llm(provider=self.provider)
-        
-        # Special handling for Ollama to make it work with CrewAI
+        # If using Ollama, create a pre-configured LLM instance that works with CrewAI
         if self.provider == 'ollama':
-            # Use OpenAI provider with our API key, but configure it for Ollama
+            # Get Ollama settings
+            model_name = os.getenv('OLLAMA_MODEL', 'deepseek-r1:8b')
+            # Remove 'ollama/' prefix if present
+            if model_name.startswith('ollama/'):
+                model_name = model_name[len('ollama/'):]
+            
+            base_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
+            
+            # For CrewAI compatibility
             os.environ["OPENAI_API_KEY"] = "sk-valid-ollama-key"
-            os.environ["OPENAI_API_BASE"] = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
-            # Let CrewAI use OpenAI provider but with our Ollama base URL
-            os.environ["CREW_LLM_PROVIDER"] = "openai"
+            
+            # Import CrewAI LLM to create a pre-configured instance
+            try:
+                from crewai.llm import LLM
+                self.llm = LLM(
+                    model="ollama/"+model_name,     # Format expected by LiteLLM
+                    base_url=base_url,              # Ollama API
+                    api_key="sk-valid-ollama-key",  # Placeholder key
+                    temperature=float(os.getenv('TEMPERATURE', 0.2)),
+                    custom_llm_provider="ollama"    # Force provider type
+                )
+                logger.info(f"Created pre-configured CrewAI LLM for Ollama with model={model_name}")
+                self.use_direct_api = False         # Use standard CrewAI flow now
+            except ImportError:
+                logger.warning("Could not import crewai.llm, falling back to direct API implementation")
+                # Create an LLM instance using our utility
+                self.llm = LLMProvider.create_llm(provider_or_model=self.provider)
+                self.use_direct_api = True          # Still use direct API as fallback
+        else:
+            # Create an LLM instance using the unified LLMProvider
+            self.llm = LLMProvider.create_llm(provider_or_model=self.provider)
+            self.use_direct_api = False
+        
         # Set up environment variables for CrewAI compatibility
-        elif self.provider == 'bedrock' or self.provider == 'anthropic':
+        if self.provider == 'bedrock' or self.provider == 'anthropic':
             os.environ["OPENAI_API_KEY"] = "sk-valid-bedrock-key"
             os.environ["CREW_LLM_PROVIDER"] = "bedrock"
+        elif self.provider == 'ollama':
+            os.environ["OPENAI_API_KEY"] = "sk-valid-ollama-key"
+            os.environ["CREW_LLM_PROVIDER"] = "ollama"
         
         self.agents = []
         self.tasks = []
@@ -76,13 +106,6 @@ class DebugCrew:
                 "llm": self.llm
             }
             
-            # Add provider specific configurations
-            if self.provider == 'bedrock' or self.provider == 'anthropic':
-                agent_config["llm_provider"] = "bedrock"
-            elif self.provider == 'ollama':
-                # Use OpenAI provider but with our Ollama URL
-                agent_config["llm_provider"] = "openai"
-            
             # Create the agent with the appropriate config
             agent = Agent(**agent_config)
             
@@ -95,64 +118,194 @@ class DebugCrew:
             
             logger.debug(f"Added agent {agent_name} to crew")
     
-    def execute_direct_ollama_task(self, task, context):
+    def call_ollama_directly(self, prompt, system_message=None):
         """
-        Execute a task directly with Ollama, bypassing CrewAI's LLM integration
+        Call Ollama API directly without using any abstractions.
         
         Args:
-            task: The task object to execute
-            context: The task context
+            prompt: The prompt to send
+            system_message: Optional system message
             
         Returns:
-            Task result as string
+            Generated text
         """
-        # Get the task description and context
-        task_description = task.description
+        # Get model from environment or use default
+        model = os.getenv('OLLAMA_MODEL', 'deepseek-r1:8b')
         
-        # Get model name from environment or use default
-        model = os.getenv('OLLAMA_MODEL', 'llama3')
+        # Clean the model name - remove ollama/ prefix if present
+        if model.startswith('ollama/'):
+            model = model[len('ollama/'):]
+            
+        base_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
         
-        # Get agent information - CrewAI stores this differently in newer versions
+        # Remove trailing slash from base_url if present
+        if base_url.endswith('/'):
+            base_url = base_url[:-1]
+            
+        # Format the request
+        api_url = f"{base_url}/api/generate"
+        
+        request_data = {
+            "model": model,
+            "prompt": prompt,
+            "temperature": 0.2,
+        }
+        
+        # Add system prompt if provided
+        if system_message:
+            request_data["system"] = system_message
+        
         try:
-            # Try to access directly if available
-            agent_name = task.agent.name
-            agent_role = task.agent.role
-            agent_goal = task.agent.goal
-            agent_backstory = task.agent.backstory
-        except AttributeError:
-            # If not directly available, use the agent object itself
-            agent = task.agent
-            agent_name = getattr(agent, 'name', 'Debugging Agent')
-            agent_role = getattr(agent, 'role', 'Technical Specialist')
-            agent_goal = getattr(agent, 'goal', 'Analyze and fix technical issues')
-            agent_backstory = getattr(agent, 'backstory', 'You are an expert in diagnosing and fixing software problems')
-        
-        # Format messages for the Ollama chat API
-        messages = [
-            {
-                "role": "system", 
-                "content": f"You are {agent_name}, a {agent_role}. Your goal is to {agent_goal}. {agent_backstory}"
-            },
-            {
-                "role": "user", 
-                "content": f"""Task: {task_description}
+            logger.info(f"Calling Ollama API directly with model={model}")
+            
+            # Make the API call
+            with httpx.Client(timeout=60.0) as client:
+                response = client.post(api_url, json=request_data)
+                response.raise_for_status()
                 
-Context:
-{context}
-
-Please complete this task to the best of your ability, providing detailed analysis and insights.
-"""
-            }
-        ]
+                # Ollama's generate endpoint returns streaming responses
+                # We'll collect all the text from the response
+                all_text = ""
+                for line in response.iter_lines():
+                    if not line:
+                        continue
+                    
+                    try:
+                        response_part = json.loads(line)
+                        response_text = response_part.get("response", "")
+                        all_text += response_text
+                        
+                        # Check for done flag
+                        if response_part.get("done", False):
+                            break
+                    except json.JSONDecodeError:
+                        logger.warning(f"Failed to decode Ollama response line: {line}")
+                
+                logger.debug(f"Ollama response length: {len(all_text)} chars")
+                return all_text
         
-        # Call Ollama directly
-        logger.info(f"Executing task '{task_description}' directly with Ollama")
-        result = LLMProvider.ollama_chat_completion(
-            messages=messages,
-            model=model
+        except Exception as e:
+            logger.error(f"Error calling Ollama API: {str(e)}")
+            return f"Error: {str(e)}"
+    
+    def run_direct_ollama(self, issue_id: str) -> Dict[str, Any]:
+        """
+        Run the debugging process directly using Ollama API
+        
+        Args:
+            issue_id: The issue ID to debug
+            
+        Returns:
+            Dict with results information
+        """
+        logger.info(f"Running direct Ollama debugging for issue {issue_id}")
+        
+        # Create context to send to the model
+        context = {
+            "issue_id": issue_id,
+            "timestamp": datetime.now().isoformat(),
+            "environment": {
+                "python_version": sys.version,
+                "os": sys.platform
+            }
+        }
+        
+        # Use our agent descriptions to create task list
+        task_descriptions = []
+        for agent_pair in self.agents:
+            agent_obj = agent_pair["agent_obj"]
+            agent_name = agent_pair["agent_name"]
+            
+            # Get the task description from agent if available
+            task_description = f"Analyze and process the issue {issue_id}"
+            if hasattr(agent_obj, "get_task_description"):
+                task_description = agent_obj.get_task_description(issue_id)
+                
+            task_descriptions.append({
+                "agent_name": agent_name,
+                "description": task_description
+            })
+        
+        # Execute each task in sequence
+        task_results = []
+        previous_results = []
+        
+        for i, task in enumerate(task_descriptions):
+            agent_name = task["agent_name"]
+            task_description = task["description"]
+            
+            logger.info(f"Running task {i+1}/{len(task_descriptions)}: {agent_name}")
+            
+            # Create system message for the agent
+            system_message = f"""You are {agent_name}, an expert in software debugging and analysis.
+Your goal is to provide detailed technical expertise to solve complex software issues.
+Respond with detailed, actionable information."""
+            
+            # Create prompt with task description and context
+            prompt = f"""# Task: {task_description}
+
+## Context Information:
+Issue ID: {issue_id}
+
+"""
+            
+            # Add previous results if any
+            if previous_results:
+                prompt += "\n## Previous Analysis Results:\n"
+                for prev in previous_results:
+                    prompt += f"\n### {prev['agent']} Results:\n{prev['result']}\n"
+            
+            # Call Ollama directly
+            result = self.call_ollama_directly(
+                prompt=prompt,
+                system_message=system_message
+            )
+            
+            # Store the result
+            task_result = {
+                "agent": agent_name,
+                "description": task_description,
+                "result": result
+            }
+            task_results.append(task_result)
+            previous_results.append(task_result)
+            
+            logger.info(f"Completed task: {agent_name}")
+        
+        # Generate final summary
+        system_message = """You are a senior software engineer with expertise in debugging and technical documentation.
+Your task is to create a comprehensive executive summary of a debugging report."""
+
+        prompt = f"""# Debug Report Summary Request
+
+## Issue Information:
+Issue ID: {issue_id}
+
+## Task Results:
+"""
+        for result in task_results:
+            prompt += f"\n### {result['agent']} Results:\n{result['result']}\n"
+            
+        prompt += """
+# Request:
+Please provide a concise executive summary of the debugging process and findings.
+Include key insights, root causes identified, and recommendations."""
+
+        # Generate final summary
+        final_summary = self.call_ollama_directly(
+            prompt=prompt,
+            system_message=system_message
         )
         
-        return result
+        # Generate final output string
+        crew_output = "\n\n".join([
+            f"## {result['agent']} Results:\n{result['result']}"
+            for result in task_results
+        ])
+        
+        crew_output += f"\n\n## Executive Summary:\n{final_summary}"
+        
+        return crew_output
     
     def run(self, issue_id: str) -> Dict[str, Any]:
         """
@@ -169,84 +322,45 @@ Please complete this task to the best of your ability, providing detailed analys
         
         logger.info(f"Running debugging process for issue {issue_id}")
         
-        # Create tasks for each agent
-        tasks = []
-        
-        # Create properly structured context
-        context = [{
-            "issue_id": issue_id,
-            "description": f"Debug information for issue {issue_id}",
-            "expected_output": f"Analysis results for issue {issue_id}"
-        }]
-        
-        # Create tasks based on the agent sequence
-        for i, agent_pair in enumerate(self.agents):
-            agent = agent_pair["crew_agent"]
-            agent_obj = agent_pair["agent_obj"]
-            agent_name = agent_pair["agent_name"]  # Get stored name
-            
-            # Create a task for this agent
-            task_description = f"Analyze and process the issue {issue_id}"
-            if hasattr(agent_obj, "get_task_description"):
-                task_description = agent_obj.get_task_description(issue_id)
-            
-            task = Task(
-                description=task_description,
-                agent=agent,
-                context=context,
-                expected_output=f"Analysis results for issue {issue_id}"
-            )
-            tasks.append(task)
-            
-            # For debugging later, store tasks
-            self.tasks.append(task)
-            
-            logger.debug(f"Created task for agent {agent_name}")
-        
-        # Special handling for Ollama provider - bypass CrewAI
-        if self.provider == 'ollama':
-            logger.info("Using direct Ollama API execution to bypass CrewAI integration")
-            
-            # Execute each task in sequence and collect results
-            task_results = []
-            task_outputs = []
-            
-            for task in tasks:
-                # Get agent name safely
-                try:
-                    agent_name = task.agent.name
-                except AttributeError:
-                    agent_name = getattr(task.agent, 'name', f"Agent_{tasks.index(task)+1}")
-                
-                logger.info(f"Running task for agent {agent_name}")
-                
-                # Update context with previous results
-                context_with_results = context.copy()
-                if task_outputs:
-                    context_with_results.append({
-                        "previous_results": task_outputs
-                    })
-                
-                # Execute the task directly with Ollama
-                result = self.execute_direct_ollama_task(task, context_with_results)
-                
-                # Store the result
-                task_results.append({
-                    "agent": agent_name,
-                    "description": task.description,
-                    "result": result
-                })
-                task_outputs.append(result)
-                
-                logger.info(f"Completed task for agent {agent_name}")
-            
-            # Generate final output string
-            crew_output = "\n\n".join([
-                f"## {result['agent']} Results:\n{result['result']}"
-                for result in task_results
-            ])
+        # Use direct API implementation if needed
+        if self.use_direct_api:
+            logger.info("Running with direct API implementation to avoid LiteLLM issues")
+            crew_output = self.run_direct_ollama(issue_id)
         else:
-            # Use regular CrewAI for other providers
+            # Create tasks for each agent
+            tasks = []
+            
+            # Create properly structured context
+            context = [{
+                "issue_id": issue_id,
+                "description": f"Debug information for issue {issue_id}",
+                "expected_output": f"Analysis results for issue {issue_id}"
+            }]
+            
+            # Create tasks based on the agent sequence
+            for i, agent_pair in enumerate(self.agents):
+                agent = agent_pair["crew_agent"]
+                agent_obj = agent_pair["agent_obj"]
+                agent_name = agent_pair["agent_name"]  # Get stored name
+                
+                # Create a task for this agent
+                task_description = f"Analyze and process the issue {issue_id}"
+                if hasattr(agent_obj, "get_task_description"):
+                    task_description = agent_obj.get_task_description(issue_id)
+                
+                task = Task(
+                    description=task_description,
+                    agent=agent,
+                    context=context,
+                    expected_output=f"Analysis results for issue {issue_id}"
+                )
+                tasks.append(task)
+                
+                # For debugging later, store tasks
+                self.tasks.append(task)
+                
+                logger.debug(f"Created task for agent {agent_name}")
+            
             # Create crew with provider config
             crew_config = {
                 "agents": [a["crew_agent"] for a in self.agents],
@@ -259,8 +373,7 @@ Please complete this task to the best of your ability, providing detailed analys
             if self.provider == 'bedrock' or self.provider == 'anthropic':
                 crew_config["llm_provider"] = "bedrock"
             elif self.provider == 'ollama':
-                # Use OpenAI provider but with our configured base URL
-                crew_config["llm_provider"] = "openai"
+                crew_config["llm_provider"] = "ollama"
                 
             # Create the crew with sequential process
             crew = Crew(**crew_config)

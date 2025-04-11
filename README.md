@@ -68,7 +68,7 @@ This system supports Ollama for local LLM inference. To use Ollama:
 2. Set the following in your `.env` file:
 ```
 LLM_PROVIDER=ollama
-OLLAMA_MODEL=deepseek-r1    # or any model you have pulled in Ollama
+OLLAMA_MODEL=ollama/deepseek-r1:8b    # Note the ollama/ prefix is required!
 OLLAMA_BASE_URL=http://localhost:11434  # default Ollama URL
 ```
 3. Run the CLI normally:
@@ -77,7 +77,7 @@ export PYTHONPATH=$PYTHONPATH:$(pwd) && python debug_agent_cli.py info
 export PYTHONPATH=$PYTHONPATH:$(pwd) && python debug_agent_cli.py debug YOUR-ISSUE-123
 ```
 
-When using Ollama provider, the system automatically bypasses the standard agent framework and uses direct API calls to Ollama for better compatibility.
+Important: The `ollama/` prefix in the model name is required for compatibility with the underlying LLM framework. Make sure to include it in your model name.
 
 ## Model Switching
 
@@ -100,14 +100,17 @@ Available models include:
 You can add custom models programmatically:
 
 ```python
-from src.utils.llm_factory import LLMFactory
+from src.utils.llm_provider import LLMProvider, ModelConfig
 
-# Register a custom model
-LLMFactory.register_custom_model(
-    name="my-custom-model",
-    provider="bedrock",
-    model_id="anthropic.claude-3-opus-20240229-v1:0",
-    options={"max_tokens": 4000}
+# Register a new model
+LLMProvider.register_model(
+    "my-custom-gpt4",
+    ModelConfig(
+        provider="openai",
+        model_id="gpt-4-1106-preview",
+        requires_auth=True,
+        auth_env_var="OPENAI_API_KEY"
+    )
 )
 
 # Then use it from the CLI
@@ -115,6 +118,30 @@ LLMFactory.register_custom_model(
 ```
 
 For more details, see [Usage Guide](docs/usage_guide.md).
+
+## Registering a Custom Model
+
+You can register custom models for use with the system:
+
+```python
+from src.utils.llm_provider import LLMProvider, ModelConfig
+
+# Register a new model
+LLMProvider.register_model(
+    "my-custom-gpt4",
+    ModelConfig(
+        provider="openai",
+        model_id="gpt-4-1106-preview",
+        requires_auth=True,
+        auth_env_var="OPENAI_API_KEY"
+    )
+)
+
+# Then use it in your code
+from src.coordination.crew_manager import DebugCrew
+
+crew = DebugCrew("my-custom-gpt4")
+```
 
 ## Project Structure
 

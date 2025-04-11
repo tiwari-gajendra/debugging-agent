@@ -23,6 +23,7 @@ venv/
 *.log
 logs/
 *.tmp
+debug_*.log
 
 # Test files
 test.py
