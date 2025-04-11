@@ -15,7 +15,7 @@ from src.realtime.debug_plan_creator import DebugPlanCreator
 from src.realtime.executor import Executor
 from src.realtime.analyzer import Analyzer
 from src.realtime.document_generator import DocumentGenerator
-from src.utils.llm_factory import LLMFactory
+from src.utils.llm_provider import LLMProvider
 
 # Load environment variables
 load_dotenv()
@@ -67,7 +67,11 @@ def run_realtime_debugging(issue_id=None, llm_provider_or_model=None):
     logger.info(f"Starting real-time debugging for issue: {issue_id}")
     
     # Use specified provider/model or default from env
-    provider_or_model = llm_provider_or_model or os.getenv('LLM_PROVIDER', 'openai')
+    raw_provider = llm_provider_or_model or os.getenv('LLM_PROVIDER', 'openai')
+    
+    # Clean the provider string (remove any comments)
+    provider_or_model = raw_provider.split('#')[0].strip()
+    
     logger.info(f"Using LLM provider/model: {provider_or_model}")
     
     try:
@@ -122,7 +126,7 @@ def main():
     parser.add_argument('--mode', choices=['forecast', 'debug', 'both'], 
                         default='both', help='Operation mode')
     parser.add_argument('--issue-id', type=str, help='Issue ID for debugging')
-    parser.add_argument('--llm-provider', type=str, choices=['openai', 'ollama', 'bedrock'],
+    parser.add_argument('--llm-provider', type=str, choices=['openai', 'ollama', 'bedrock', 'anthropic'],
                         help='LLM provider to use (default: from .env)')
     
     args = parser.parse_args()
@@ -138,4 +142,11 @@ def main():
             return
     
 if __name__ == "__main__":
-    main() 
+    main()
+
+def validate_environment():
+    """Validate that required environment variables are set."""
+    from src.utils.llm_provider import LLMProvider
+    
+    llm_provider = os.getenv('LLM_PROVIDER', 'openai').lower()
+    return LLMProvider.validate_environment(llm_provider) 

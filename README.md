@@ -60,6 +60,25 @@ debug-agent forecast --verbose
 
 For detailed CLI usage instructions, see [CLI Guide](docs/cli_guide.md).
 
+## Running with Local Models (Ollama)
+
+This system supports Ollama for local LLM inference. To use Ollama:
+
+1. Make sure Ollama is running on your machine (default: http://localhost:11434)
+2. Set the following in your `.env` file:
+```
+LLM_PROVIDER=ollama
+OLLAMA_MODEL=deepseek-r1    # or any model you have pulled in Ollama
+OLLAMA_BASE_URL=http://localhost:11434  # default Ollama URL
+```
+3. Run the CLI normally:
+```bash
+export PYTHONPATH=$PYTHONPATH:$(pwd) && python debug_agent_cli.py info
+export PYTHONPATH=$PYTHONPATH:$(pwd) && python debug_agent_cli.py debug YOUR-ISSUE-123
+```
+
+When using Ollama provider, the system automatically bypasses the standard agent framework and uses direct API calls to Ollama for better compatibility.
+
 ## Model Switching
 
 The system now supports easy switching between different LLM models:
