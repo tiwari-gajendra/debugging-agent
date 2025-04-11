@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 from langchain_core.language_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
-from langchain_community.llms.bedrock import Bedrock
+from langchain_aws import Bedrock
 
 # Import boto3 for AWS services
 import boto3
