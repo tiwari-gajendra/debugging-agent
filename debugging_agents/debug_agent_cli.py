@@ -14,7 +14,7 @@ from logging.handlers import RotatingFileHandler
 
 # Get the path to the project root
 script_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.dirname(script_dir)
+project_root = script_dir  # The script is now in the project root
 
 # Ensure logs directory exists
 logs_dir = os.path.join(project_root, "logs")
@@ -120,27 +120,10 @@ load_dotenv()
 
 def validate_environment():
     """Validate that required environment variables are set."""
-    required_vars = ["OPENAI_API_KEY"]
+    from src.utils.llm_factory import LLMFactory
     
-    # Check for provider-specific requirements
     llm_provider = os.getenv('LLM_PROVIDER', 'openai').lower()
-    
-    if llm_provider == 'openai':
-        required_vars = ["OPENAI_API_KEY"]
-    elif llm_provider == 'bedrock':
-        required_vars = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_DEFAULT_REGION"]
-    elif llm_provider == 'ollama':
-        # Ollama just needs a running server, no keys required
-        required_vars = []
-    
-    missing_vars = [var for var in required_vars if not os.getenv(var)]
-    
-    if missing_vars:
-        logger.error(f"Missing required environment variables for {llm_provider}: {', '.join(missing_vars)}")
-        logger.error("Please set these variables in your .env file")
-        return False
-    
-    return True
+    return LLMFactory.validate_environment(llm_provider)
 
 def forecast_command(args):
     """Run the forecasting pipeline."""
@@ -250,7 +233,7 @@ def main():
                              help='Time window in minutes to look back')
     debug_parser.add_argument('--open-doc', action='store_true', 
                              help='Open document in browser when done')
-    debug_parser.add_argument('--llm-provider', type=str, choices=['openai', 'ollama', 'bedrock'],
+    debug_parser.add_argument('--llm-provider', type=str, choices=['openai', 'ollama', 'bedrock', 'anthropic'],
                              help='LLM provider to use (default: from .env)')
     debug_parser.add_argument('--model', type=str, 
                              help='Specific model name to use (e.g., claude-3-sonnet, gpt-4-turbo)')
@@ -281,6 +264,8 @@ def main():
             print(f"Debugging Agents System v{__version__}")
             print(f"Python version: {sys.version}")
             llm_provider = os.getenv('LLM_PROVIDER', 'openai')
+            # Clean the provider string (remove any comments)
+            llm_provider = llm_provider.split('#')[0].strip()
             llm_model = os.getenv(f"{llm_provider.upper()}_MODEL", 'unknown')
             print(f"LLM Provider: {llm_provider}")
             print(f"LLM Model: {llm_model}")
@@ -293,6 +278,8 @@ def main():
             print(f"Debugging Agents System")
             print(f"Python version: {sys.version}")
             llm_provider = os.getenv('LLM_PROVIDER', 'openai')
+            # Clean the provider string (remove any comments)
+            llm_provider = llm_provider.split('#')[0].strip()
             llm_model = os.getenv(f"{llm_provider.upper()}_MODEL", 'unknown')
             print(f"LLM Provider: {llm_provider}")
             print(f"LLM Model: {llm_model}")

@@ -15,7 +15,7 @@ from src.realtime.debug_plan_creator import DebugPlanCreator
 from src.realtime.executor import Executor
 from src.realtime.analyzer import Analyzer
 from src.realtime.document_generator import DocumentGenerator
-from src.utils.llm_provider import LLMProvider
+from src.utils.llm_factory import LLMFactory
 
 # Load environment variables
 load_dotenv()
@@ -146,7 +146,7 @@ if __name__ == "__main__":
 
 def validate_environment():
     """Validate that required environment variables are set."""
-    from src.utils.llm_provider import LLMProvider
+    from src.utils.llm_factory import LLMFactory
     
     llm_provider = os.getenv('LLM_PROVIDER', 'openai').lower()
-    return LLMProvider.validate_environment(llm_provider) 
+    return LLMFactory.validate_environment(llm_provider) 

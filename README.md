@@ -124,23 +124,14 @@ For more details, see [Usage Guide](docs/usage_guide.md).
 You can register custom models for use with the system:
 
 ```python
-from src.utils.llm_provider import LLMProvider, ModelConfig
-
-# Register a new model
-LLMProvider.register_model(
-    "my-custom-gpt4",
-    ModelConfig(
-        provider="openai",
-        model_id="gpt-4-1106-preview",
-        requires_auth=True,
-        auth_env_var="OPENAI_API_KEY"
-    )
-)
+from src.utils.llm_factory import LLMFactory
 
 # Then use it in your code
 from src.coordination.crew_manager import DebugCrew
 
-crew = DebugCrew("my-custom-gpt4")
+crew = DebugCrew("openai")  # Use default provider
+# Or specify a model directly
+crew = DebugCrew("gpt-4")
 ```
 
 ## Project Structure

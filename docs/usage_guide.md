@@ -285,38 +285,30 @@ python debug_agent_cli.py debug --issue-id COMPLEX-ISSUE
 
 ## Advanced LLM Configuration
 
-### Custom Model Registration
+### Creating an LLM Instance
 
-If you need to use a model that isn't included in the default configuration, you can register it dynamically.
+You can create an LLM instance directly using the factory:
 
 ```python
-from src.utils.llm_provider import LLMProvider, ModelConfig
+from src.utils.llm_factory import LLMFactory
 
-# Register a custom model
-LLMProvider.register_model(
-    "my-model-name", 
-    ModelConfig(
-        provider="openai",
-        model_id="gpt-4-1106-preview",
-        requires_auth=True,
-        auth_env_var="OPENAI_API_KEY"
-    )
-)
-
-# Then use it by name
-llm = LLMProvider.create_llm("my-model-name")
+# Create a specific LLM
+llm = LLMFactory.create_llm("openai")  # Use default model from env
+llm = LLMFactory.create_llm("ollama", model="llama3")  # Specify model
 ```
 
-### Listing Available Models
+### Switching Providers
 
-You can list all registered models:
+To switch between different providers, update your .env file:
 
-```python
-from src.utils.llm_provider import LLMProvider
+```
+# Set in .env file
+LLM_PROVIDER=openai
+OPENAI_MODEL=gpt-4
 
-# Get a dictionary of model names and their providers
-models = LLMProvider.list_models()
-print(models)
+# Or for Ollama
+LLM_PROVIDER=ollama
+OLLAMA_MODEL=llama3
 ```
 
 ## References

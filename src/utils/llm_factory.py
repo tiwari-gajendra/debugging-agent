@@ -1,12 +1,5 @@
 """
-Unified LLM Provider - Simplified interface for working with different LLM providers
-
-This module provides a unified interface for working with different Language Model providers,
-including OpenAI, Ollama, and Bedrock/Anthropic. It handles:
-- Model registration and configuration
-- Environment validation
-- Direct API access for Ollama
-- Compatible LLM instances for CrewAI
+LLM Factory - Simple interface for creating LLM instances from different providers
 """
 
 import os
@@ -14,14 +7,14 @@ import sys
 import json
 import logging
 import httpx
-from typing import Dict, List, Any, Optional, Union, Type
+from typing import Dict, List, Any, Optional
 from dotenv import load_dotenv
 
 # LangChain imports
 from langchain_core.language_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
-from langchain_aws import Bedrock
+from langchain_aws import BedrockLLM
 
 # Import boto3 for AWS services
 import boto3
@@ -32,197 +25,38 @@ logger = logging.getLogger(__name__)
 # Load environment variables
 load_dotenv()
 
-class ModelConfig:
-    """Configuration for an LLM model"""
+class LLMFactory:
+    """Simple factory for creating LLM instances based on provider type"""
     
-    def __init__(
-        self, 
-        provider: str,
-        model_id: str,
-        model_options: Optional[Dict[str, Any]] = None,
-        provider_options: Optional[Dict[str, Any]] = None,
-        requires_auth: bool = True,
-        auth_env_var: Optional[str] = None,
-        default_temp: float = 0.2
-    ):
-        """
-        Initialize a model configuration.
-        
-        Args:
-            provider: The provider name (e.g., 'openai', 'bedrock')
-            model_id: The model identifier
-            model_options: Model-specific options
-            provider_options: Provider-specific options
-            requires_auth: Whether authentication is required
-            auth_env_var: Environment variable for authentication
-            default_temp: Default temperature
-        """
-        self.provider = provider.lower()
-        self.model_id = model_id
-        self.model_options = model_options or {}
-        self.provider_options = provider_options or {}
-        self.requires_auth = requires_auth
-        self.auth_env_var = auth_env_var
-        self.default_temp = default_temp
-
-class LLMProvider:
-    """Unified interface for working with different LLM providers
-    
-    This class provides a single point of access for all LLM functionality:
-    - Create LLM instances for different providers
-    - Register and retrieve model configurations
-    - Direct API access for special cases like Ollama
-    - Environment validation
-    """
-    
-    # Registry of available models
-    _models = {}
-    
-    @classmethod
-    def register_model(cls, name: str, config: ModelConfig) -> None:
-        """
-        Register a model in the registry
-        
-        Args:
-            name: Name to register the model under
-            config: Configuration for the model
-        """
-        cls._models[name.lower()] = config
-        logger.debug(f"Registered model: {name}")
-    
-    @classmethod
-    def get_model_config(cls, name: str) -> Optional[ModelConfig]:
-        """
-        Get a model configuration by name
-        
-        Args:
-            name: Model name to look up
-            
-        Returns:
-            Model configuration or None if not found
-        """
-        return cls._models.get(name.lower())
-    
-    @classmethod
-    def list_models(cls) -> Dict[str, str]:
-        """
-        List all registered models
-        
-        Returns:
-            Dictionary of model names and providers
-        """
-        return {name: config.provider for name, config in cls._models.items()}
-    
-    @classmethod
-    def register_defaults(cls) -> None:
-        """Register default LLM models"""
-        # OpenAI models
-        cls.register_model("gpt-4", ModelConfig(
-            provider="openai",
-            model_id="gpt-4",
-            requires_auth=True,
-            auth_env_var="OPENAI_API_KEY"
-        ))
-        
-        cls.register_model("gpt-3.5-turbo", ModelConfig(
-            provider="openai",
-            model_id="gpt-3.5-turbo",
-            requires_auth=True,
-            auth_env_var="OPENAI_API_KEY"
-        ))
-        
-        # Ollama models
-        cls.register_model("llama3", ModelConfig(
-            provider="ollama",
-            model_id="llama3",
-            provider_options={"base_url": "http://localhost:11434"},
-            requires_auth=False
-        ))
-        
-        cls.register_model("deepseek-r1", ModelConfig(
-            provider="ollama",
-            model_id="deepseek-r1:8b",
-            provider_options={"base_url": "http://localhost:11434"},
-            requires_auth=False
-        ))
-        
-        # Bedrock/Anthropic models
-        cls.register_model("claude", ModelConfig(
-            provider="bedrock",
-            model_id="anthropic.claude-3-sonnet-20240229-v1:0",
-            requires_auth=True,
-            auth_env_var="AWS_ACCESS_KEY_ID"
-        ))
-    
-    @classmethod
-    def create_llm(cls, provider_or_model: str = None, model: str = None, **kwargs) -> BaseChatModel:
+    @staticmethod
+    def create_llm(provider: str = None, model: str = None, **kwargs) -> BaseChatModel:
         """
         Create an LLM instance based on the provider and model.
         
-        This method supports two calling patterns:
-        1. By model name: create_llm("gpt-4")
-        2. By provider/model: create_llm("openai", "gpt-4")
-        
         Args:
-            provider_or_model: The LLM provider (openai, anthropic, bedrock, ollama) or a model name
-            model: The specific model to use (if provider is specified)
+            provider: The LLM provider (openai, bedrock, ollama)
+            model: The specific model to use (defaults to env variable)
             **kwargs: Additional arguments for the LLM
             
         Returns:
             An instance of a chat model
         """
-        # Initialize defaults
-        if not provider_or_model:
-            provider_or_model = os.getenv('LLM_PROVIDER', 'openai')
+        # Default to environment variables if not provided
+        provider = provider or os.getenv('LLM_PROVIDER', 'openai')
         
         # Clean the provider string (remove any comments)
-        provider_or_model = provider_or_model.split('#')[0].strip().lower()
+        provider = provider.split('#')[0].strip().lower()
         
-        # Check if this is a model name in our registry
-        model_config = cls.get_model_config(provider_or_model)
-        
-        if model_config:
-            # We were given a model name, use its configuration
-            provider = model_config.provider
-            model_name = model_config.model_id
-            
-            # Apply config options
-            for k, v in model_config.provider_options.items():
-                if k not in kwargs:
-                    kwargs[k] = v
-                    
-            for k, v in model_config.model_options.items():
-                if k not in kwargs:
-                    kwargs[k] = v
-                    
-            temperature = kwargs.get('temperature', model_config.default_temp)
-        else:
-            # Assume provider_or_model is a provider name
-            provider = provider_or_model
-            
-            # Default model by provider
-            if not model:
-                if provider == 'openai':
-                    model_name = os.getenv('OPENAI_MODEL', 'gpt-4')
-                elif provider == 'ollama':
-                    model_name = os.getenv('OLLAMA_MODEL', 'llama3')
-                elif provider == 'bedrock' or provider == 'anthropic':
-                    model_name = os.getenv('BEDROCK_MODEL', 'anthropic.claude-3-sonnet-20240229-v1:0')
-                else:
-                    model_name = model or 'gpt-4'  # Safe default
-            else:
-                model_name = model
-                
-            temperature = kwargs.get('temperature', float(os.getenv('TEMPERATURE', 0.2)))
-            
-        logger.info(f"Creating LLM with provider={provider}, model={model_name}")
-        
-        # Ensure temperature is applied consistently
+        # Get temperature from env or use default
+        temperature = kwargs.get('temperature', float(os.getenv('TEMPERATURE', 0.2)))
         if 'temperature' not in kwargs:
             kwargs['temperature'] = temperature
+            
+        logger.info(f"Creating LLM with provider={provider}")
         
         # Create LLM based on provider
         if provider == 'openai':
+            model_name = model or os.getenv('OPENAI_MODEL', 'gpt-4')
             api_key = os.getenv('OPENAI_API_KEY')
             
             logger.info(f"Using OpenAI with model={model_name}")
@@ -234,12 +68,13 @@ class LLMProvider:
             )
         
         elif provider == 'ollama':
-            base_url = kwargs.get('base_url', os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434'))
+            # Get model from environment or use default
+            model_name = model or os.getenv('OLLAMA_MODEL', 'llama3')
+            base_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
             
-            # Ensure model has ollama/ prefix for LiteLLM compatibility
-            langchain_model = model_name
+            # Remove 'ollama/' prefix if present (LangChain doesn't want it)
             if model_name.startswith('ollama/'):
-                langchain_model = model_name[len('ollama/'):]
+                model_name = model_name[len('ollama/'):]
             
             logger.info(f"Using Ollama with model={model_name} at {base_url}")
             
@@ -249,14 +84,15 @@ class LLMProvider:
             
             # Use the LangChain OllamaLLM implementation
             return OllamaLLM(
-                model=langchain_model,  # Use the name without ollama/ prefix for LangChain
+                model=model_name,
                 base_url=base_url,
                 **kwargs
             )
         
         elif provider == 'bedrock' or provider == 'anthropic':
             # For AWS Bedrock (which hosts Anthropic models)
-            region = kwargs.get('region', os.getenv('AWS_DEFAULT_REGION', 'us-east-1'))
+            model_name = model or os.getenv('BEDROCK_MODEL', 'anthropic.claude-3-sonnet-20240229-v1:0')
+            region = os.getenv('AWS_DEFAULT_REGION', 'us-east-1')
             
             logger.info(f"Using AWS Bedrock with model={model_name}, region={region}")
             
@@ -284,7 +120,7 @@ class LLMProvider:
             if 'temperature' in kwargs and 'temperature' not in model_kwargs:
                 model_kwargs['temperature'] = kwargs['temperature']
             
-            return Bedrock(
+            return BedrockLLM(
                 client=bedrock_client,
                 model_id=model_name,
                 model_kwargs=model_kwargs,
@@ -306,11 +142,10 @@ class LLMProvider:
             True if all required variables are set, False otherwise
         """
         # Get provider from environment if not specified
-        raw_provider = provider or os.getenv('LLM_PROVIDER', 'openai')
+        provider = provider or os.getenv('LLM_PROVIDER', 'openai')
         
-        # Clean the provider string - it might have comments if read directly from .env
-        # Extract just the provider name without any comments
-        provider = raw_provider.split('#')[0].strip().lower()
+        # Clean the provider string - it might have comments
+        provider = provider.split('#')[0].strip().lower()
         
         logger.info(f"Validating environment for LLM provider: {provider}")
         
@@ -344,10 +179,7 @@ class LLMProvider:
         base_url: str = None
     ) -> str:
         """
-        Use Ollama Chat API directly without going through LiteLLM or CrewAI
-        
-        Direct method to communicate with Ollama API for when the standard
-        abstractions don't work well. This is used as a fallback mechanism.
+        Use Ollama API directly without going through LiteLLM or CrewAI
         
         Args:
             messages: List of message dicts with 'role' and 'content' keys
@@ -439,7 +271,4 @@ class LLMProvider:
         
         except Exception as e:
             logger.error(f"Error calling Ollama API: {str(e)}")
-            return f"Error: {str(e)}"
-
-# Register default models on module import
-LLMProvider.register_defaults() 
+            return f"Error: {str(e)}" 

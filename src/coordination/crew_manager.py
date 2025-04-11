@@ -12,7 +12,7 @@ from crewai import Agent, Task, Crew, Process
 from dotenv import load_dotenv
 from datetime import datetime
 
-from src.utils.llm_provider import LLMProvider
+from src.utils.llm_factory import LLMFactory
 
 # Load environment variables
 load_dotenv()
@@ -64,11 +64,11 @@ class DebugCrew:
             except ImportError:
                 logger.warning("Could not import crewai.llm, falling back to direct API implementation")
                 # Create an LLM instance using our utility
-                self.llm = LLMProvider.create_llm(provider_or_model=self.provider)
+                self.llm = LLMFactory.create_llm(provider=self.provider, model=model_name)
                 self.use_direct_api = True          # Still use direct API as fallback
         else:
-            # Create an LLM instance using the unified LLMProvider
-            self.llm = LLMProvider.create_llm(provider_or_model=self.provider)
+            # Create an LLM instance using the LLMFactory
+            self.llm = LLMFactory.create_llm(provider=self.provider)
             self.use_direct_api = False
         
         # Set up environment variables for CrewAI compatibility
