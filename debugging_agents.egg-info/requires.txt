@@ -1,5 +1,0 @@
-requests
-langchain
-openai
-boto3
-python-dotenv

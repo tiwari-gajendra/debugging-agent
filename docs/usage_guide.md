@@ -21,18 +21,25 @@ This guide provides instructions on how to set up and use the Debugging Agents s
    cd debugging-agents
    ```
 
-2. Install dependencies:
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Configure environment variables according to your chosen LLM provider:
+4. Configure environment variables according to your chosen LLM provider:
 
    **For OpenAI:**
    ```bash
    export LLM_PROVIDER=openai
    export OPENAI_API_KEY=your_api_key_here
-   export LLM_MODEL=gpt-4-turbo
+   export OPENAI_MODEL=gpt-4-turbo  # or another model
+   export TEMPERATURE=0.2
    ```
 
    **For AWS Bedrock:**
@@ -40,202 +47,247 @@ This guide provides instructions on how to set up and use the Debugging Agents s
    export LLM_PROVIDER=bedrock
    export AWS_ACCESS_KEY_ID=your_access_key
    export AWS_SECRET_ACCESS_KEY=your_secret_key
-   export AWS_REGION=your_aws_region
-   export LLM_MODEL=anthropic.claude-3-sonnet-20240229-v1:0
+   export AWS_DEFAULT_REGION=your_aws_region
+   export BEDROCK_MODEL=anthropic.claude-3-sonnet-20240229-v1:0
+   export TEMPERATURE=0.2
    ```
 
    **For Ollama:**
    ```bash
    export LLM_PROVIDER=ollama
-   export OLLAMA_API_BASE=http://localhost:11434
-   export LLM_MODEL=llama3
+   export OLLAMA_BASE_URL=http://localhost:11434
+   export OLLAMA_MODEL=deepseek-r1:8b  # or another model
+   export TEMPERATURE=0.2
    ```
 
-4. Set data directory (optional):
+5. Set up logging and data directories:
    ```bash
-   export DATA_DIR=/path/to/data/directory
+   mkdir -p data/logs/debug_agent
+   mkdir -p data/logs/service_logs
+   mkdir -p data/reports
    ```
 
 ## Basic Usage
 
-The Debugging Agents system is operated through a command-line interface (CLI) with several subcommands.
+### Verifying Installation
 
-### Displaying System Information
-
-To verify your setup and see the current configuration:
+First, verify that your installation is working correctly:
 
 ```bash
 python debug_agent_cli.py info
 ```
 
-This will display:
-- System version
-- Python version
-- LLM provider and model
-- Data directory location
+This will show:
+- System version and configuration
+- LLM provider status
+- Logging configuration
+- Available agents
 
-### Debugging an Issue
+### Running the Debug Command
 
-To debug an issue with a specific ID:
+To debug an issue:
 
 ```bash
-python debug_agent_cli.py debug TEST-FIXED-123 --open-doc
+python debug_agent_cli.py debug ISSUE-ID [options]
 ```
 
-Optional flags:
-- `--open-report`: Automatically open the generated report in a web browser
-- `--interactive`: Run in interactive mode with step-by-step confirmation
-- `--verbose`: Enable verbose logging
+Options:
+- `--llm-provider`: Override the default LLM provider (openai, bedrock, ollama)
+- `--open-doc`: Open the generated report when complete
+- `--verbose`: Show detailed output
 
 Example:
 ```bash
-python debug_agent_cli.py debug TEST-FIXED-123 --open-doc
+python debug_agent_cli.py debug TEST-123 --llm-provider ollama --open-doc
 ```
 
-### Forecasting Potential Issues
+### Understanding the Output
 
-To predict potential issues before they occur:
+The debug command will:
+1. Initialize the CrewAI agents
+2. Gather context about the issue
+3. Create a debugging plan
+4. Execute the plan
+5. Analyze results
+6. Generate a report
 
-```bash
-python debug_agent_cli.py forecast
+The report will be saved in `data/reports/` and includes:
+- Executive summary
+- Root cause analysis
+- Debugging steps taken
+- Recommendations
+
+## Configuration
+
+### LLM Configuration
+
+Create a `.env` file in the project root:
+
+```env
+# LLM Provider Settings
+LLM_PROVIDER=ollama  # or openai, bedrock
+TEMPERATURE=0.2
+
+# Ollama Settings
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=deepseek-r1:8b
+
+# OpenAI Settings (if using OpenAI)
+#OPENAI_API_KEY=your_key_here
+#OPENAI_MODEL=gpt-4-turbo
+
+# AWS Bedrock Settings (if using Bedrock)
+#AWS_ACCESS_KEY_ID=your_key
+#AWS_SECRET_ACCESS_KEY=your_secret
+#AWS_DEFAULT_REGION=us-east-1
+#BEDROCK_MODEL=anthropic.claude-3-sonnet-20240229-v1:0
 ```
 
-Optional flags:
-- `--service`: Focus forecasting on a specific service
-- `--lookback`: Historical data window to consider (in hours)
-- `--confidence`: Minimum confidence threshold for predictions
+### Logging Configuration
 
-Example:
-```bash
-python debug_agent_cli.py forecast --service payment-processor --lookback 24
-```
-
-## Configuration File
-
-For more advanced configuration, you can create a `config.yaml` file in the root directory:
+The system uses a YAML-based logging configuration in `config/logging.yaml`:
 
 ```yaml
-llm:
-  provider: openai
-  model: gpt-4-turbo
-  temperature: 0.2
-  max_tokens: 4096
+version: 1
+disable_existing_loggers: false
 
-data:
-  logs_source: elasticsearch
-  metrics_source: prometheus
-  traces_source: jaeger
-  config_source: consul
+formatters:
+  standard:
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: standard
+    stream: ext://sys.stdout
+
+  file:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: data/logs/debug_agent/debug_agent.log
+    mode: a
+    encoding: utf8
+
+loggers:
+  '':  # root logger
+    handlers: [console, file]
+    level: INFO
+    propagate: true
+
+  httpx:
+    level: WARNING
+    handlers: [console, file]
+    propagate: false
+
+  crewai:
+    level: INFO
+    handlers: [console, file]
+    propagate: false
+```
+
+### Agent Configuration
+
+Each agent can be configured in `config/agents.yaml`:
+
+```yaml
+context_builder:
+  enabled: true
+  log_sources:
+    - loki
+    - files
+  log_path: data/logs/service_logs
+
+debug_plan_creator:
+  enabled: true
+  max_steps: 10
+  confidence_threshold: 0.7
 
 executor:
+  enabled: true
   timeout: 300
   max_retries: 3
   parallel_execution: false
 
 analyzer:
-  confidence_threshold: 0.7
+  enabled: true
+  min_confidence: 0.7
   max_root_causes: 3
 
-document:
+document_generator:
+  enabled: true
   format: html
-  include_raw_data: false
-  template: default
+  template: rca_template.json
+  output_dir: data/reports
 ```
 
-## Data Integration
-
-### Log Sources
-
-The system supports various log sources that can be configured in the `config.yaml` file:
-
-```yaml
-data:
-  logs_source: elasticsearch
-  logs_config:
-    url: http://elasticsearch:9200
-    index_pattern: logs-*
-    username: elastic
-    password: ${ES_PASSWORD}
-```
-
-Supported log sources:
-- Elasticsearch
-- Splunk
-- CloudWatch
-- Local log files
-
-### Metrics Sources
-
-Configure metrics sources:
-
-```yaml
-data:
-  metrics_source: prometheus
-  metrics_config:
-    url: http://prometheus:9090
-    query_timeout: 30
-```
-
-Supported metrics sources:
-- Prometheus
-- Datadog
-- CloudWatch Metrics
-- Grafana
-
-### Trace Sources
-
-Configure distributed tracing:
-
-```yaml
-data:
-  traces_source: jaeger
-  traces_config:
-    url: http://jaeger:16686
-    service_name: ${SERVICE}
-```
-
-Supported trace sources:
-- Jaeger
-- Zipkin
-- AWS X-Ray
-- OpenTelemetry
-
-## Example Workflows
-
-### Basic Troubleshooting
-
-1. Receive alert for a service issue with ID "SVC-DOWN-123"
-2. Run the debug command:
-   ```bash
-   python debug_agent_cli.py debug TEST-FIXED-123 --open-report
-   ```
-3. Review the generated HTML report for root cause and recommendations
-
-### Proactive Monitoring
-
-1. Schedule a daily forecasting job:
-   ```bash
-   # In crontab
-   0 6 * * * cd /path/to/debugging-agents && python debug_agent_cli.py forecast --service all
-   ```
-2. Analyze predicted issues in the generated reports
-3. Take preventive action based on recommendations
-
-## Troubleshooting the Debugging Agents
+## Troubleshooting
 
 ### Common Issues
 
-#### Missing Environment Variables
-If you see errors about missing environment variables, ensure you've set all required variables for your LLM provider.
+1. **LLM Provider Not Available**
+   ```
+   Error: Could not connect to LLM provider
+   ```
+   - Check if the provider is running (especially for Ollama)
+   - Verify API keys and environment variables
+   - Check network connectivity
 
-#### LLM Connection Errors
-For OpenAI or Bedrock connection issues, verify your API keys and network connectivity.
+2. **Missing Log Sources**
+   ```
+   Warning: No log sources available
+   ```
+   - Ensure log directories exist
+   - Check Loki connection if using Loki
+   - Verify log file permissions
 
-#### Data Source Connection Issues
-Check connectivity to your configured data sources and ensure credentials are correct.
+3. **Report Generation Fails**
+   ```
+   Error: Could not generate report
+   ```
+   - Check write permissions in reports directory
+   - Verify template file exists
+   - Check disk space
 
-#### Report Generation Failures
-Verify write permissions for the data directory and ensure enough disk space is available.
+### Getting Help
+
+1. Check the logs in `data/logs/debug_agent/debug_agent.log`
+2. Run commands with `--verbose` flag
+3. Check the GitHub issues page
+4. Join our Discord community
+
+## Best Practices
+
+1. **LLM Selection**
+   - Use Ollama for development and testing
+   - Use OpenAI/Bedrock for production
+   - Consider latency and cost requirements
+
+2. **Log Management**
+   - Regularly rotate log files
+   - Monitor disk usage
+   - Set appropriate log levels
+
+3. **Security**
+   - Never commit API keys
+   - Use environment variables
+   - Regularly rotate credentials
+
+4. **Performance**
+   - Use appropriate timeouts
+   - Monitor resource usage
+   - Cache results when possible
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for new features
+4. Submit a pull request
+
+See CONTRIBUTING.md for detailed guidelines.
 
 ## Advanced Usage
 

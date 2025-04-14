@@ -16,13 +16,14 @@ graph TD
         CLI["CLI Interface"]
         CM["Crew Manager"]
         
-        subgraph "Forecasting Agents"
-            FA["Forecasting Engine"]
-            SLF["Service Log Forecaster"]
-            AF["Alert Forecaster"]
+        subgraph "LLM Integration"
+            LF["LLM Factory"]
+            OL["Ollama"]
+            BR["AWS Bedrock"]
+            OA["OpenAI"]
         end
         
-        subgraph "Real-time Debugging Pipeline"
+        subgraph "CrewAI Agents"
             CB["Context Builder"]
             DPC["Debug Plan Creator"]
             EX["Executor"]
@@ -39,12 +40,13 @@ graph TD
     end
     
     CLI --> CM
-    CM --> FA
+    CM --> LF
+    
+    LF --> OL
+    LF --> BR
+    LF --> OA
+    
     CM --> CB
-    
-    FA --> SLF
-    FA --> AF
-    
     CB --> DPC
     DPC --> EX
     EX --> AZ
@@ -54,150 +56,187 @@ graph TD
     M --> CB
     T --> CB
     C --> CB
-    
-    FA -.-> L
-    FA -.-> M
 ```
 
 ## Core Components
 
-### Context Builder
-
-The Context Builder aggregates relevant information about the system being debugged from various sources:
-- Logs from centralized logging systems
-- Metrics from monitoring platforms
-- Distributed traces from tracing systems
-- Configuration information from config repositories and service discovery
-- System status and health checks
-
-This component creates a comprehensive context object that serves as the foundation for debugging activities.
-
-### Debug Plan Creator
-
-The Debug Plan Creator uses an LLM to analyze the context gathered and generate a structured debugging plan. The plan consists of a series of steps, each with specific actions and parameters. The plan is optimized based on the system's symptoms and follows best practices for troubleshooting the specific technology stack.
-
-### Executor
-
-The Executor is responsible for implementing the debugging plan by:
-- Running each step in the appropriate sequence
-- Interfacing with the target system to execute diagnostic commands
-- Collecting output from each step
-- Managing execution state and handling errors
-- Supporting both automated and interactive execution modes
-
-### Analyzer
-
-The Analyzer uses an LLM to interpret the results of plan execution, identify root causes, and generate recommendations. It evaluates the confidence of its findings and suggests next steps or alternative approaches if needed.
-
-### Document Generator
-
-The Document Generator produces comprehensive debugging reports in various formats (HTML, Markdown, PDF). These reports include:
-- Executive summary of findings
-- Detailed analysis of the issue
-- Step-by-step troubleshooting process
-- Evidence collected during debugging
-- Recommendations for fixing the issue and preventing similar problems
-
-### Forecasting Engine
-
-The Forecasting Engine analyzes system patterns and historical data to predict potential issues before they occur. It uses ML models and LLMs to:
-- Identify anomalous patterns
-- Correlate system behaviors with historical incidents
-- Generate alerts for potential future failures
-- Provide early warning recommendations
-
 ### Crew Manager
 
-The Crew Manager orchestrates the end-to-end debugging process by:
-- Initiating and coordinating all components
-- Managing the workflow between components
-- Providing a unified interface for running debugging and forecasting pipelines
-- Handling resource allocation and dependencies
+The Crew Manager (`DebugCrew`) is the central orchestrator that:
+- Initializes and manages specialized debugging agents
+- Handles LLM provider configuration and integration
+- Coordinates the debugging workflow
+- Manages task execution and agent communication
+- Supports both direct API calls and CrewAI integration
 
-## Process Flow Diagram
+### LLM Factory
+
+The LLM Factory provides a unified interface for different LLM providers:
+- OpenAI (GPT-4, etc.)
+- AWS Bedrock (Claude, etc.)
+- Ollama (local models)
+- Handles provider-specific configuration and API calls
+- Manages environment variables and credentials
+
+### CrewAI Agents
+
+The system uses CrewAI for agent orchestration and collaboration:
+
+#### Context Builder
+- Aggregates system information from various sources
+- Supports multiple log sources (Loki, local files)
+- Creates comprehensive context for debugging
+
+#### Debug Plan Creator
+- Analyzes context using LLM
+- Generates structured debugging plans
+- Optimizes steps based on system state
+
+#### Executor
+- Implements debugging plans
+- Manages command execution
+- Handles errors and retries
+- Supports both automated and interactive modes
+
+#### Analyzer
+- Interprets execution results
+- Identifies root causes
+- Generates recommendations
+- Evaluates confidence levels
+
+#### Document Generator
+- Produces debugging reports
+- Supports multiple formats (HTML, Markdown)
+- Uses customizable templates
+- Includes metrics and analysis
+
+## Process Flow
 
 ```mermaid
 sequenceDiagram
     actor User
-    participant CLI as CLI Interface
+    participant CLI
     participant CM as Crew Manager
-    participant CB as Context Builder
-    participant DPC as Debug Plan Creator
-    participant EX as Executor
-    participant AZ as Analyzer
-    participant DG as Document Generator
+    participant LF as LLM Factory
+    participant Agents as CrewAI Agents
     
     User->>CLI: debug issue-123
-    CLI->>CM: run_realtime_debugging("issue-123")
+    CLI->>CM: initialize_crew()
+    CM->>LF: create_llm(provider)
+    LF-->>CM: llm_instance
     
-    CM->>CB: build_context("issue-123")
-    CB->>CM: context
+    CM->>Agents: initialize_agents(llm)
     
-    CM->>DPC: create_plan(context)
-    DPC->>CM: plan
+    loop For each agent
+        CM->>Agents: create_task(agent)
+        Agents-->>CM: task
+    end
     
-    CM->>EX: execute_plan(plan)
-    EX->>CM: execution_results
+    CM->>Agents: run_tasks()
+    Agents-->>CM: results
     
-    CM->>AZ: analyze_results(execution_results)
-    AZ->>CM: analysis
-    
-    CM->>DG: generate_document(context, plan, results, analysis)
-    DG->>CM: document_url
-    
-    CM->>CLI: result
-    CLI->>User: "Results document: https://..."
+    CM->>CLI: return_results()
+    CLI->>User: display_report()
 ```
 
 ## Data Flow
 
-1. **Issue Identification**: The system receives an issue identifier, either manually provided or generated by the Forecasting Engine.
-
-2. **Context Collection**: The Context Builder gathers relevant information about the issue from various data sources.
-
-3. **Plan Creation**: The Debug Plan Creator analyzes the context and generates a structured debugging plan.
-
-4. **Plan Execution**: The Executor implements the debugging plan, interacting with the target system and collecting outputs.
-
-5. **Result Analysis**: The Analyzer evaluates execution results to identify root causes and generate recommendations.
-
-6. **Document Generation**: The Document Generator creates a comprehensive debugging report.
-
-7. **Feedback Loop**: Results are used to improve future debugging plans and forecasting accuracy.
-
-## Deployment Model
-
-The Debugging Agents system can be deployed in various configurations:
-
-### Standalone CLI Tool
-- Single binary or script that can be run locally
-- Connects to remote data sources as needed
-- Suitable for ad-hoc debugging by engineers
-
-### Integrated Service
-- Deployed as a microservice within the target environment
-- Can be triggered automatically by monitoring systems
-- Integrates with existing observability platforms
-
-### Hybrid Model
-- Core components run as centralized services
-- Executor agents can be deployed closer to target systems
-- Balances accessibility with execution capabilities
+1. **Issue Identification**: System receives issue ID or alert
+2. **LLM Initialization**: Crew Manager configures appropriate LLM provider
+3. **Agent Setup**: CrewAI agents are initialized with the LLM
+4. **Context Collection**: Context Builder gathers system information
+5. **Plan Creation**: Debug Plan Creator generates structured plan
+6. **Execution**: Executor implements debugging steps
+7. **Analysis**: Analyzer evaluates results and identifies causes
+8. **Documentation**: Document Generator creates detailed report
 
 ## Technology Stack
 
-- **Language**: Python
-- **LLM Integration**: Support for OpenAI, AWS Bedrock, and Ollama
-- **Data Storage**: JSON/YAML for configuration, SQLite for local persistence
-- **Output Formats**: HTML, Markdown, PDF
-- **Interface**: CLI and API options
+### Core Technologies
+- **Language**: Python 3.10+
+- **Agent Framework**: CrewAI
+- **LLM Integration**: 
+  - OpenAI API
+  - AWS Bedrock
+  - Ollama (local models)
+
+### Dependencies
+- **HTTP Client**: httpx
+- **Configuration**: PyYAML
+- **Logging**: Python standard logging
+- **Documentation**: Markdown, HTML
+
+### Development Tools
+- **Type Checking**: Python type hints
+- **Testing**: pytest
+- **Documentation**: MkDocs
 
 ## Security Model
 
-- **API Key Management**: Secure handling of LLM provider credentials
-- **Execution Sandboxing**: Controlled environment for running debugging commands
-- **Access Control**: Role-based permissions for debugging operations
-- **Data Protection**: Redaction of sensitive information in logs and reports
+### API Key Management
+- Environment variable-based configuration
+- Support for AWS credentials
+- Secure key storage recommendations
+
+### Execution Safety
+- Controlled command execution
+- Error handling and validation
+- Resource usage limits
+
+### Data Protection
+- Log redaction capabilities
+- Configurable data retention
+- Access control options
+
+## Configuration
+
+### LLM Configuration
+```yaml
+llm:
+  provider: ollama  # or openai, bedrock
+  model: deepseek-r1:8b
+  temperature: 0.2
+  api_base: http://localhost:11434  # for Ollama
+```
+
+### Logging Configuration
+```yaml
+logging:
+  level: INFO
+  handlers:
+    - console
+    - file
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+```
+
+### Agent Configuration
+```yaml
+agents:
+  context_builder:
+    enabled: true
+    log_sources: ["loki", "files"]
+  executor:
+    timeout: 300
+    max_retries: 3
+```
+
+## Deployment Options
+
+### Local Development
+- Run directly with Python
+- Use Ollama for local LLM
+- Local file system for storage
+
+### Production Deployment
+- Containerized deployment
+- Cloud-based LLM providers
+- Centralized logging
+- Monitoring integration
+
+### Hybrid Setup
+- Mix of local and cloud components
+- Flexible LLM provider selection
+- Scalable agent deployment
 
 ## Extension Points
 

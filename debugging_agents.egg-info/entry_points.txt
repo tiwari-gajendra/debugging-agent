@@ -1,2 +1,0 @@
-[console_scripts]
-debug-agent = debugging_agents.debug_agent_cli:main

@@ -1,5 +1,5 @@
 """
-Context Builder - Builds context for debugging.
+Context Builder - Collects and organizes contextual information for debugging.
 """
 
 import os
@@ -7,6 +7,7 @@ import json
 import logging
 from typing import Dict, List, Any, Optional
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import pandas as pd
 import numpy as np
@@ -14,6 +15,9 @@ from dotenv import load_dotenv
 
 # LangChain imports
 from langchain_core.documents import Document
+
+# Import integrations
+from src.integrations.loki_client import LokiClient
 
 # Load environment variables
 load_dotenv()
@@ -23,8 +27,8 @@ logger = logging.getLogger(__name__)
 
 class ContextBuilder:
     """
-    Agent that gathers relevant context for a reported issue,
-    including logs, metrics, execution traces, and past related issues.
+    Builds comprehensive context for debugging by collecting and organizing
+    relevant information from various sources.
     """
     
     def __init__(self, 
@@ -40,12 +44,39 @@ class ContextBuilder:
             metrics_source: Source of metrics (prometheus, cloudwatch, etc.)
             traces_source: Source of traces (jaeger, x-ray, etc.)
             vector_db_path: Path to the vector database for RAG
+            
+        Raises:
+            RuntimeError: If no log source is available
         """
         self.log_source = log_source
         self.metrics_source = metrics_source
         self.traces_source = traces_source
         self.vector_db_path = vector_db_path or os.path.join('data', 'vector_store')
-        logger.info(f"Initializing ContextBuilder with log source {log_source}")
+        
+        # Initialize Loki client if using Loki
+        self.loki_client = None
+        if log_source == "loki":
+            try:
+                self.loki_client = LokiClient()
+                logger.info(f"Successfully connected to Loki at {self.loki_client.base_url}")
+            except Exception as e:
+                logger.warning(f"Failed to initialize Loki client: {e}")
+                logger.info("Falling back to service_logs directory")
+                self.log_source = "service_logs"
+        
+        # Check service_logs directory if using service_logs
+        if self.log_source == "service_logs":
+            service_logs_dir = Path("data/logs/service_logs")
+            if not service_logs_dir.exists():
+                raise RuntimeError("No log source available: Loki is not available and service_logs directory does not exist")
+            
+            # Check if service_logs directory is empty
+            if not any(service_logs_dir.iterdir()):
+                raise RuntimeError("No log source available: Loki is not available and service_logs directory is empty")
+            
+            logger.info("Using service_logs directory for logs")
+        
+        logger.info(f"Initializing ContextBuilder with log source {self.log_source}")
     
     def get_task_description(self, issue_id: str) -> str:
         """
@@ -60,7 +91,7 @@ class ContextBuilder:
         return (f"Gather and analyze all relevant logs, metrics, and system information for issue {issue_id}. "
                 f"Create a comprehensive context to help identify the root cause of the problem.")
     
-    def collect_logs(self, issue_id: str, time_window_minutes: int = 60) -> List[Dict[str, Any]]:
+    async def collect_logs(self, issue_id: str, time_window_minutes: int = 60) -> List[Dict[str, Any]]:
         """
         Collect relevant logs for the given issue.
         
@@ -70,42 +101,94 @@ class ContextBuilder:
             
         Returns:
             List of log entries
+            
+        Raises:
+            RuntimeError: If no logs are available from either Loki or service_logs directory
         """
         logger.info(f"Collecting logs for issue {issue_id} from {self.log_source}")
         
-        # This would be replaced with actual log collection from the configured source
-        # For now, generate synthetic logs
-        end_time = datetime.now()
-        start_time = end_time - timedelta(minutes=time_window_minutes)
-        
-        # Generate synthetic logs
         logs = []
+        error_messages = []
         
-        # Generate normal logs
-        for i in range(50):
-            timestamp = start_time + timedelta(minutes=np.random.uniform(0, time_window_minutes))
-            logs.append({
-                "timestamp": timestamp.isoformat(),
-                "level": np.random.choice(["INFO", "DEBUG", "INFO", "INFO", "WARN"]),
-                "service": np.random.choice(["auth-service", "api-gateway", "user-service", "payment-service"]),
-                "message": f"Regular operation log message {i}"
-            })
-        
-        # Generate some warning/error logs related to the issue
-        for i in range(10):
-            timestamp = start_time + timedelta(minutes=np.random.uniform(time_window_minutes*0.7, time_window_minutes))
-            logs.append({
-                "timestamp": timestamp.isoformat(),
-                "level": np.random.choice(["ERROR", "WARN", "ERROR"]),
-                "service": "auth-service",  # Assume issue is with auth service
-                "message": f"Authentication failure: token validation error (ref: {issue_id})"
-            })
-        
-        # Sort logs by timestamp
-        logs.sort(key=lambda x: x["timestamp"])
-        
-        logger.info(f"Collected {len(logs)} log entries")
-        return logs
+        if self.log_source == "loki" and self.loki_client:
+            try:
+                # First get error logs
+                error_logs = await self.loki_client.get_error_logs(time_window_minutes)
+                
+                # If we have error logs, get logs from the affected services
+                if error_logs:
+                    affected_services = set(log["service"] for log in error_logs)
+                    all_logs = error_logs
+                    
+                    # Get all logs from affected services
+                    for service in affected_services:
+                        service_logs = await self.loki_client.get_service_logs(
+                            service, time_window_minutes
+                        )
+                        all_logs.extend(service_logs)
+                    
+                    # Remove duplicates and sort by timestamp
+                    unique_logs = {log["timestamp"]: log for log in all_logs}.values()
+                    logs = sorted(unique_logs, key=lambda x: x["timestamp"])
+                    
+                    logger.info(f"Collected {len(logs)} log entries from Loki")
+                    return list(logs)
+                else:
+                    error_messages.append("No error logs found in Loki")
+                    
+            except Exception as e:
+                error_messages.append(f"Error collecting logs from Loki: {str(e)}")
+                logger.error(f"Error collecting logs from Loki: {e}")
+                
+        # Check for service_logs directory
+        service_logs_dir = Path("data/logs/service_logs")
+        if service_logs_dir.exists():
+            try:
+                all_logs = []
+                # Read all JSON files in the service_logs directory
+                for log_file in service_logs_dir.glob("*.json"):
+                    with open(log_file, 'r') as f:
+                        try:
+                            file_logs = json.load(f)
+                            if not isinstance(file_logs, list):
+                                error_messages.append(f"Invalid log format in {log_file}: not a list")
+                                continue
+                            if not file_logs:
+                                error_messages.append(f"Empty log file: {log_file}")
+                                continue
+                            all_logs.extend(file_logs)
+                        except json.JSONDecodeError as e:
+                            error_messages.append(f"Error parsing {log_file}: {str(e)}")
+                            continue
+                
+                if all_logs:
+                    # Filter logs within the time window
+                    end_time = datetime.now()
+                    start_time = end_time - timedelta(minutes=time_window_minutes)
+                    
+                    logs = [
+                        log for log in all_logs
+                        if start_time <= datetime.fromisoformat(log["timestamp"]) <= end_time
+                    ]
+                    
+                    if logs:
+                        logger.info(f"Collected {len(logs)} log entries from service_logs")
+                        return logs
+                    else:
+                        error_messages.append("No logs found within the specified time window in service_logs")
+                else:
+                    error_messages.append("No valid logs found in service_logs directory")
+                    
+            except Exception as e:
+                error_messages.append(f"Error reading service_logs: {str(e)}")
+                logger.error(f"Error reading service_logs: {e}")
+        else:
+            error_messages.append("Service logs directory does not exist")
+                
+        # If we get here, no logs were available
+        error_message = "No logs available. Errors encountered:\n" + "\n".join(error_messages)
+        logger.error(error_message)
+        raise RuntimeError(error_message)
     
     def collect_metrics(self, issue_id: str, time_window_minutes: int = 60) -> Dict[str, Any]:
         """

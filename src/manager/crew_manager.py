@@ -8,7 +8,6 @@ import json
 import logging
 import httpx
 from typing import List, Dict, Any, Optional
-from crewai import Agent, Task, Crew, Process
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -107,6 +106,7 @@ class DebugCrew:
             }
             
             # Create the agent with the appropriate config
+            from crewai import Agent
             agent = Agent(**agent_config)
             
             # Store both the crewAI agent and the original agent object
@@ -307,86 +307,61 @@ Include key insights, root causes identified, and recommendations."""
         
         return crew_output
     
-    def run(self, issue_id: str) -> Dict[str, Any]:
+    async def run(self, issue_id: str) -> Dict[str, Any]:
         """
-        Run the debugging process for an issue.
+        Run the debugging process.
         
         Args:
-            issue_id: The ID of the issue to debug
+            issue_id: The issue ID to debug
             
         Returns:
-            Dict containing results of the debugging process
+            Dict with results information
         """
-        if not self.agents:
-            raise ValueError("No agents added to the crew")
-        
         logger.info(f"Running debugging process for issue {issue_id}")
         
-        # Use direct API implementation if needed
-        if self.use_direct_api:
-            logger.info("Running with direct API implementation to avoid LiteLLM issues")
-            crew_output = self.run_direct_ollama(issue_id)
-        else:
+        try:
+            # Import Task here to avoid circular imports
+            from crewai import Task
+            
             # Create tasks for each agent
-            tasks = []
-            
-            # Create properly structured context
-            context = [{
-                "issue_id": issue_id,
-                "description": f"Debug information for issue {issue_id}",
-                "expected_output": f"Analysis results for issue {issue_id}"
-            }]
-            
-            # Create tasks based on the agent sequence
-            for i, agent_pair in enumerate(self.agents):
-                agent = agent_pair["crew_agent"]
-                agent_obj = agent_pair["agent_obj"]
-                agent_name = agent_pair["agent_name"]  # Get stored name
+            for agent_info in self.agents:
+                agent_obj = agent_info["agent_obj"]
+                agent_name = agent_info["agent_name"]
                 
-                # Create a task for this agent
-                task_description = f"Analyze and process the issue {issue_id}"
-                if hasattr(agent_obj, "get_task_description"):
-                    task_description = agent_obj.get_task_description(issue_id)
+                # Get task description from the agent object
+                task_description = agent_obj.get_task_description(issue_id)
                 
+                # Create the task with expected output
                 task = Task(
                     description=task_description,
-                    agent=agent,
-                    context=context,
-                    expected_output=f"Analysis results for issue {issue_id}"
+                    agent=agent_info["crew_agent"],
+                    expected_output=f"Analysis results for issue {issue_id} from {agent_name}"
                 )
-                tasks.append(task)
                 
-                # For debugging later, store tasks
                 self.tasks.append(task)
-                
                 logger.debug(f"Created task for agent {agent_name}")
             
-            # Create crew with provider config
-            crew_config = {
-                "agents": [a["crew_agent"] for a in self.agents],
-                "tasks": tasks,
-                "process": Process.sequential,
-                "verbose": True
+            # Create the crew with sequential process
+            from crewai import Crew, Process
+            crew = Crew(
+                agents=[a["crew_agent"] for a in self.agents],
+                tasks=self.tasks,
+                process=Process.sequential,
+                verbose=True
+            )
+            
+            # Run the crew
+            result = await crew.kickoff()
+            
+            # Process the result
+            return {
+                "crew_output": result,
+                "document_url": None  # Will be set by document generator
             }
             
-            # Add provider override if needed
-            if self.provider == 'bedrock' or self.provider == 'anthropic':
-                crew_config["llm_provider"] = "bedrock"
-            elif self.provider == 'ollama':
-                crew_config["llm_provider"] = "ollama"
-                
-            # Create the crew with sequential process
-            crew = Crew(**crew_config)
-            
-            logger.info("Starting crew kickoff")
-            
-            try:
-                # Run the crew
-                crew_output = crew.kickoff()
-                logger.info("Crew execution completed successfully")
-            except Exception as e:
-                logger.error(f"Error during crew execution: {str(e)}")
-                crew_output = f"Error during execution: {str(e)}"
+        except Exception as e:
+            logger.error(f"Error running debugging process: {str(e)}")
+            raise
         
         # Get the path to the project root (two levels up from this file)
         src_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -420,16 +395,10 @@ Include key insights, root causes identified, and recommendations."""
     <h1>Debug Report: {issue_id}</h1>
     <div class="section">
         <h2>Debugging Results</h2>
-        <pre>{str(crew_output)}</pre>
+        <pre>{str(result)}</pre>
     </div>
 </body>
 </html>""")
-        
-        # Create a dictionary with the crew output and document URL
-        result = {
-            "crew_output": crew_output,
-            "document_url": f"file://{report_path}"
-        }
         
         logger.info(f"Report generated at {report_path}")
         
