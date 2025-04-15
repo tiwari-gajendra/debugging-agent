@@ -11,6 +11,75 @@ A system for automated root cause analysis and debugging of issues in distribute
 - Root Cause Analysis (RCA) report generation
 - Slack integration for alerts and notifications
 
+## Project Structure
+
+```
+debugging-agents/
+├── config/                    # Configuration files
+│   ├── logging.yaml          # Logging configuration
+│   └── loki/                 # Loki-specific configurations
+│
+├── data/                     # Data storage
+│   ├── logs/                 # Log files
+│   │   ├── debug_agent/      # Debug agent logs
+│   │   └── service_logs/     # Service logs
+│   ├── plots/                # Generated plots and visualizations
+│   ├── reports/              # Generated debugging reports
+│   └── templates/            # Report templates
+│
+├── docs/                     # Documentation
+│   ├── api_reference.md      # API documentation
+│   ├── architecture.md       # System architecture
+│   ├── bedrock_setup.md      # AWS Bedrock setup guide
+│   ├── cli_guide.md          # CLI usage guide
+│   └── usage_guide.md        # General usage guide
+│
+├── src/                      # Source code
+│   ├── integrations/         # External service integrations
+│   │   ├── __init__.py
+│   │   ├── loki_client.py   # Loki log client
+│   │   └── slack_handler.py # Slack integration
+│   │
+│   ├── manager/             # Core management components
+│   │   ├── __init__.py
+│   │   └── crew_manager.py  # Crew management
+│   │
+│   ├── realtime/           # Real-time debugging components
+│   │   ├── __init__.py
+│   │   ├── analyzer.py     # Analysis engine
+│   │   ├── context_builder.py  # Context gathering
+│   │   ├── debug_plan_creator.py  # Debug plan generation
+│   │   ├── document_generator.py  # Report generation
+│   │   └── executor.py     # Plan execution
+│   │
+│   └── utils/              # Utility functions
+│       ├── __init__.py
+│       └── template_manager.py  # Template management
+│
+├── tests/                  # Test files
+│   └── test_logs.py       # Log testing
+│
+├── .env                   # Environment variables
+├── .env.example          # Example environment variables
+├── .gitignore           # Git ignore rules
+├── debug_agent_cli.py   # CLI interface
+├── main.py             # Main application entry
+├── README.md          # Project overview
+└── requirements.txt   # Python dependencies
+```
+
+### Key Components
+
+- **config/**: Configuration files for logging and external services
+- **data/**: Storage for logs, plots, reports, and templates
+- **docs/**: Comprehensive documentation
+- **src/**: Core source code organized into modules:
+  - `integrations/`: External service integrations (Loki, Slack)
+  - `manager/`: Core management components
+  - `realtime/`: Real-time debugging components
+  - `utils/`: Utility functions and helpers
+- **tests/**: Test files for the application
+
 ## Prerequisites
 
 - Python 3.8+
