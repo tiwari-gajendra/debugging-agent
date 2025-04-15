@@ -1,370 +1,180 @@
 # Debugging Agents Usage Guide
 
-This guide provides instructions on how to set up and use the Debugging Agents system for automated troubleshooting of production issues.
+This guide explains how to use the Debugging Agents system for automated troubleshooting and debugging.
 
-## Installation
+## System Setup
 
 ### Prerequisites
-
 - Python 3.10 or higher
-- pip (Python package manager)
-- Access to one of the supported LLM providers:
-  - OpenAI API
-  - AWS Bedrock
-  - Ollama (for local LLM usage)
+- Ollama (for local LLM) or access to other LLM providers
+- JIRA access (for ticket integration)
+- Loki (optional, for log collection)
 
-### Setup
+### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/debugging-agents.git
-   cd debugging-agents
-   ```
+```bash
+git clone https://github.com/your-org/debugging-agents.git
+cd debugging-agents
+```
 
 2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
 3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Configure environment variables according to your chosen LLM provider:
-
-   **For OpenAI:**
-   ```bash
-   export LLM_PROVIDER=openai
-   export OPENAI_API_KEY=your_api_key_here
-   export OPENAI_MODEL=gpt-4-turbo  # or another model
-   export TEMPERATURE=0.2
-   ```
-
-   **For AWS Bedrock:**
-   ```bash
-   export LLM_PROVIDER=bedrock
-   export AWS_ACCESS_KEY_ID=your_access_key
-   export AWS_SECRET_ACCESS_KEY=your_secret_key
-   export AWS_DEFAULT_REGION=your_aws_region
-   export BEDROCK_MODEL=anthropic.claude-3-sonnet-20240229-v1:0
-   export TEMPERATURE=0.2
-   ```
-
-   **For Ollama:**
-   ```bash
-   export LLM_PROVIDER=ollama
-   export OLLAMA_BASE_URL=http://localhost:11434
-   export OLLAMA_MODEL=deepseek-r1:8b  # or another model
-   export TEMPERATURE=0.2
-   ```
-
-5. Set up logging and data directories:
-   ```bash
-   mkdir -p data/logs/debug_agent
-   mkdir -p data/logs/service_logs
-   mkdir -p data/reports
-   ```
-
-## Basic Usage
-
-### Verifying Installation
-
-First, verify that your installation is working correctly:
-
 ```bash
-python debug_agent_cli.py info
+pip install -r requirements.txt
 ```
 
-This will show:
-- System version and configuration
-- LLM provider status
-- Logging configuration
-- Available agents
-
-### Running the Debug Command
-
-To debug an issue:
-
+4. Configure environment variables:
 ```bash
-python debug_agent_cli.py debug ISSUE-ID [options]
+cp .env.example .env
+# Edit .env with your configuration
 ```
 
-Options:
-- `--llm-provider`: Override the default LLM provider (openai, bedrock, ollama)
-- `--open-doc`: Open the generated report when complete
-- `--verbose`: Show detailed output
+### Running the System
 
-Example:
+The system can be run in two modes:
+
+#### 1. Integrated Mode (UI + Backend)
 ```bash
-python debug_agent_cli.py debug TEST-123 --llm-provider ollama --open-doc
+streamlit run streamlit_app.py
+```
+This starts both the UI and backend services together. The UI will be available at `http://localhost:8501`.
+
+#### 2. Separate Mode
+If you need to run the backend separately (e.g., for development or testing):
+
+a) Start the backend:
+```bash
+python src/main.py
 ```
 
-### Understanding the Output
-
-The debug command will:
-1. Initialize the CrewAI agents
-2. Gather context about the issue
-3. Create a debugging plan
-4. Execute the plan
-5. Analyze results
-6. Generate a report
-
-The report will be saved in `data/reports/` and includes:
-- Executive summary
-- Root cause analysis
-- Debugging steps taken
-- Recommendations
-
-## Configuration
-
-### LLM Configuration
-
-Create a `.env` file in the project root:
-
-```env
-# LLM Provider Settings
-LLM_PROVIDER=ollama  # or openai, bedrock
-TEMPERATURE=0.2
-
-# Ollama Settings
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=deepseek-r1:8b
-
-# OpenAI Settings (if using OpenAI)
-#OPENAI_API_KEY=your_key_here
-#OPENAI_MODEL=gpt-4-turbo
-
-# AWS Bedrock Settings (if using Bedrock)
-#AWS_ACCESS_KEY_ID=your_key
-#AWS_SECRET_ACCESS_KEY=your_secret
-#AWS_DEFAULT_REGION=us-east-1
-#BEDROCK_MODEL=anthropic.claude-3-sonnet-20240229-v1:0
+b) Start the UI in a separate terminal:
+```bash
+streamlit run streamlit_app.py
 ```
 
-### Logging Configuration
+## Context Preservation
 
-The system uses a YAML-based logging configuration in `config/logging.yaml`:
+The system automatically preserves debugging context in two ways:
 
-```yaml
-version: 1
-disable_existing_loggers: false
-
-formatters:
-  standard:
-    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    datefmt: "%Y-%m-%d %H:%M:%S"
-
-handlers:
-  console:
-    class: logging.StreamHandler
-    level: INFO
-    formatter: standard
-    stream: ext://sys.stdout
-
-  file:
-    class: logging.FileHandler
-    level: DEBUG
-    formatter: standard
-    filename: data/logs/debug_agent/debug_agent.log
-    mode: a
-    encoding: utf8
-
-loggers:
-  '':  # root logger
-    handlers: [console, file]
-    level: INFO
-    propagate: true
-
-  httpx:
-    level: WARNING
-    handlers: [console, file]
-    propagate: false
-
-  crewai:
-    level: INFO
-    handlers: [console, file]
-    propagate: false
+### 1. File-based Storage
+- Contexts are stored in `data/contexts/` directory
+- Each ticket's current context: `{ticket_id}_context.json`
+- Context history: `{ticket_id}_history.json`
+- Example structure:
+```json
+{
+    "current_context": {
+        "ticket_id": "PROJ-123",
+        "timestamp": "2024-04-14T12:00:00",
+        "logs": [...],
+        "metrics": {...},
+        "analysis": {...}
+    },
+    "history": [
+        {
+            "timestamp": "2024-04-14T11:00:00",
+            "context": {...}
+        }
+    ]
+}
 ```
 
-### Agent Configuration
+### 2. In-memory Cache
+- Contexts are cached in memory during the session
+- Cache is cleared when the application restarts
+- Used for quick access to recent contexts
 
-Each agent can be configured in `config/agents.yaml`:
+## Using the System
 
-```yaml
-context_builder:
-  enabled: true
-  log_sources:
-    - loki
-    - files
-  log_path: data/logs/service_logs
+### 1. JIRA Ticket Debugging
 
-debug_plan_creator:
-  enabled: true
-  max_steps: 10
-  confidence_threshold: 0.7
+1. Open the Streamlit UI at `http://localhost:8501`
+2. Enter a JIRA ticket ID (e.g., "PROJ-123")
+3. Choose an action:
+   - "Generate BIM Document": Creates a structured document
+   - "Run Debug Analysis": Performs automated debugging
 
-executor:
-  enabled: true
-  timeout: 300
-  max_retries: 3
-  parallel_execution: false
+### 2. Context Management
 
-analyzer:
-  enabled: true
-  min_confidence: 0.7
-  max_root_causes: 3
+The system automatically:
+- Preserves context between debugging sessions
+- Maintains history of previous contexts
+- Updates context with new findings
+- Provides context-aware debugging
 
-document_generator:
-  enabled: true
-  format: html
-  template: rca_template.json
-  output_dir: data/reports
-```
+### 3. Document Generation
+
+1. BIM documents are generated in `data/reports/`
+2. Analysis results are saved in JSON format
+3. HTML reports are created for visualization
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **LLM Provider Not Available**
-   ```
-   Error: Could not connect to LLM provider
-   ```
-   - Check if the provider is running (especially for Ollama)
-   - Verify API keys and environment variables
+1. **LLM Connection Issues**
+   - Check Ollama is running: `curl http://localhost:11434/api/tags`
+   - Verify API keys in `.env`
+
+2. **JIRA Integration**
+   - Ensure JIRA credentials are correct
    - Check network connectivity
+   - Verify ticket access permissions
 
-2. **Missing Log Sources**
-   ```
-   Warning: No log sources available
-   ```
-   - Ensure log directories exist
-   - Check Loki connection if using Loki
-   - Verify log file permissions
+3. **Context Preservation**
+   - Check `data/contexts/` directory exists
+   - Verify file permissions
+   - Monitor disk space
 
-3. **Report Generation Fails**
-   ```
-   Error: Could not generate report
-   ```
-   - Check write permissions in reports directory
-   - Verify template file exists
-   - Check disk space
+### Logs and Monitoring
 
-### Getting Help
-
-1. Check the logs in `data/logs/debug_agent/debug_agent.log`
-2. Run commands with `--verbose` flag
-3. Check the GitHub issues page
-4. Join our Discord community
-
-## Best Practices
-
-1. **LLM Selection**
-   - Use Ollama for development and testing
-   - Use OpenAI/Bedrock for production
-   - Consider latency and cost requirements
-
-2. **Log Management**
-   - Regularly rotate log files
-   - Monitor disk usage
-   - Set appropriate log levels
-
-3. **Security**
-   - Never commit API keys
-   - Use environment variables
-   - Regularly rotate credentials
-
-4. **Performance**
-   - Use appropriate timeouts
-   - Monitor resource usage
-   - Cache results when possible
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new features
-4. Submit a pull request
-
-See CONTRIBUTING.md for detailed guidelines.
+- Application logs: `logs/debug_agent.log`
+- Context files: `data/contexts/`
+- Reports: `data/reports/`
 
 ## Advanced Usage
 
-### Custom Debug Plans
+### Custom Context Management
 
-You can provide a custom debugging plan in JSON format:
+You can customize context preservation by:
 
-```bash
-python debug_agent_cli.py debug --issue-id CUSTOM-DEBUG --plan-file my_plan.json
-```
+1. Modifying `ContextBuilder` class
+2. Implementing custom storage backends
+3. Adjusting cache settings
 
-Example plan file:
-```json
-{
-  "steps": [
-    {
-      "name": "Check CPU Usage",
-      "action": "execute_command",
-      "parameters": {
-        "command": "top -b -n 1"
-      }
-    },
-    {
-      "name": "Check Memory Usage",
-      "action": "execute_command",
-      "parameters": {
-        "command": "free -m"
-      }
-    }
-  ]
-}
-```
+### Integration with Other Systems
 
-### Using Different LLM Models
+The system can be extended to:
+- Add new data sources
+- Implement custom analyzers
+- Create specialized reports
 
-Switch between different LLM models for cost or performance reasons:
+## Best Practices
 
-```bash
-# Use a smaller model for faster results
-export LLM_MODEL=gpt-3.5-turbo
-python debug_agent_cli.py debug --issue-id SMALL-ISSUE
+1. **Context Management**
+   - Regularly backup context files
+   - Monitor context storage usage
+   - Clean up old contexts periodically
 
-# Use a more powerful model for complex analysis
-export LLM_MODEL=gpt-4-turbo
-python debug_agent_cli.py debug --issue-id COMPLEX-ISSUE
-```
+2. **Performance**
+   - Use appropriate time windows for data collection
+   - Monitor memory usage with large contexts
+   - Optimize query patterns
 
-## Advanced LLM Configuration
+3. **Security**
+   - Secure sensitive data in contexts
+   - Implement proper access controls
+   - Regularly rotate API keys
 
-### Creating an LLM Instance
+## Support
 
-You can create an LLM instance directly using the factory:
-
-```python
-from src.utils.llm_factory import LLMFactory
-
-# Create a specific LLM
-llm = LLMFactory.create_llm("openai")  # Use default model from env
-llm = LLMFactory.create_llm("ollama", model="llama3")  # Specify model
-```
-
-### Switching Providers
-
-To switch between different providers, update your .env file:
-
-```
-# Set in .env file
-LLM_PROVIDER=openai
-OPENAI_MODEL=gpt-4
-
-# Or for Ollama
-LLM_PROVIDER=ollama
-OLLAMA_MODEL=llama3
-```
-
-## References
-
-- [Architecture Document](architecture.md) - System architecture overview
-- [API Reference](api_reference.md) - Detailed API documentation
-- [GitHub Repository](https://github.com/yourusername/debugging-agents) - Source code and examples 
+For issues or questions:
+1. Check the documentation
+2. Review logs in `logs/`
+3. Contact the development team 

@@ -1,92 +1,17 @@
-# Debugging Agents System
+# Debugging Agents
 
-A system for automated root cause analysis and debugging of issues in distributed systems.
+An AI-powered debugging assistant that uses multiple specialized agents to analyze and debug software issues.
 
 ## Features
 
-- Real-time issue detection and analysis
-- Automated log collection and analysis
-- Metrics monitoring and correlation
-- Distributed tracing analysis
-- Root Cause Analysis (RCA) report generation
-- Slack integration for alerts and notifications
+- 🔍 Automated debugging with specialized AI agents
+- 📊 Log analysis and pattern detection
+- 📝 BIM document generation
+- 🎯 JIRA integration
+- 🚀 Streamlit web interface
+- 🔄 Real-time progress tracking
 
-## Project Structure
-
-```
-debugging-agents/
-├── config/                    # Configuration files
-│   ├── logging.yaml          # Logging configuration
-│   └── loki/                 # Loki-specific configurations
-│
-├── data/                     # Data storage
-│   ├── logs/                 # Log files
-│   │   ├── debug_agent/      # Debug agent logs
-│   │   └── service_logs/     # Service logs
-│   ├── plots/                # Generated plots and visualizations
-│   ├── reports/              # Generated debugging reports
-│   └── templates/            # Report templates
-│
-├── docs/                     # Documentation
-│   ├── api_reference.md      # API documentation
-│   ├── architecture.md       # System architecture
-│   ├── bedrock_setup.md      # AWS Bedrock setup guide
-│   ├── cli_guide.md          # CLI usage guide
-│   └── usage_guide.md        # General usage guide
-│
-├── src/                      # Source code
-│   ├── integrations/         # External service integrations
-│   │   ├── __init__.py
-│   │   ├── loki_client.py   # Loki log client
-│   │   └── slack_handler.py # Slack integration
-│   │
-│   ├── manager/             # Core management components
-│   │   ├── __init__.py
-│   │   └── crew_manager.py  # Crew management
-│   │
-│   ├── realtime/           # Real-time debugging components
-│   │   ├── __init__.py
-│   │   ├── analyzer.py     # Analysis engine
-│   │   ├── context_builder.py  # Context gathering
-│   │   ├── debug_plan_creator.py  # Debug plan generation
-│   │   ├── document_generator.py  # Report generation
-│   │   └── executor.py     # Plan execution
-│   │
-│   └── utils/              # Utility functions
-│       ├── __init__.py
-│       └── template_manager.py  # Template management
-│
-├── tests/                  # Test files
-│   └── test_logs.py       # Log testing
-│
-├── .env                   # Environment variables
-├── .env.example          # Example environment variables
-├── .gitignore           # Git ignore rules
-├── debug_agent_cli.py   # CLI interface
-├── main.py             # Main application entry
-├── README.md          # Project overview
-└── requirements.txt   # Python dependencies
-```
-
-### Key Components
-
-- **config/**: Configuration files for logging and external services
-- **data/**: Storage for logs, plots, reports, and templates
-- **docs/**: Comprehensive documentation
-- **src/**: Core source code organized into modules:
-  - `integrations/`: External service integrations (Loki, Slack)
-  - `manager/`: Core management components
-  - `realtime/`: Real-time debugging components
-  - `utils/`: Utility functions and helpers
-- **tests/**: Test files for the application
-
-## Prerequisites
-
-- Python 3.8+
-- Docker and Docker Compose (for running Loki)
-- Slack workspace (for notifications)
-
-## Setup
+## Installation
 
 1. Clone the repository:
 ```bash
@@ -105,57 +30,97 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Copy the example environment file and update it:
+4. Install pandoc (required for document format conversion):
+```bash
+# macOS
+brew install pandoc
+
+# Linux
+sudo apt-get install pandoc
+
+# Windows
+choco install pandoc
+```
+
+5. Copy the example environment file and configure:
 ```bash
 cp .env.example .env
+# Edit .env with your settings
 ```
 
-5. Update the `.env` file with your configuration:
-- Set `LOKI_URL` to your Loki instance URL
-- Set `SLACK_APP_TOKEN` and `SLACK_BOT_TOKEN` for Slack integration
+## Usage
 
-## Running the System
+### Web Interface
 
-1. Start the Loki service:
+Run the Streamlit app:
 ```bash
-docker-compose up -d
+streamlit run streamlit_app.py
 ```
 
-2. Start the debugging agents:
+### CLI
+
+Use the command-line interface:
 ```bash
-python src/main.py
+python debug_agent_cli.py --issue-id PROJ-123
+```
+
+## Project Structure
+
+```
+debugging-agents/
+├── config/              # Configuration files
+├── data/               # Data directories
+│   ├── contexts/       # Debug context storage
+│   ├── logs/          # Application logs
+│   ├── models/        # ML model storage
+│   ├── plots/         # Generated plots
+│   ├── reports/       # Debug reports
+│   ├── templates/     # Document templates
+│   └── vector_store/  # Vector embeddings
+├── docs/              # Documentation
+├── scripts/           # Utility scripts
+├── src/              # Source code
+│   ├── forecasting/  # Forecasting models
+│   ├── integrations/ # External integrations
+│   ├── manager/      # Agent management
+│   ├── realtime/     # Real-time analysis
+│   ├── ui/           # UI components
+│   └── utils/        # Utilities
+└── tests/            # Test files
 ```
 
 ## Configuration
 
-### Templates
+The application can be configured through environment variables in the `.env` file:
 
-The system uses JSON-based templates for generating RCA reports. Templates are stored in `data/templates/`.
+- `LLM_PROVIDER`: LLM provider (openai, ollama, bedrock, anthropic)
+- `OLLAMA_MODEL`: Model name for Ollama (default: deepseek-r1:8b)
+- `OLLAMA_BASE_URL`: Ollama API URL (default: http://localhost:11434)
+- `JIRA_URL`: JIRA instance URL
+- `JIRA_USERNAME`: JIRA username
+- `JIRA_API_TOKEN`: JIRA API token
 
-Example template structure:
-```json
-{
-    "title": "Root Cause Analysis Report",
-    "sections": [
-        {
-            "name": "Executive Summary",
-            "template": "..."
-        },
-        {
-            "name": "Error Analysis",
-            "template": "..."
-        }
-    ],
-    "footer": "..."
-}
+## Development
+
+1. Install development dependencies:
+```bash
+pip install -r requirements.txt
 ```
 
-### Slack Integration
+2. Run tests:
+```bash
+pytest
+```
 
-The system can be configured to:
-- Monitor specific Slack channels for alerts
-- Send RCA reports to designated channels
-- Provide real-time updates on debugging progress
+3. Run linting:
+```bash
+pylint src tests
+```
+
+4. Run type checking:
+```bash
+mypy src
+```
 
 ## Contributing
 
@@ -167,4 +132,4 @@ The system can be configured to:
 
 ## License
 
-MIT License 
+This project is licensed under the MIT License - see the LICENSE file for details. 

@@ -1,0 +1,179 @@
+.stage-container {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.signal {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.stage-pending .signal {
+    background-color: #808080;
+}
+
+.stage-running .signal {
+    background-color: #2196F3;
+    animation: pulse 1.5s infinite;
+}
+
+.stage-complete .signal {
+    background-color: #4CAF50;
+}
+
+.stage-error .signal {
+    background-color: #f44336;
+}
+
+.stage-message {
+    font-style: italic;
+    color: #666;
+    font-size: 0.9em;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.7);
+    }
+    
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(33, 150, 243, 0);
+    }
+    
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(33, 150, 243, 0);
+    }
+}
+
+/* Button Styles */
+.stButton > button {
+    width: 100%;
+    border-radius: 5px;
+    height: 3em;
+}
+
+.stButton > button[kind="primary"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Select Box Styles */
+.stSelectbox > div > div {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+.stSelectbox label {
+    color: #ffffff !important;
+}
+
+/* Status Box Styles */
+.status-box {
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+}
+
+.running {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+}
+
+.success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+/* Progress Stage Styles */
+.progress-stage {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.stage-pending {
+    color: #6c757d;
+    background-color: #f8f9fa;
+}
+
+.stage-running {
+    color: #856404;
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+}
+
+.stage-complete {
+    color: #155724;
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+}
+
+.stage-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-left: 4px solid #dc3545;
+}
+
+/* Form Styles */
+div[data-testid="stForm"] {
+    border: 1px solid #444;
+    padding: 1em;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+div[data-testid="stForm"] > div > div > div > div > div {
+    gap: 1em;
+}
+
+/* Hide Streamlit Components */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+.stException {display: none;}
+
+.abort-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.abort-button:hover {
+    background-color: #d32f2f;
+}
+
+.success-message {
+    color: #4CAF50;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.error-message {
+    color: #f44336;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    background-color: rgba(244, 67, 54, 0.1);
+} 

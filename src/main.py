@@ -1,3 +1,7 @@
+"""
+Main entry point for the debugging agents system.
+"""
+
 import os
 import argparse
 import logging
@@ -8,6 +12,7 @@ import sys
 from logging.handlers import RotatingFileHandler
 import asyncio
 from pathlib import Path
+from typing import Optional, Dict, Any
 
 # Import components
 from src.manager.crew_manager import DebugCrew
@@ -125,23 +130,26 @@ async def run_realtime_debugging(issue_id=None, llm_provider_or_model=None):
             doc_generator
         ])
         
-        # Run the debugging process
+        # Run the debugging process - properly await the coroutine
         result = await debug_crew.run(issue_id=issue_id)
         
-        # Log information about the result for debugging
-        logger.debug(f"Result type: {type(result)}")
-        logger.debug(f"Result keys: {result.keys() if hasattr(result, 'keys') else 'No keys (not a dict)'}")
-        
-        # If result has crew_output, log some info about it too
-        if 'crew_output' in result:
-            logger.debug(f"Crew output type: {type(result['crew_output'])}")
-            if hasattr(result['crew_output'], 'raw_output'):
-                logger.debug(f"Crew raw output available: {len(str(result['crew_output'].raw_output))} chars")
+        # Convert CrewOutput to dictionary
+        if hasattr(result, 'raw_output'):
+            output = {
+                'crew_output': result.raw_output,
+                'document_url': None  # Will be set if document is generated
+            }
+        else:
+            output = {
+                'crew_output': str(result),
+                'document_url': None
+            }
         
         logger.info("Debugging process completed")
-        logger.info(f"Results available at: {result.get('document_url', 'N/A')}")
+        if output.get('document_url'):
+            logger.info(f"Results available at: {output['document_url']}")
         
-        return result
+        return output
         
     except RuntimeError as e:
         logger.error(f"Critical error during debugging process: {str(e)}")
@@ -186,8 +194,74 @@ if __name__ == "__main__":
     asyncio.run(main())
 
 def validate_environment():
-    """Validate that required environment variables are set."""
-    from src.utils.llm_factory import LLMFactory
+    """
+    Validate the environment configuration.
     
+    Returns:
+        bool: True if valid, False otherwise
+    """
     llm_provider = os.getenv('LLM_PROVIDER', 'openai').lower()
-    return LLMFactory.validate_environment(llm_provider) 
+    return LLMFactory.validate_environment(llm_provider)
+
+def initialize_logging():
+    """Initialize logging configuration."""
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    logger.info("Logging initialized")
+
+async def debug_issue(issue_id: str, llm_provider: str = None):
+    """
+    Start real-time debugging for an issue.
+    
+    Args:
+        issue_id: The issue ID to debug
+        llm_provider: Optional LLM provider to use
+    """
+    logger.info(f"Starting real-time debugging for issue: {issue_id}")
+    
+    # Get LLM provider from environment or parameter
+    provider = llm_provider or os.getenv("LLM_PROVIDER", "ollama")
+    logger.info(f"Using LLM provider/model: {provider}")
+    
+    try:
+        # Initialize debug crew
+        debug_crew = DebugCrew(llm_provider=provider)
+        
+        # Run debugging process
+        results = await debug_crew.run(issue_id)
+        
+        return results
+        
+    except Exception as e:
+        logger.error(f"Critical error during debugging process: {str(e)}")
+        raise
+
+def main():
+    """Main entry point."""
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description='Debug Agent CLI')
+    parser.add_argument('--issue-id', type=str, help='Issue ID to debug')
+    parser.add_argument('--llm-provider', type=str, help='LLM provider to use')
+    args = parser.parse_args()
+    
+    # Validate environment
+    if not validate_environment():
+        logger.error("Invalid environment configuration")
+        return 1
+    
+    # Run debugging process
+    if args.issue_id:
+        try:
+            asyncio.run(debug_issue(args.issue_id, args.llm_provider))
+            return 0
+        except Exception as e:
+            logger.error(f"Error: {str(e)}")
+            return 1
+    
+    return 0
+
+if __name__ == "__main__":
+    exit(main()) 

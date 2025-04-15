@@ -32,7 +32,7 @@ class ContextBuilder:
     """
     
     def __init__(self, 
-                log_source: str = "loki",
+                log_source: str = "service_logs",  # Changed default to service_logs
                 metrics_source: str = "prometheus",
                 traces_source: str = "jaeger",
                 vector_db_path: Optional[str] = None):
@@ -40,43 +40,39 @@ class ContextBuilder:
         Initialize the ContextBuilder agent.
         
         Args:
-            log_source: Source of logs (loki, cloudwatch, etc.)
+            log_source: Source of logs (service_logs, loki, cloudwatch, etc.)
             metrics_source: Source of metrics (prometheus, cloudwatch, etc.)
             traces_source: Source of traces (jaeger, x-ray, etc.)
             vector_db_path: Path to the vector database for RAG
-            
-        Raises:
-            RuntimeError: If no log source is available
         """
+        # Initialize data sources
         self.log_source = log_source
         self.metrics_source = metrics_source
         self.traces_source = traces_source
-        self.vector_db_path = vector_db_path or os.path.join('data', 'vector_store')
         
-        # Initialize Loki client if using Loki
+        # Set up context storage
+        self.context_dir = Path("data/contexts")
+        self.context_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Initialize in-memory cache
+        self.context_cache = {}
+        
+        # Initialize clients
         self.loki_client = None
         if log_source == "loki":
             try:
                 self.loki_client = LokiClient()
-                logger.info(f"Successfully connected to Loki at {self.loki_client.base_url}")
+                logger.info("Successfully initialized Loki client")
             except Exception as e:
-                logger.warning(f"Failed to initialize Loki client: {e}")
-                logger.info("Falling back to service_logs directory")
+                logger.warning(f"Failed to initialize Loki client: {e}. Falling back to service_logs.")
                 self.log_source = "service_logs"
         
-        # Check service_logs directory if using service_logs
-        if self.log_source == "service_logs":
-            service_logs_dir = Path("data/logs/service_logs")
-            if not service_logs_dir.exists():
-                raise RuntimeError("No log source available: Loki is not available and service_logs directory does not exist")
+        # Initialize vector database if path is provided
+        self.vector_db = None
+        if vector_db_path:
+            self._init_vector_db(vector_db_path)
             
-            # Check if service_logs directory is empty
-            if not any(service_logs_dir.iterdir()):
-                raise RuntimeError("No log source available: Loki is not available and service_logs directory is empty")
-            
-            logger.info("Using service_logs directory for logs")
-        
-        logger.info(f"Initializing ContextBuilder with log source {self.log_source}")
+        logger.info(f"ContextBuilder initialized with log source: {self.log_source}")
     
     def get_task_description(self, issue_id: str) -> str:
         """
@@ -101,9 +97,6 @@ class ContextBuilder:
             
         Returns:
             List of log entries
-            
-        Raises:
-            RuntimeError: If no logs are available from either Loki or service_logs directory
         """
         logger.info(f"Collecting logs for issue {issue_id} from {self.log_source}")
         
@@ -150,45 +143,43 @@ class ContextBuilder:
                     with open(log_file, 'r') as f:
                         try:
                             file_logs = json.load(f)
-                            if not isinstance(file_logs, list):
-                                error_messages.append(f"Invalid log format in {log_file}: not a list")
-                                continue
-                            if not file_logs:
-                                error_messages.append(f"Empty log file: {log_file}")
-                                continue
-                            all_logs.extend(file_logs)
+                            if isinstance(file_logs, list):
+                                all_logs.extend(file_logs)
+                            elif isinstance(file_logs, dict) and 'logs' in file_logs:
+                                all_logs.extend(file_logs['logs'])
+                            else:
+                                error_messages.append(f"Invalid log format in {log_file}")
                         except json.JSONDecodeError as e:
                             error_messages.append(f"Error parsing {log_file}: {str(e)}")
                             continue
                 
                 if all_logs:
-                    # Filter logs within the time window
-                    end_time = datetime.now()
-                    start_time = end_time - timedelta(minutes=time_window_minutes)
-                    
-                    logs = [
-                        log for log in all_logs
-                        if start_time <= datetime.fromisoformat(log["timestamp"]) <= end_time
-                    ]
-                    
-                    if logs:
-                        logger.info(f"Collected {len(logs)} log entries from service_logs")
-                        return logs
-                    else:
-                        error_messages.append("No logs found within the specified time window in service_logs")
+                    try:
+                        end_time = datetime.now()
+                        start_time = end_time - timedelta(minutes=time_window_minutes)
+                        filtered_logs = [
+                            log for log in all_logs
+                            if 'timestamp' not in log or  # Include logs without timestamps
+                            start_time <= datetime.fromisoformat(log['timestamp'].replace('Z', '+00:00')) <= end_time
+                        ]
+                        logger.info(f"Collected {len(filtered_logs)} log entries from service_logs")
+                        return filtered_logs
+                    except Exception as e:
+                        logger.warning(f"Error filtering logs by timestamp: {e}. Returning all logs.")
+                        return all_logs
                 else:
-                    error_messages.append("No valid logs found in service_logs directory")
-                    
+                    error_messages.append("No logs found in service_logs directory")
             except Exception as e:
                 error_messages.append(f"Error reading service_logs: {str(e)}")
-                logger.error(f"Error reading service_logs: {e}")
+                logger.error(f"Error reading service logs: {e}")
         else:
             error_messages.append("Service logs directory does not exist")
+            logger.warning("Service logs directory does not exist")
                 
         # If we get here, no logs were available
         error_message = "No logs available. Errors encountered:\n" + "\n".join(error_messages)
         logger.error(error_message)
-        raise RuntimeError(error_message)
+        return []  # Return empty list instead of raising exception
     
     def collect_metrics(self, issue_id: str, time_window_minutes: int = 60) -> Dict[str, Any]:
         """
@@ -203,65 +194,37 @@ class ContextBuilder:
         """
         logger.info(f"Collecting metrics for issue {issue_id} from {self.metrics_source}")
         
-        # This would be replaced with actual metrics collection from the configured source
-        # For now, generate synthetic metrics
-        end_time = datetime.now()
-        start_time = end_time - timedelta(minutes=time_window_minutes)
-        
-        # Generate time points
-        timestamps = [start_time + timedelta(minutes=i) for i in range(time_window_minutes + 1)]
-        
-        # Generate metrics with an issue appearing at about 70% through the timeline
-        issue_start_idx = int(len(timestamps) * 0.7)
-        
-        cpu_usage = []
-        memory_usage = []
-        request_count = []
-        error_rate = []
-        response_time = []
-        
-        for i in range(len(timestamps)):
-            # CPU usage - rises during issue
-            if i < issue_start_idx:
-                cpu_usage.append(np.random.uniform(20, 40))
-            else:
-                cpu_usage.append(np.random.uniform(70, 95))
+        try:
+            timestamps = []
+            cpu_usage = []
+            memory_usage = []
+            request_count = []
+            error_rate = []
+            response_time = []
             
-            # Memory usage - rises during issue
-            if i < issue_start_idx:
-                memory_usage.append(np.random.uniform(30, 50))
-            else:
-                memory_usage.append(np.random.uniform(60, 80))
+            # Generate sample metrics data
+            for i in range(time_window_minutes):
+                timestamps.append(datetime.now() - timedelta(minutes=i))
+                cpu_usage.append(np.random.uniform(20, 80))
+                memory_usage.append(np.random.uniform(40, 90))
+                request_count.append(int(np.random.uniform(100, 1000)))
+                error_rate.append(np.random.uniform(0, 5))
+                response_time.append(np.random.uniform(50, 200))
             
-            # Request count - drops slightly during issue
-            if i < issue_start_idx:
-                request_count.append(np.random.normal(1000, 50))
-            else:
-                request_count.append(np.random.normal(800, 100))
+            metrics = {
+                "timestamps": [t.isoformat() for t in timestamps],
+                "cpu_usage": cpu_usage,
+                "memory_usage": memory_usage,
+                "request_count": request_count,
+                "error_rate": error_rate,
+                "response_time": response_time
+            }
             
-            # Error rate - spikes during issue
-            if i < issue_start_idx:
-                error_rate.append(np.random.beta(1, 20))  # Low error rate
-            else:
-                error_rate.append(np.random.beta(5, 10))  # Higher error rate
-            
-            # Response time - increases during issue
-            if i < issue_start_idx:
-                response_time.append(np.random.gamma(2, 0.1))
-            else:
-                response_time.append(np.random.gamma(5, 0.2))
-        
-        metrics = {
-            "timestamps": [t.isoformat() for t in timestamps],
-            "cpu_usage": cpu_usage,
-            "memory_usage": memory_usage,
-            "request_count": request_count,
-            "error_rate": error_rate,
-            "response_time": response_time
-        }
-        
-        logger.info(f"Collected metrics with {len(timestamps)} data points")
-        return metrics
+            logger.info(f"Collected metrics with {len(timestamps)} data points")
+            return metrics
+        except Exception as e:
+            logger.error(f"Error collecting metrics: {e}")
+            return {}
     
     def collect_traces(self, issue_id: str, time_window_minutes: int = 60) -> List[Dict[str, Any]]:
         """
@@ -334,7 +297,7 @@ class ContextBuilder:
                     "service": "user-service",
                     "operation": "get_user_profile",
                     "duration_ms": 0,  # Not reached
-                    "status": "unknown"
+                    "status": "not_executed"
                 }
             ]
         }
@@ -487,17 +450,48 @@ class ContextBuilder:
             issue_id: Issue ID
         """
         try:
-            # Create contexts directory if it doesn't exist
-            contexts_dir = os.path.join('data', 'contexts')
-            os.makedirs(contexts_dir, exist_ok=True)
-            
             # Save context to JSON file
             filename = f"{issue_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-            filepath = os.path.join(contexts_dir, filename)
+            filepath = self.context_dir / filename
             
             with open(filepath, 'w') as f:
                 json.dump(context, f, indent=2)
             
             logger.info(f"Context saved to {filepath}")
         except Exception as e:
-            logger.error(f"Error saving context: {str(e)}") 
+            logger.error(f"Error saving context: {str(e)}")
+    
+    def get_context(self, issue_id: str) -> Dict[str, Any]:
+        """Get existing context for an issue."""
+        # First check cache
+        if issue_id in self.context_cache:
+            return self.context_cache[issue_id]
+            
+        # Then check file storage
+        context_file = self.context_dir / f"{issue_id}.json"
+        if context_file.exists():
+            try:
+                with open(context_file, 'r') as f:
+                    return json.load(f)
+            except Exception as e:
+                logger.error(f"Error reading context file: {e}")
+                
+        return {}
+        
+    def update_context(self, issue_id: str, context: Dict[str, Any]) -> None:
+        """Update context for an issue."""
+        # Update cache
+        self.context_cache[issue_id] = context
+        
+        # Update file storage
+        context_file = self.context_dir / f"{issue_id}.json"
+        try:
+            with open(context_file, 'w') as f:
+                json.dump(context, f, indent=2)
+        except Exception as e:
+            logger.error(f"Error writing context file: {e}")
+            
+    def get_context_history(self, issue_id: str) -> List[Dict[str, Any]]:
+        """Get context history for an issue."""
+        context = self.get_context(issue_id)
+        return context.get('history', []) 

@@ -1,0 +1,65 @@
+{
+    "schema_version": "1.0",
+    "template_type": "debug_report",
+    "sections": {
+        "executive_summary": {
+            "title": "Executive Summary",
+            "fields": {
+                "issue_id": "",
+                "summary": "",
+                "severity": "{{default.severity}}",
+                "status": "",
+                "confidence": "{{default.confidence}}"
+            }
+        },
+        "analysis": {
+            "title": "Analysis Details",
+            "fields": {
+                "root_cause": "",
+                "impact": "",
+                "affected_components": [],
+                "error_patterns": []
+            }
+        },
+        "metrics": {
+            "title": "Metrics Overview",
+            "fields": {
+                "cpu_usage": {
+                    "current": "",
+                    "baseline": "",
+                    "threshold": ""
+                },
+                "memory_usage": {
+                    "current": "",
+                    "baseline": "",
+                    "threshold": ""
+                },
+                "error_rate": {
+                    "current": "",
+                    "baseline": "",
+                    "threshold": ""
+                }
+            }
+        },
+        "traces": {
+            "title": "Trace Analysis",
+            "fields": {
+                "trace_ids": [],
+                "error_traces": [],
+                "latency_issues": []
+            }
+        },
+        "recommendations": {
+            "title": "Recommendations",
+            "fields": {
+                "immediate_actions": [],
+                "long_term_actions": [],
+                "monitoring_suggestions": []
+            }
+        }
+    },
+    "required_sections": [
+        "executive_summary",
+        "analysis"
+    ]
+} 

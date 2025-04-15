@@ -10,8 +10,9 @@ venv/
 .venv
 
 # Environment variables
-# .env
-# .env.*
+.env
+.env.*
+!.env.example
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
@@ -27,6 +28,8 @@ debug_*.log
 
 # Test files
 test.py
+.coverage
+htmlcov/
 
 # Build artifacts
 *.egg-info/
@@ -36,8 +39,27 @@ dist/
 # Cache directories
 __pycache__/
 .pytest_cache/
+.mypy_cache/
 
-# Generated content
-*/config/
-data/reports/
-data/plots/
+# Data directories
+data/reports/*
+data/plots/*
+data/logs/*
+data/contexts/*
+data/vector_store/*
+data/models/*
+
+# Keep .gitkeep files
+!data/reports/.gitkeep
+!data/plots/.gitkeep
+!data/logs/.gitkeep
+!data/contexts/.gitkeep
+!data/vector_store/.gitkeep
+!data/models/.gitkeep
+!data/templates/.gitkeep
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo

@@ -1,0 +1,27 @@
+Sample JIRA Ticket
+
+This is a sample JIRA ticket description for testing the BIM document generator.
+
+The ticket describes an issue with the authentication system where users are unable to log in after the latest deployment.
+
+Key points:
+- Authentication service is returning 500 errors
+- Error occurs for both new and existing users
+- Issue started after deployment v2.1.0
+- Affects approximately 30% of users
+
+Steps to reproduce:
+1. Navigate to login page
+2. Enter valid credentials
+3. Click login button
+4. Observe 500 error
+
+Expected behavior:
+- User should be successfully logged in
+- Session should be created
+- Dashboard should be displayed
+
+Actual behavior:
+- 500 Internal Server Error
+- User remains on login page
+- No session created 

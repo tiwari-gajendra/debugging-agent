@@ -7,8 +7,6 @@ import json
 import logging
 from typing import Dict, List, Any, Optional
 from datetime import datetime
-import docx
-import PyPDF2
 from dotenv import load_dotenv
 
 # Load environment variables

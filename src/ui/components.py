@@ -1,0 +1,173 @@
+"""
+UI Components for the Streamlit application
+"""
+import streamlit as st
+from pathlib import Path
+from .app_state import AppState, DebugStage
+from .utils import UILoader
+import time
+import os
+from jinja2 import Environment, FileSystemLoader
+
+class UIComponents:
+    """Handles UI component rendering"""
+    
+    def __init__(self, app_state: AppState):
+        self.app_state = app_state
+        self.template_dir = Path(__file__).parent / "templates"
+    
+    def _load_template(self, template_name: str) -> str:
+        template_path = self.template_dir / template_name
+        if not template_path.exists():
+            raise FileNotFoundError(f"Template {template_name} not found")
+        return template_path.read_text()
+    
+    def apply_styles(self):
+        """Apply CSS styles from the base template"""
+        loader = UILoader.get_instance()
+        css = loader.apply_style('base')
+        st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+    
+    @staticmethod
+    def show_header():
+        """Show application header"""
+        st.title("🔍 JIRA Debugging Agents")
+        st.markdown("### Enter JIRA Ticket Details")
+    
+    @staticmethod
+    def show_input_section():
+        """Show JIRA ticket input section"""
+        col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            jira_id = st.text_input(
+                "JIRA Ticket ID",
+                value=st.session_state.jira_id,
+                placeholder="e.g., PROJ-123",
+                help="Enter a valid JIRA ticket ID to start debugging",
+                disabled=st.session_state.debug_state == 'running',
+                key="jira_id_input"
+            )
+        
+        with col2:
+            if st.session_state.debug_state == 'running':
+                if st.button("🛑 Abort Debug", type="secondary", help="Stop the current debugging process"):
+                    AppState.request_abort()
+                    st.rerun()
+            elif jira_id:
+                AppState.start_debug(jira_id)
+                st.rerun()
+    
+    @staticmethod
+    def show_progress():
+        """Show debug progress"""
+        if st.session_state.abort_requested:
+            st.warning("⚠️ Debugging process aborted by user.", icon="⚠️")
+            return
+        
+        if st.session_state.debug_state == 'running':
+            st.markdown("""
+                <div class="stage-container stage-running">
+                    <span class="signal"></span>
+                    <span>🔄 Debug in progress...</span>
+                </div>
+            """, unsafe_allow_html=True)
+            UIComponents.show_progress_stages()
+        elif st.session_state.debug_state == 'error':
+            st.error("❌ Debug failed", icon="❌")
+            if st.session_state.error_message:
+                st.error(st.session_state.error_message)
+        elif st.session_state.debug_state == 'success':
+            st.success("✅ Debug completed successfully", icon="✅")
+    
+    @staticmethod
+    def show_document_section():
+        """Show document generation section"""
+        if st.session_state.debug_state != 'success':
+            return
+            
+        st.markdown("### Generate Documentation")
+        col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            doc_format = st.selectbox(
+                "Document Format",
+                options=["doc", "pdf", "markdown"],
+                index=0,
+                help="Select the output format for the BIM document",
+                key="doc_format"
+            )
+        
+        with col2:
+            return st.button(
+                "📄 Generate Document",
+                help="Generate a BIM document from the analysis",
+                type="primary"
+            )
+    
+    def show_progress_stages(self):
+        """Show detailed progress stages with status indicators"""
+        for stage in DebugStage:
+            stage_info = self.app_state.get_stage_status(stage)
+            status = stage_info['status']
+            message = stage_info['message']
+            
+            # Determine stage status and styling
+            signal_class = f"signal signal-{status}"
+            stage_class = f"stage-{status}"
+            
+            icon = {
+                'running': "🔄",
+                'complete': "✅",
+                'error': "❌",
+                'pending': "⏳"
+            }.get(status, "⏳")
+            
+            # Show stage with signal indicator and message
+            st.markdown(f"""
+                <div class="progress-stage {stage_class}">
+                    <div style="display: flex; align-items: center;">
+                        <span class="{signal_class}"></span>
+                        <span style="margin-right: 8px;">{icon}</span>
+                        <span>{stage.value}</span>
+                    </div>
+                    {f'<div style="margin-left: 26px; font-style: italic; color: inherit;">{message}</div>' if message else ''}
+                </div>
+            """, unsafe_allow_html=True)
+            
+            # Add a small spacing between stages
+            st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
+            
+            # Only rerun if the stage is actually running and not aborted
+            if status == 'running' and not self.app_state.is_aborted():
+                time.sleep(0.1)  # Small delay to prevent too frequent updates
+                st.rerun()
+    
+    @staticmethod
+    def show_status_box(state: str, message: str):
+        """Show a styled status box"""
+        css_class = {
+            'running': 'running',
+            'success': 'success',
+            'error': 'error'
+        }.get(state, '')
+        
+        html = UILoader.render_template('status_box',
+            css_class=css_class,
+            message=message
+        )
+        st.markdown(html, unsafe_allow_html=True)
+    
+    def show_error(self, error_message: str):
+        """Display an error message"""
+        st.error(error_message)
+    
+    def show_success(self, success_message: str):
+        """Display a success message"""
+        st.success(success_message)
+    
+    def show_abort_button(self):
+        """Display and handle the abort button"""
+        if st.button("🛑 Abort Debug", type="secondary"):
+            self.app_state.set_abort_flag()
+            st.rerun() 

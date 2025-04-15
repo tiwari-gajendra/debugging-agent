@@ -1,50 +1,184 @@
 """
-Document Generator - Generates debugging reports.
+Document Generator for BIM reports
 """
 
-import os
 import json
-import logging
-import textwrap
-from typing import Dict, List, Any, Optional
+from pathlib import Path
 from datetime import datetime
+from typing import Dict, Any, List
+import time
+import logging
 
-from dotenv import load_dotenv
-
-# Import template manager
-from src.utils.template_manager import TemplateManager
-
-# Load environment variables
-load_dotenv()
-
-# Set up logging
 logger = logging.getLogger(__name__)
 
 class DocumentGenerator:
-    """
-    Agent that generates comprehensive debugging reports based on analysis results.
-    """
+    def __init__(self):
+        self.template_path = Path("data/templates/bim_template.md")
+        self.reports_path = Path("data/reports")
+        self.reports_path.mkdir(parents=True, exist_ok=True)
+        
+    def _load_template(self) -> str:
+        """Load the BIM template."""
+        with open(self.template_path, 'r') as f:
+            return f.read()
+            
+    def _load_logs(self, service_name: str) -> List[Dict[str, Any]]:
+        """Load logs for the given service."""
+        log_path = Path(f"data/logs/service_logs/{service_name}_service.json")
+        with open(log_path, 'r') as f:
+            return json.load(f)
+            
+    def _analyze_logs(self, logs: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Analyze logs and extract relevant information."""
+        # Get the first log entry with warnings
+        log_entry = None
+        warnings = []
+        errors = []
+        
+        for entry in logs:
+            log_data = json.loads(json.loads(entry['line'])['log'])
+            
+            # Store the first entry for service info
+            if not log_entry:
+                log_entry = entry
+                
+            # Collect warnings
+            if 'webhookpost Response' in log_data and log_data['webhookpost Response'].get('warnings'):
+                warnings.extend(log_data['webhookpost Response']['warnings'])
+                
+            # Collect errors
+            if log_data.get('level') == 'error':
+                errors.append(log_data)
+                
+        if not log_entry:
+            raise ValueError("No valid log entries found")
+            
+        # Get service info from the first entry
+        service_info = {
+            'service': log_entry['fields']['app_kubernetes_io_instance'],
+            'cluster': log_entry['fields']['cluster'],
+            'pod': log_entry['fields']['pod'],
+            'container': log_entry['fields']['container']
+        }
+        
+        # Get metrics from the first entry with webhookpost Response
+        for entry in logs:
+            log_data = json.loads(json.loads(entry['line'])['log'])
+            if 'webhookpost Response' in log_data:
+                webhook_response = log_data['webhookpost Response']
+                service_info.update({
+                    'daily_bid_requests': webhook_response['daily_bid_requests'],
+                    'total_bid_requests': webhook_response['total_bid_requests'],
+                    'unique_devices': webhook_response['unique_devices'],
+                    'unique_ips': webhook_response['unique_ips']
+                })
+                break
+                
+        service_info['warnings'] = warnings
+        service_info['errors'] = errors
+        return service_info
+        
+    def _format_warnings(self, warnings: list) -> str:
+        """Format warning messages."""
+        formatted = "**Warning Messages Found:**\n\n"
+        for warning in warnings:
+            formatted += f"- Code: {', '.join(warning['code'])}\n"
+            formatted += f"  Message: {', '.join(warning['message'])}\n"
+        return formatted
+        
+    def _format_errors(self, errors: list) -> str:
+        """Format error messages."""
+        if not errors:
+            return "No errors found in the logs."
+            
+        formatted = "**Error Messages Found:**\n\n"
+        for error in errors:
+            formatted += f"- Level: {error['level']}\n"
+            formatted += f"  Message: {error['msg']}\n"
+            if 'error' in error:
+                formatted += f"  Details: {error['error']}\n"
+        return formatted
+        
+    def _convert_format(self, input_file: Path, output_format: str) -> Path:
+        """Convert document to desired format."""
+        try:
+            import pypandoc
+            output_file = input_file.parent / f"{input_file.stem}.{output_format}"
+            
+            # Convert using pandoc
+            pypandoc.convert_file(
+                str(input_file),
+                output_format,
+                outputfile=str(output_file),
+                format=input_file.suffix[1:]  # Remove the dot from suffix
+            )
+            
+            return output_file
+        except ImportError:
+            logger.error("pypandoc not installed. Please install it for format conversion.")
+            raise
+        except Exception as e:
+            logger.error(f"Error converting document format: {str(e)}")
+            raise
     
-    def __init__(self, output_format: str = "md", template_name: Optional[str] = None):
+    def generate_bim_doc(self, ticket_data: dict, output_format: str = 'doc') -> str:
         """
-        Initialize the DocumentGenerator agent.
+        Generate a BIM document from ticket data.
         
         Args:
-            output_format: Format for generated documents (md, markdown)
-            template_name: Name of the template to use (defaults to rca_template.json)
-        """
-        self.output_format = output_format.lower()
-        if self.output_format not in ["md", "markdown"]:
-            raise ValueError("Only markdown format is supported")
+            ticket_data: Dictionary containing ticket data or template
+            output_format: Output format (doc, pdf, markdown)
             
-        self.template_name = template_name or "rca_template.json"
-        self.template_manager = TemplateManager()
-        
-        logger.info(f"Initializing DocumentGenerator with format: {output_format}, template: {self.template_name}")
-        
-        # Get the path to the project root directory (3 levels up from this file)
-        self.src_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.project_root = os.path.dirname(self.src_dir)
+        Returns:
+            Path to generated document
+        """
+        try:
+            # Check if we're using a template
+            if 'template' in ticket_data:
+                content = ticket_data['template']
+            else:
+                # Try to use ticket data
+                template_path = Path("data/templates/bim_template.md")
+                if not template_path.exists():
+                    raise FileNotFoundError("BIM template not found")
+                
+                with open(template_path, 'r') as f:
+                    template = f.read()
+                
+                # Replace placeholders with ticket data
+                content = template.format(
+                    ticket_id=ticket_data.get('key', 'UNKNOWN'),
+                    summary=ticket_data.get('summary', 'No summary available'),
+                    description=ticket_data.get('description', 'No description available'),
+                    status=ticket_data.get('status', 'Unknown'),
+                    priority=ticket_data.get('priority', 'Unknown'),
+                    created=ticket_data.get('created', 'Unknown'),
+                    updated=ticket_data.get('updated', 'Unknown')
+                )
+            
+            # Create output directory if it doesn't exist
+            output_dir = Path("data/reports")
+            output_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Generate output filename
+            timestamp = int(time.time())
+            ticket_id = ticket_data.get('key', 'UNKNOWN')
+            
+            # First save as markdown
+            md_file = output_dir / f"BIM_{ticket_id}_{timestamp}.md"
+            with open(md_file, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            # Convert to desired format if different from markdown
+            if output_format != 'md':
+                output_file = self._convert_format(md_file, output_format)
+                return str(output_file)
+            
+            return str(md_file)
+            
+        except Exception as e:
+            logger.error(f"Error generating BIM document: {str(e)}")
+            raise RuntimeError(f"Failed to generate document: {str(e)}")
     
     def get_task_description(self, issue_id: str) -> str:
         """
@@ -56,141 +190,5 @@ class DocumentGenerator:
         Returns:
             Task description string
         """
-        return textwrap.dedent(f"""
-        Generate a comprehensive debugging report for issue {issue_id} based on:
-        1. The context information gathered
-        2. The debugging plan created
-        3. The execution results collected
-        4. The analysis performed
-        
-        The report should include an executive summary, detailed analysis, and recommendations.
-        """).strip()
-    
-    def generate_report(self,
-                       issue_id: str,
-                       context: Dict[str, Any],
-                       plan: Dict[str, Any],
-                       execution_result: Dict[str, Any],
-                       analysis: Dict[str, Any]) -> str:
-        """
-        Generate a debugging report.
-        
-        Args:
-            issue_id: Issue ID
-            context: Context information
-            plan: Debugging plan
-            execution_result: Execution results
-            analysis: Analysis results
-            
-        Returns:
-            Path to the generated report file
-        """
-        try:
-            # Load template
-            template = self.template_manager.load_template(self.template_name)
-            
-            # Prepare data for template
-            data = {
-                "issue_id": issue_id,
-                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "alert_text": context.get("alert_text", "N/A"),
-                "root_cause": analysis.get("root_cause", {}).get("description", "Unknown"),
-                "confidence": analysis.get("confidence", "low"),
-                "immediate_actions": "\n".join(f"- {action}" for action in analysis.get("solution", {}).get("immediate_actions", [])),
-                "long_term_actions": "\n".join(f"- {action}" for action in analysis.get("solution", {}).get("long_term_actions", [])),
-                "error_logs": "\n".join(f"- {log['message']}" for log in context.get("logs", []) if log.get("level") in ["ERROR", "WARN"]),
-                "metrics_summary": self._format_metrics_summary(context.get("metrics", {})),
-                "trace_summary": self._format_trace_summary(context.get("traces", []))
-            }
-            
-            # Apply template
-            report_content = self.template_manager.apply_template(template, data)
-            
-            # Create reports directory if it doesn't exist
-            reports_dir = os.path.join(self.project_root, 'data', 'reports')
-            os.makedirs(reports_dir, exist_ok=True)
-            
-            # Generate filename
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = f"{issue_id}_report_{timestamp}.{self.output_format}"
-            filepath = os.path.join(reports_dir, filename)
-            
-            # Save report
-            with open(filepath, 'w') as f:
-                f.write(report_content)
-            
-            logger.info(f"Generated report at {filepath}")
-            return filepath
-        except Exception as e:
-            logger.error(f"Error generating report: {e}")
-            raise
-    
-    def _format_metrics_summary(self, metrics: Dict[str, Any]) -> str:
-        """
-        Format metrics data for the report.
-        
-        Args:
-            metrics: Metrics data
-            
-        Returns:
-            Formatted metrics summary
-        """
-        summary = []
-        
-        # CPU usage
-        cpu_values = metrics.get("cpu_usage", [])
-        if cpu_values:
-            avg_cpu = sum(cpu_values) / len(cpu_values)
-            max_cpu = max(cpu_values)
-            summary.append(f"CPU Usage: Average {avg_cpu:.1f}%, Max {max_cpu:.1f}%")
-        
-        # Memory usage
-        memory_values = metrics.get("memory_usage", [])
-        if memory_values:
-            avg_mem = sum(memory_values) / len(memory_values)
-            max_mem = max(memory_values)
-            summary.append(f"Memory Usage: Average {avg_mem:.1f}%, Max {max_mem:.1f}%")
-        
-        # Error rate
-        error_values = metrics.get("error_rate", [])
-        if error_values:
-            avg_error = sum(error_values) / len(error_values)
-            max_error = max(error_values)
-            summary.append(f"Error Rate: Average {avg_error:.2f}, Max {max_error:.2f}")
-        
-        return "\n".join(summary)
-    
-    def _format_trace_summary(self, traces: List[Dict[str, Any]]) -> str:
-        """
-        Format trace data for the report.
-        
-        Args:
-            traces: Trace data
-            
-        Returns:
-            Formatted trace summary
-        """
-        summary = []
-        
-        # Count failed traces
-        failed_traces = [trace for trace in traces 
-                        if any(span.get("status") == "error" for span in trace.get("spans", []))]
-        
-        if failed_traces:
-            summary.append(f"Found {len(failed_traces)} failed traces")
-            
-            # Group by service
-            services = {}
-            for trace in failed_traces:
-                for span in trace.get("spans", []):
-                    if span.get("status") == "error":
-                        service = span.get("service", "unknown")
-                        if service not in services:
-                            services[service] = 0
-                        services[service] += 1
-            
-            # Add service breakdown
-            for service, count in services.items():
-                summary.append(f"- {service}: {count} errors")
-        
-        return "\n".join(summary) if summary else "No trace issues found" 
+        return (f"Generate comprehensive documentation for issue {issue_id}, including analysis results, "
+                f"debugging steps taken, and recommendations.") 

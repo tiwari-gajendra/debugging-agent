@@ -1,0 +1,10 @@
+{# Stage indicator template #}
+<div class="stage-container stage-{{ status }}">
+    <div class="signal"></div>
+    <div class="stage-content">
+        <div class="stage-name">{{ stage_name }}</div>
+        {% if message %}
+        <div class="stage-message">{{ message }}</div>
+        {% endif %}
+    </div>
+</div> 

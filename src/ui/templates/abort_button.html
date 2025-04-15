@@ -1,0 +1,14 @@
+{# Abort button template #}
+<button class="abort-button" onclick="setAbortFlag()">
+    Abort Debug
+</button>
+
+<script>
+function setAbortFlag() {
+    window.parent.postMessage({
+        type: 'streamlit:setComponentValue',
+        value: true,
+        key: 'abort_debug'
+    }, '*');
+}
+</script> 

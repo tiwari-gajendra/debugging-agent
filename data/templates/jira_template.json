@@ -1,0 +1,37 @@
+{
+    "schema_version": "1.0",
+    "template_type": "jira_ticket",
+    "fields": {
+        "ticket_id": "",
+        "title": "",
+        "description": "",
+        "type": "{{default.type}}",
+        "priority": "{{default.priority}}",
+        "status": "Open",
+        "labels": "{{default.labels}}",
+        "components": "{{default.components}}",
+        "environment": {
+            "service": "",
+            "version": "",
+            "cluster": ""
+        },
+        "reporter": {
+            "name": "",
+            "email": ""
+        },
+        "assignee": {
+            "name": "",
+            "email": ""
+        },
+        "dates": {
+            "created": "",
+            "updated": "",
+            "due": ""
+        }
+    },
+    "required_fields": [
+        "ticket_id",
+        "title",
+        "description"
+    ]
+} 

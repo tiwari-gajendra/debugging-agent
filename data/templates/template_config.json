@@ -1,0 +1,55 @@
+{
+    "templates": {
+        "bim": {
+            "type": "markdown",
+            "path": "bim_template.md",
+            "description": "Bug Investigation Memo template for detailed issue analysis",
+            "default_values": {
+                "status": "Open",
+                "priority": "Medium",
+                "environment": {
+                    "service": "Unknown",
+                    "version": "Latest",
+                    "cluster": "Production"
+                }
+            }
+        },
+        "report": {
+            "type": "json",
+            "path": "report_template.json",
+            "description": "Comprehensive debugging report template",
+            "sections": [
+                "executive_summary",
+                "analysis",
+                "metrics",
+                "traces",
+                "recommendations"
+            ],
+            "default_values": {
+                "confidence": "Medium",
+                "severity": "Unknown",
+                "analysis_status": "In Progress"
+            }
+        },
+        "jira": {
+            "type": "json",
+            "path": "jira_template.json",
+            "description": "Template for JIRA ticket structure and defaults",
+            "default_values": {
+                "type": "Bug",
+                "priority": "Medium",
+                "labels": ["debugging-agent"],
+                "components": []
+            }
+        }
+    },
+    "fallback_paths": {
+        "jira_tickets": "data/test_data/jira",
+        "test_data": "data/test_data"
+    },
+    "output_paths": {
+        "reports": "data/reports",
+        "contexts": "data/contexts",
+        "logs": "data/logs"
+    }
+} 

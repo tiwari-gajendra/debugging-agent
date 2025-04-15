@@ -167,25 +167,30 @@ class DebugCrew:
                 # We'll collect all the text from the response
                 all_text = ""
                 for line in response.iter_lines():
-                    if not line:
-                        continue
-                    
-                    try:
-                        response_part = json.loads(line)
-                        response_text = response_part.get("response", "")
-                        all_text += response_text
-                        
-                        # Check for done flag
-                        if response_part.get("done", False):
-                            break
-                    except json.JSONDecodeError:
-                        logger.warning(f"Failed to decode Ollama response line: {line}")
+                    if line:  # Skip empty lines
+                        try:
+                            response_part = json.loads(line)
+                            response_text = response_part.get("response", "")
+                            all_text += response_text
+                            
+                            # Check for done flag
+                            if response_part.get("done", False):
+                                break
+                        except json.JSONDecodeError as e:
+                            logger.warning(f"Failed to decode Ollama response line: {line}. Error: {str(e)}")
                 
+                if not all_text:
+                    logger.warning("Received empty response from Ollama")
+                    return "No response received from Ollama"
+                    
                 logger.debug(f"Ollama response length: {len(all_text)} chars")
                 return all_text
         
+        except httpx.HTTPError as e:
+            logger.error(f"HTTP error calling Ollama API: {str(e)}")
+            return f"HTTP Error: {str(e)}"
         except Exception as e:
-            logger.error(f"Error calling Ollama API: {str(e)}")
+            logger.error(f"Unexpected error calling Ollama API: {str(e)}")
             return f"Error: {str(e)}"
     
     def run_direct_ollama(self, issue_id: str) -> Dict[str, Any]:
@@ -321,7 +326,7 @@ Include key insights, root causes identified, and recommendations."""
         
         try:
             # Import Task here to avoid circular imports
-            from crewai import Task
+            from crewai import Task, Crew, Process
             
             # Create tasks for each agent
             for agent_info in self.agents:
@@ -341,8 +346,7 @@ Include key insights, root causes identified, and recommendations."""
                 self.tasks.append(task)
                 logger.debug(f"Created task for agent {agent_name}")
             
-            # Create the crew with sequential process
-            from crewai import Crew, Process
+            # Create and run the crew synchronously
             crew = Crew(
                 agents=[a["crew_agent"] for a in self.agents],
                 tasks=self.tasks,
@@ -350,37 +354,27 @@ Include key insights, root causes identified, and recommendations."""
                 verbose=True
             )
             
-            # Run the crew
-            result = await crew.kickoff()
+            # Run crew synchronously - no await needed
+            result = crew.kickoff()
             
-            # Process the result
-            return {
-                "crew_output": result,
-                "document_url": None  # Will be set by document generator
-            }
+            # Get the path to the project root (two levels up from this file)
+            src_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            project_root = os.path.dirname(src_dir)
             
-        except Exception as e:
-            logger.error(f"Error running debugging process: {str(e)}")
-            raise
-        
-        # Get the path to the project root (two levels up from this file)
-        src_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        project_root = os.path.dirname(src_dir)
-        
-        # Ensure reports directory exists
-        reports_dir = os.path.join(project_root, "data", "reports")
-        os.makedirs(reports_dir, exist_ok=True)
-        
-        # Create report filename
-        timestamp = os.environ.get("TEST_TIMESTAMP") or int(datetime.now().timestamp())
-        report_filename = f"debug_report_{issue_id}_{timestamp}.html"
-        report_path = os.path.join(reports_dir, report_filename)
-        
-        logger.info(f"Generating report at {report_path}")
-        
-        # Write a basic HTML report with the crew output
-        with open(report_path, "w") as f:
-            f.write(f"""<!DOCTYPE html>
+            # Ensure reports directory exists
+            reports_dir = os.path.join(project_root, "data", "reports")
+            os.makedirs(reports_dir, exist_ok=True)
+            
+            # Create report filename
+            timestamp = os.environ.get("TEST_TIMESTAMP") or int(datetime.now().timestamp())
+            report_filename = f"debug_report_{issue_id}_{timestamp}.html"
+            report_path = os.path.join(reports_dir, report_filename)
+            
+            logger.info(f"Generating report at {report_path}")
+            
+            # Write a basic HTML report with the crew output
+            with open(report_path, "w") as f:
+                f.write(f"""<!DOCTYPE html>
 <html>
 <head>
     <title>Debug Report: {issue_id}</title>
@@ -399,7 +393,15 @@ Include key insights, root causes identified, and recommendations."""
     </div>
 </body>
 </html>""")
-        
-        logger.info(f"Report generated at {report_path}")
-        
-        return result 
+            
+            logger.info(f"Report generated at {report_path}")
+            
+            # Process the result
+            return {
+                "crew_output": str(result),
+                "document_url": report_path
+            }
+            
+        except Exception as e:
+            logger.error(f"Error running debugging process: {str(e)}")
+            raise 

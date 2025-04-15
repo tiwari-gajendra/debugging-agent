@@ -4,7 +4,14 @@ This document outlines the high-level architecture of the Debugging Agents syste
 
 ## System Overview
 
-The Debugging Agents system is an LLM-powered automated debugging platform that collects contextual information about system issues, creates detailed debugging plans, executes those plans, analyzes results, and generates comprehensive reports. The system can also forecast potential issues before they occur.
+The Debugging Agents system is an LLM-powered automated debugging platform that:
+- Collects contextual information about system issues
+- Creates detailed debugging plans
+- Executes those plans
+- Analyzes results
+- Generates comprehensive reports
+- Integrates with external systems (JIRA, Loki, etc.)
+- Preserves context across debugging sessions
 
 ![Architecture Diagram](../assets/architecture_diagram.png)
 
@@ -13,8 +20,15 @@ The Debugging Agents system is an LLM-powered automated debugging platform that 
 ```mermaid
 graph TD
     subgraph "Debugging Agents System"
+        UI["Streamlit UI"]
         CLI["CLI Interface"]
         CM["Crew Manager"]
+        
+        subgraph "External Integrations"
+            JIRA["JIRA Client"]
+            LOKI["Loki Client"]
+            SLACK["Slack Handler"]
+        end
         
         subgraph "LLM Integration"
             LF["LLM Factory"]
@@ -36,9 +50,12 @@ graph TD
             M["Metrics"]
             T["Traces"]
             C["Configs"]
+            JT["JIRA Tickets"]
         end
     end
     
+    UI --> JIRA
+    UI --> CM
     CLI --> CM
     CM --> LF
     
@@ -56,9 +73,45 @@ graph TD
     M --> CB
     T --> CB
     C --> CB
+    JT --> CB
+    
+    JIRA --> JT
+    LOKI --> L
 ```
 
 ## Core Components
+
+### User Interfaces
+
+#### Streamlit UI
+- Web-based interface for JIRA ticket debugging
+- BIM document generation
+- Real-time analysis visualization
+- Context history viewing
+- Document download capabilities
+
+#### CLI Interface
+- Command-line interface for debugging
+- Scriptable automation support
+- Batch processing capabilities
+
+### External Integrations
+
+#### JIRA Integration
+- Ticket data fetching
+- Fallback to local documents
+- Error handling and logging
+- Context preservation
+
+#### Loki Integration
+- Log collection and analysis
+- Real-time log streaming
+- Error pattern detection
+
+#### Slack Integration
+- Alert notifications
+- Report sharing
+- Interactive debugging
 
 ### Crew Manager
 
@@ -68,6 +121,15 @@ The Crew Manager (`DebugCrew`) is the central orchestrator that:
 - Coordinates the debugging workflow
 - Manages task execution and agent communication
 - Supports both direct API calls and CrewAI integration
+
+### Context Builder
+
+The Context Builder manages debugging context:
+- Collects and organizes system information
+- Preserves context across sessions
+- Supports multiple data sources
+- Maintains context history
+- Provides context-aware debugging
 
 ### LLM Factory
 
@@ -115,13 +177,21 @@ The system uses CrewAI for agent orchestration and collaboration:
 ```mermaid
 sequenceDiagram
     actor User
-    participant CLI
+    participant UI as Streamlit UI
+    participant JIRA as JIRA Client
+    participant CB as Context Builder
     participant CM as Crew Manager
     participant LF as LLM Factory
     participant Agents as CrewAI Agents
     
-    User->>CLI: debug issue-123
-    CLI->>CM: initialize_crew()
+    User->>UI: Enter JIRA Ticket ID
+    UI->>JIRA: fetch_ticket()
+    JIRA-->>UI: ticket_data
+    
+    UI->>CB: get_context()
+    CB-->>UI: context_history
+    
+    UI->>CM: initialize_crew()
     CM->>LF: create_llm(provider)
     LF-->>CM: llm_instance
     
@@ -135,26 +205,33 @@ sequenceDiagram
     CM->>Agents: run_tasks()
     Agents-->>CM: results
     
-    CM->>CLI: return_results()
-    CLI->>User: display_report()
+    CM->>CB: update_context()
+    CB-->>CM: updated_context
+    
+    CM->>UI: return_results()
+    UI->>User: display_report()
 ```
 
 ## Data Flow
 
-1. **Issue Identification**: System receives issue ID or alert
-2. **LLM Initialization**: Crew Manager configures appropriate LLM provider
-3. **Agent Setup**: CrewAI agents are initialized with the LLM
-4. **Context Collection**: Context Builder gathers system information
-5. **Plan Creation**: Debug Plan Creator generates structured plan
-6. **Execution**: Executor implements debugging steps
-7. **Analysis**: Analyzer evaluates results and identifies causes
-8. **Documentation**: Document Generator creates detailed report
+1. **Issue Identification**: System receives JIRA ticket ID
+2. **Ticket Data Collection**: JIRA client fetches ticket data
+3. **Context Retrieval**: Context Builder loads existing context
+4. **LLM Initialization**: Crew Manager configures appropriate LLM provider
+5. **Agent Setup**: CrewAI agents are initialized with the LLM
+6. **Context Collection**: Context Builder gathers system information
+7. **Plan Creation**: Debug Plan Creator generates structured plan
+8. **Execution**: Executor implements debugging steps
+9. **Analysis**: Analyzer evaluates results and identifies causes
+10. **Context Update**: Context Builder preserves new context
+11. **Documentation**: Document Generator creates detailed report
 
 ## Technology Stack
 
 ### Core Technologies
 - **Language**: Python 3.10+
 - **Agent Framework**: CrewAI
+- **UI Framework**: Streamlit
 - **LLM Integration**: 
   - OpenAI API
   - AWS Bedrock
@@ -165,11 +242,14 @@ sequenceDiagram
 - **Configuration**: PyYAML
 - **Logging**: Python standard logging
 - **Documentation**: Markdown, HTML
+- **JIRA Integration**: python-jira
+- **Document Processing**: python-docx
 
 ### Development Tools
 - **Type Checking**: Python type hints
 - **Testing**: pytest
 - **Documentation**: MkDocs
+- **Code Quality**: black, isort, mypy, pylint
 
 ## Security Model
 
@@ -189,6 +269,14 @@ sequenceDiagram
 - Access control options
 
 ## Configuration
+
+### JIRA Configuration
+```yaml
+jira:
+  base_url: https://your-domain.atlassian.net
+  api_token: your_api_token
+  fallback_dir: data/test_data/jira
+```
 
 ### LLM Configuration
 ```yaml
@@ -226,6 +314,7 @@ agents:
 - Run directly with Python
 - Use Ollama for local LLM
 - Local file system for storage
+- Streamlit for UI
 
 ### Production Deployment
 - Containerized deployment
@@ -246,6 +335,8 @@ The system is designed with several extension points:
 - **Execution Plugins**: Support for custom debugging actions specific to different technologies
 - **Report Templates**: Customizable document templates for different audiences
 - **Custom Analyzers**: Specialized analysis modules for specific types of systems
+- **UI Customization**: Extend Streamlit UI with additional features
+- **Context Storage**: Implement different context storage backends
 
 ## References
 

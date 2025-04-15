@@ -8,6 +8,7 @@ import logging
 import pickle
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional, Tuple
+from pathlib import Path
 
 import pandas as pd
 import numpy as np
@@ -31,41 +32,72 @@ class AlertForecaster:
         Initialize the Alert Forecaster.
         
         Args:
-            alert_data_path: Path to historical alert data (defaults to data/alerts.csv)
+            alert_data_path: Path to historical alert data (defaults to data/logs/service_logs)
             model_path: Path for saving/loading ML model (defaults to data/models/alert_model.pkl)
         """
-        self.alert_data_path = alert_data_path or os.path.join('data', 'alerts.csv')
+        self.alert_data_path = Path(alert_data_path) if alert_data_path else Path('data/logs/service_logs')
         self.model_path = model_path or os.path.join('data', 'models', 'alert_model.pkl')
         logger.info(f"Initializing AlertForecaster with data path: {self.alert_data_path}")
     
     def load_data(self) -> pd.DataFrame:
         """
-        Load and preprocess alert data.
+        Load alert data from JSON files.
         
         Returns:
-            DataFrame containing prepared alert data
+            DataFrame containing alert data
         """
         try:
-            # Check if file exists
-            if not os.path.exists(self.alert_data_path):
-                logger.warning(f"Alert data file not found: {self.alert_data_path}")
-                # Create sample data for demonstration
+            # Check if directory exists
+            if not self.alert_data_path.exists():
+                logger.warning(f"Alert data directory not found: {self.alert_data_path}")
                 return self._create_sample_data()
             
-            # Load data
-            df = pd.read_csv(self.alert_data_path)
-            logger.info(f"Loaded {len(df)} alert entries")
+            all_logs = []
+            # Read all JSON files in the service_logs directory
+            for log_file in self.alert_data_path.glob("*.json"):
+                try:
+                    with open(log_file, 'r') as f:
+                        logs = json.load(f)
+                        if isinstance(logs, list):
+                            all_logs.extend(logs)
+                        elif isinstance(logs, dict) and 'logs' in logs:
+                            all_logs.extend(logs['logs'])
+                except json.JSONDecodeError as e:
+                    logger.warning(f"Error parsing {log_file}: {str(e)}")
+                    continue
             
-            # Preprocess data
-            if 'timestamp' in df.columns:
-                df['timestamp'] = pd.to_datetime(df['timestamp'])
-            elif 'date' in df.columns:
-                df['timestamp'] = pd.to_datetime(df['date'])
-            else:
-                raise ValueError("Data must contain 'timestamp' or 'date' column")
+            if not all_logs:
+                logger.warning("No valid logs found in service_logs directory")
+                return self._create_sample_data()
             
+            # Convert logs to DataFrame
+            df = pd.DataFrame(all_logs)
+            
+            # Extract features from logs
+            features = {
+                'timestamp': [],
+                'cpu_usage': [],
+                'memory_usage': [],
+                'request_count': [],
+                'error_rate': [],
+                'response_time': []
+            }
+            
+            for log in all_logs:
+                metrics = log.get('metrics', {})
+                features['timestamp'].append(log.get('timestamp', datetime.now().isoformat()))
+                features['cpu_usage'].append(float(metrics.get('cpu', 0)))
+                features['memory_usage'].append(float(metrics.get('memory', 0)))
+                features['request_count'].append(int(metrics.get('requests', 0)))
+                features['error_rate'].append(float(metrics.get('error_rate', 0)))
+                features['response_time'].append(float(metrics.get('response_time', 0)))
+            
+            df = pd.DataFrame(features)
+            df['timestamp'] = pd.to_datetime(df['timestamp'])
+            
+            logger.info(f"Loaded {len(df)} log entries from service_logs")
             return df
-        
+            
         except Exception as e:
             logger.error(f"Error loading alert data: {str(e)}")
             return self._create_sample_data()
