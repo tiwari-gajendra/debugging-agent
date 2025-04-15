@@ -85,10 +85,13 @@ graph TD
 
 #### Streamlit UI
 - Web-based interface for JIRA ticket debugging
-- BIM document generation
+- BIM document generation with multiple format support (doc, pdf, markdown)
 - Real-time analysis visualization
 - Context history viewing
-- Document download capabilities
+- Document download capabilities with:
+  - Side-by-side format selector and download button
+  - Format conversion using pandoc
+  - Status messages and progress indicators
 
 #### CLI Interface
 - Command-line interface for debugging

@@ -47,16 +47,21 @@ class UIComponents:
                 help="Enter a valid JIRA ticket ID to start debugging",
                 disabled=st.session_state.debug_state == 'running',
                 key="jira_id_input"
-            )
+            ).strip().upper()
+            
+            # Update session state if JIRA ID changes
+            if jira_id != st.session_state.jira_id:
+                st.session_state.jira_id = jira_id
         
         with col2:
             if st.session_state.debug_state == 'running':
-                if st.button("🛑 Abort Debug", type="secondary", help="Stop the current debugging process"):
+                if st.button("🛑 Abort Debug", type="secondary", help="Stop the current debugging process", key="abort_button"):
                     AppState.request_abort()
                     st.rerun()
             elif jira_id:
-                AppState.start_debug(jira_id)
-                st.rerun()
+                if st.button("Start Debug", type="primary", help="Start debugging process", key="start_button"):
+                    AppState.start_debug(jira_id)
+                    st.rerun()
     
     @staticmethod
     def show_progress():
@@ -83,11 +88,12 @@ class UIComponents:
     @staticmethod
     def show_document_section():
         """Show document generation section"""
-        st.markdown("### 📄 Documentation")
+        st.markdown("### 📄 Download RCA")
         
-        # Create two columns for format selection and generation button
+        # Create columns for side by side layout
         col1, col2 = st.columns([3, 1])
         
+        # Format selector
         with col1:
             doc_format = st.selectbox(
                 "Document Format",
@@ -98,45 +104,56 @@ class UIComponents:
                 disabled=st.session_state.debug_state == 'running'
             )
         
-        # Show appropriate state and controls based on debug state
-        if st.session_state.debug_state == 'running':
-            st.info("🔄 Debug in progress... Document will be available once completed.", icon="🔄")
-            
-        elif st.session_state.debug_state == 'error':
-            st.error("❌ Debug failed. Please fix errors and try again.", icon="❌")
-            
-        elif st.session_state.debug_state == 'success':
-            st.success("✅ Debug completed successfully. You can now download the document.", icon="✅")
-            
-            # Check for existing reports
-            reports_dir = Path("data/reports")
-            jira_id = st.session_state.jira_id.upper()
-            
-            # Look for both BIM and debug report files
-            report_files = []
-            for pattern in [f"BIM_{jira_id}*", f"debug_report_{jira_id}*"]:
-                report_files.extend(list(reports_dir.glob(pattern)))
-            
-            if report_files:
-                # Sort by modification time to get the most recent
-                latest_report = max(report_files, key=lambda x: x.stat().st_mtime)
+        # Download button
+        with col2:
+            st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)  # More precise spacing
+            if st.session_state.debug_state == 'success':
+                reports_dir = Path("data/reports")
+                jira_id = st.session_state.jira_id.upper()
+                report_files = []
                 
-                # Show download button
-                with open(latest_report, 'rb') as f:
-                    st.download_button(
-                        label=f"📥 Download {doc_format.upper()}",
-                        data=f,
-                        file_name=f"{jira_id}_report.{doc_format}",
-                        mime=f"application/{doc_format}",
-                        help=f"Download the generated document in {doc_format.upper()} format",
-                        key="download_button",
+                for pattern in [f"BIM_{jira_id}*", f"debug_report_{jira_id}*"]:
+                    report_files.extend(list(reports_dir.glob(pattern)))
+                
+                if report_files:
+                    latest_report = max(report_files, key=lambda x: x.stat().st_mtime)
+                    with open(latest_report, 'rb') as f:
+                        st.download_button(
+                            label="📥 Download",
+                            data=f,
+                            file_name=f"{jira_id}_report.{doc_format}",
+                            mime=f"application/{doc_format}",
+                            help=f"Download the generated document in {doc_format.upper()} format",
+                            key="download_button",
+                            use_container_width=True
+                        )
+                else:
+                    st.button(
+                        "📥 Download",
+                        disabled=True,
+                        help="No report files found",
+                        key="download_button_missing",
                         use_container_width=True
                     )
             else:
+                st.button(
+                    "📥 Download",
+                    disabled=True,
+                    help="Start debugging to generate a downloadable document",
+                    key="download_button_ready",
+                    use_container_width=True
+                )
+        
+        # Show status messages below the controls
+        if st.session_state.debug_state == 'running':
+            st.info("🔄 Debug in progress... Document will be available once completed.", icon="🔄")
+        elif st.session_state.debug_state == 'error':
+            st.error("❌ Debug failed. Please fix errors and try again.", icon="❌")
+        elif st.session_state.debug_state == 'success':
+            if not report_files:
                 st.warning("⚠️ No report files found. Please try regenerating the document.", icon="⚠️")
-        else:
-            # Ready state
-            st.info("ℹ️ Start debugging to generate documentation.", icon="ℹ️")
+            else:
+                st.success("✅ Debug completed successfully. You can now download the document.", icon="✅")
     
     def show_progress_stages(self):
         """Show detailed progress stages with status indicators"""

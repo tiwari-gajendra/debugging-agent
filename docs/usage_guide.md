@@ -110,9 +110,18 @@ The system automatically:
 
 ### 3. Document Generation
 
-1. BIM documents are generated in `data/reports/`
-2. Analysis results are saved in JSON format
-3. HTML reports are created for visualization
+The document section is always visible in the UI and provides:
+1. A format selector dropdown (supports doc, pdf, and markdown)
+2. A download button that becomes active once debugging is complete
+3. Status messages indicating the current state of document generation
+
+To generate and download a document:
+1. Enter a valid JIRA ticket ID and start debugging
+2. Select your desired format from the dropdown
+3. Once debugging is complete, click the download button
+4. The document will be generated in your chosen format
+
+Note: Format conversion requires pandoc to be installed on your system.
 
 ## Troubleshooting
 

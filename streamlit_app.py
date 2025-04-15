@@ -94,7 +94,8 @@ class DebugAssistant:
                 'abort_requested': False,
                 'initialized': True,
                 'jira_id': '',  # Store the actual JIRA ID value
-                'debug_timeout': self.debug_timeout  # Store timeout in session state
+                'debug_state': 'ready',  # Add debug state initialization
+                'doc_format': 'doc'  # Default document format
             }
             for key, value in defaults.items():
                 st.session_state[key] = value
@@ -217,6 +218,21 @@ class DebugAssistant:
             self.logger.warning("Abort requested by user")
             st.session_state.abort_requested = True
             self.cleanup()
+            st.rerun()
+        
+        # Add some spacing before the document section
+        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+        
+        # Always show document section after debug buttons
+        UIComponents.show_document_section()
+        
+        # Handle abort request
+        if st.session_state.abort_requested:
+            self.logger.warning("Debug process aborted by user")
+            st.session_state.app_state.set_error("Debug process aborted by user")
+            st.session_state.abort_requested = False
+            st.session_state.is_debugging = False
+            st.session_state.app_state.reset()
             st.rerun()
         
         return jira_id, start_clicked

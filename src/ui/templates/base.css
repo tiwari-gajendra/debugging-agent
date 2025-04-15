@@ -1,0 +1,14 @@
+/* Download button alignment */
+div[data-testid="column"]:nth-child(2) {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+}
+
+div[data-testid="column"]:nth-child(2) .stDownloadButton {
+    margin-top: 21px;  /* Align with selectbox input */
+}
+
+div[data-testid="column"]:nth-child(2) .stDownloadButton button {
+    height: 38px;
+} 

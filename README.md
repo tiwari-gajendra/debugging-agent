@@ -11,6 +11,12 @@ An AI-powered debugging assistant that uses multiple specialized agents to analy
 - 🚀 Streamlit web interface
 - 🔄 Real-time progress tracking
 
+## Requirements
+
+- Python 3.8+
+- Pandoc (for document format conversion)
+- Python packages listed in requirements.txt
+
 ## Installation
 
 1. Clone the repository:
@@ -30,17 +36,20 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Install pandoc (required for document format conversion):
+4. Install pandoc:
+
+macOS:
 ```bash
-# macOS
 brew install pandoc
-
-# Linux
-sudo apt-get install pandoc
-
-# Windows
-choco install pandoc
 ```
+
+Linux:
+```bash
+sudo apt-get install pandoc
+```
+
+Windows:
+Download the installer from https://pandoc.org/installing.html
 
 5. Copy the example environment file and configure:
 ```bash
