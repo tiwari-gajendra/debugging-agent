@@ -87,6 +87,8 @@ class UIComponents:
             return
             
         st.markdown("### Generate Documentation")
+        
+        # Create two columns for format selection and generation button
         col1, col2 = st.columns([3, 1])
         
         with col1:
@@ -99,11 +101,40 @@ class UIComponents:
             )
         
         with col2:
-            return st.button(
-                "📄 Generate Document",
+            generate_clicked = st.button(
+                "📄 Generate",
                 help="Generate a BIM document from the analysis",
                 type="primary"
             )
+            
+        # Check for existing reports
+        if generate_clicked or st.session_state.get('doc_generated'):
+            reports_dir = Path("data/reports")
+            jira_id = st.session_state.jira_id.upper()
+            
+            # Look for both BIM and debug report files
+            report_files = []
+            for pattern in [f"BIM_{jira_id}*", f"debug_report_{jira_id}*"]:
+                report_files.extend(list(reports_dir.glob(pattern)))
+            
+            if report_files:
+                # Sort by modification time to get the most recent
+                latest_report = max(report_files, key=lambda x: x.stat().st_mtime)
+                
+                # Show download button
+                with open(latest_report, 'rb') as f:
+                    st.download_button(
+                        label=f"📥 Download {doc_format.upper()}",
+                        data=f,
+                        file_name=f"{jira_id}_report.{doc_format}",
+                        mime=f"application/{doc_format}",
+                        help=f"Download the generated document in {doc_format.upper()} format",
+                        key="download_button"
+                    )
+                st.session_state.doc_generated = True
+            else:
+                st.warning("No report files found. Please generate the document first.")
+                st.session_state.doc_generated = False
     
     def show_progress_stages(self):
         """Show detailed progress stages with status indicators"""

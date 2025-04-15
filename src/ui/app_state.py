@@ -123,6 +123,8 @@ class AppState:
             st.session_state.current_stage = None
         if 'abort_requested' not in st.session_state:
             st.session_state.abort_requested = False
+        if 'doc_generated' not in st.session_state:
+            st.session_state.doc_generated = False
     
     @staticmethod
     def request_abort():
@@ -131,6 +133,7 @@ class AppState:
         st.session_state.debug_state = 'ready'
         st.session_state.current_stage = None
         st.session_state.stage_status = {}
+        st.session_state.doc_generated = False
     
     @staticmethod
     def start_debug(jira_id: str):
@@ -139,4 +142,5 @@ class AppState:
         st.session_state.abort_requested = False
         st.session_state.jira_id = jira_id
         st.session_state.error_message = None
-        st.session_state.stage_status = {} 
+        st.session_state.stage_status = {}
+        st.session_state.doc_generated = False 
