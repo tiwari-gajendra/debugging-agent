@@ -83,10 +83,7 @@ class UIComponents:
     @staticmethod
     def show_document_section():
         """Show document generation section"""
-        if st.session_state.debug_state != 'success':
-            return
-            
-        st.markdown("### Generate Documentation")
+        st.markdown("### 📄 Documentation")
         
         # Create two columns for format selection and generation button
         col1, col2 = st.columns([3, 1])
@@ -97,18 +94,21 @@ class UIComponents:
                 options=["doc", "pdf", "markdown"],
                 index=0,
                 help="Select the output format for the BIM document",
-                key="doc_format"
+                key="doc_format",
+                disabled=st.session_state.debug_state == 'running'
             )
         
-        with col2:
-            generate_clicked = st.button(
-                "📄 Generate",
-                help="Generate a BIM document from the analysis",
-                type="primary"
-            )
+        # Show appropriate state and controls based on debug state
+        if st.session_state.debug_state == 'running':
+            st.info("🔄 Debug in progress... Document will be available once completed.", icon="🔄")
             
-        # Check for existing reports
-        if generate_clicked or st.session_state.get('doc_generated'):
+        elif st.session_state.debug_state == 'error':
+            st.error("❌ Debug failed. Please fix errors and try again.", icon="❌")
+            
+        elif st.session_state.debug_state == 'success':
+            st.success("✅ Debug completed successfully. You can now download the document.", icon="✅")
+            
+            # Check for existing reports
             reports_dir = Path("data/reports")
             jira_id = st.session_state.jira_id.upper()
             
@@ -129,12 +129,14 @@ class UIComponents:
                         file_name=f"{jira_id}_report.{doc_format}",
                         mime=f"application/{doc_format}",
                         help=f"Download the generated document in {doc_format.upper()} format",
-                        key="download_button"
+                        key="download_button",
+                        use_container_width=True
                     )
-                st.session_state.doc_generated = True
             else:
-                st.warning("No report files found. Please generate the document first.")
-                st.session_state.doc_generated = False
+                st.warning("⚠️ No report files found. Please try regenerating the document.", icon="⚠️")
+        else:
+            # Ready state
+            st.info("ℹ️ Start debugging to generate documentation.", icon="ℹ️")
     
     def show_progress_stages(self):
         """Show detailed progress stages with status indicators"""
