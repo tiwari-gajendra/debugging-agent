@@ -14,7 +14,6 @@ An AI-powered debugging assistant that uses multiple specialized agents to analy
 ## Requirements
 
 - Python 3.8+
-- Pandoc (for document format conversion)
 - Python packages listed in requirements.txt
 
 ## Installation
@@ -36,22 +35,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Install pandoc:
-
-macOS:
-```bash
-brew install pandoc
-```
-
-Linux:
-```bash
-sudo apt-get install pandoc
-```
-
-Windows:
-Download the installer from https://pandoc.org/installing.html
-
-5. Copy the example environment file and configure:
+4. Copy the example environment file and configure:
 ```bash
 cp .env.example .env
 # Edit .env with your settings

@@ -85,12 +85,13 @@ graph TD
 
 #### Streamlit UI
 - Web-based interface for JIRA ticket debugging
-- BIM document generation with multiple format support (doc, pdf, markdown)
+- BIM document generation with multiple format support (doc, pdf)
 - Real-time analysis visualization
 - Context history viewing
 - Document download capabilities with:
   - Side-by-side format selector and download button
-  - Format conversion using pandoc
+  - Format conversion using pure Python libraries (WeasyPrint, python-docx)
+  - Graceful error handling with fallback mechanisms
   - Status messages and progress indicators
 
 #### CLI Interface
@@ -171,7 +172,7 @@ The system uses CrewAI for agent orchestration and collaboration:
 
 #### Document Generator
 - Produces debugging reports
-- Supports multiple formats (HTML, Markdown)
+- Supports multiple formats (HTML for internal processing, doc and pdf for export)
 - Uses customizable templates
 - Includes metrics and analysis
 

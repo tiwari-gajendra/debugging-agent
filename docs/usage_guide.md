@@ -110,18 +110,21 @@ The system automatically:
 
 ### 3. Document Generation
 
-The document section is always visible in the UI and provides:
-1. A format selector dropdown (supports doc, pdf, and markdown)
-2. A download button that becomes active once debugging is complete
-3. Status messages indicating the current state of document generation
+After a successful debug analysis, you can download the BIM document in your preferred format:
 
-To generate and download a document:
-1. Enter a valid JIRA ticket ID and start debugging
-2. Select your desired format from the dropdown
-3. Once debugging is complete, click the download button
-4. The document will be generated in your chosen format
+1. Select your desired format from the Document Format dropdown:
+   - **doc**: Microsoft Word document format
+   - **pdf**: Portable Document Format
 
-Note: Format conversion requires pandoc to be installed on your system.
+2. Click the "Download" button to save the report to your computer.
+
+3. The document includes:
+   - A summary of the debugging process
+   - Issue analysis
+   - Root cause determination
+   - Recommended solutions
+
+> **Note:** Format conversion is handled automatically using built-in Python libraries. No external dependencies are required for document conversion.
 
 ## Troubleshooting
 

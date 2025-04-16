@@ -31,14 +31,13 @@ tenacity>=8.2.3
 python-docx>=1.1.0
 PyPDF2>=3.0.0
 streamlit>=1.32.0
+weasyprint>=60.0
+requests>=2.31.0
+litellm>=1.10.1
+markdown>=3.5.0
 
 # Development
 black>=24.2.0
 isort>=5.13.0
 mypy>=1.8.0
-pylint>=3.0.3
-
-# New additions
-pypandoc>=1.11
-requests>=2.31.0
-litellm>=1.10.1 
+pylint>=3.0.3 
