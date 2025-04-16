@@ -34,7 +34,9 @@ graph TD
             LF["LLM Factory"]
             OL["Ollama"]
             BR["AWS Bedrock"]
+            AN["Anthropic"]
             OA["OpenAI"]
+            SF["Snowflake Cortex"]
         end
         
         subgraph "CrewAI Agents"
@@ -61,7 +63,9 @@ graph TD
     
     LF --> OL
     LF --> BR
+    LF --> AN
     LF --> OA
+    LF --> SF
     
     CM --> CB
     CB --> DPC
@@ -139,7 +143,8 @@ The Context Builder manages debugging context:
 
 The LLM Factory provides a unified interface for different LLM providers:
 - OpenAI (GPT-4, etc.)
-- AWS Bedrock (Claude, etc.)
+- Anthropic (Claude, etc.)
+- AWS Bedrock (Claude and other models)
 - Ollama (local models)
 - Snowflake Cortex AI (Llama 3, etc.)
 - Handles provider-specific configuration and API calls
@@ -239,8 +244,10 @@ sequenceDiagram
 - **UI Framework**: Streamlit
 - **LLM Integration**: 
   - OpenAI API
+  - Anthropic API
   - AWS Bedrock
   - Ollama (local models)
+  - Snowflake Cortex AI
 
 ### Dependencies
 - **HTTP Client**: httpx

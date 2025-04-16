@@ -363,7 +363,7 @@ The system can be configured through environment variables or a configuration fi
 ### Environment Variables
 
 ```
-LLM_PROVIDER=openai|bedrock|ollama|snowflake|cortex
+LLM_PROVIDER=openai|bedrock|ollama|anthropic|snowflake|cortex
 LLM_MODEL=<model-name>
 DATA_DIR=<path-to-data>
 LOG_LEVEL=DEBUG|INFO|WARNING|ERROR
@@ -373,7 +373,7 @@ LOG_LEVEL=DEBUG|INFO|WARNING|ERROR
 
 ```yaml
 llm:
-  provider: openai|bedrock|ollama|snowflake|cortex
+  provider: openai|bedrock|ollama|anthropic|snowflake|cortex
   model: <model-name>
   temperature: 0.2
   max_tokens: 4096

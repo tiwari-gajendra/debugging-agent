@@ -16,10 +16,10 @@ from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
 from langchain_aws import BedrockLLM
 try:
-    from langchain.llms import SnowflakeLLM
+    from langchain_anthropic import ChatAnthropic
 except ImportError:
     logger = logging.getLogger(__name__)
-    logger.warning("SnowflakeLLM not available. Install with 'pip install langchain-snowflake'")
+    logger.warning("ChatAnthropic not available. Install with 'pip install langchain-anthropic'")
 
 # Import boto3 for AWS services
 import boto3
@@ -39,7 +39,7 @@ class LLMFactory:
         Create an LLM instance based on the provider and model.
         
         Args:
-            provider: The LLM provider (openai, bedrock, ollama, snowflake)
+            provider: The LLM provider (openai, bedrock, ollama, anthropic, snowflake)
             model: The specific model to use (defaults to env variable)
             **kwargs: Additional arguments for the LLM
             
@@ -94,7 +94,33 @@ class LLMFactory:
                 **kwargs
             )
         
-        elif provider == 'bedrock' or provider == 'anthropic':
+        elif provider == 'anthropic':
+            # Direct Anthropic API integration
+            try:
+                from langchain_anthropic import ChatAnthropic
+            except ImportError:
+                raise ImportError("ChatAnthropic not available. Install with 'pip install langchain-anthropic'")
+                
+            # Get model from environment or use default
+            model_name = model or os.getenv('ANTHROPIC_MODEL', 'claude-3-opus-20240229')
+            api_key = os.getenv('ANTHROPIC_API_KEY')
+            
+            if not api_key:
+                raise ValueError("ANTHROPIC_API_KEY environment variable is required for Anthropic provider")
+                
+            logger.info(f"Using Anthropic with model={model_name}")
+            
+            # For CrewAI compatibility
+            os.environ["OPENAI_API_KEY"] = "sk-valid-anthropic-key"
+            os.environ["CREW_LLM_PROVIDER"] = "anthropic"
+            
+            return ChatAnthropic(
+                model=model_name,
+                anthropic_api_key=api_key,
+                **kwargs
+            )
+        
+        elif provider == 'bedrock':
             # For AWS Bedrock (which hosts Anthropic models)
             model_name = model or os.getenv('BEDROCK_MODEL', 'anthropic.claude-3-sonnet-20240229-v1:0')
             region = os.getenv('AWS_DEFAULT_REGION', 'us-east-1')
@@ -183,7 +209,7 @@ class LLMFactory:
             )
         
         else:
-            raise ValueError(f"Unsupported LLM provider: {provider}")
+            raise ValueError(f"Unsupported LLM provider: {provider}. Valid options are: openai, ollama, bedrock, anthropic, snowflake, cortex")
     
     @staticmethod
     def validate_environment(provider: str = None) -> bool:
@@ -206,8 +232,16 @@ class LLMFactory:
         
         if provider == 'openai':
             required_vars = ["OPENAI_API_KEY"]
-        elif provider == 'bedrock' or provider == 'anthropic':
+        elif provider == 'bedrock':
             required_vars = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_DEFAULT_REGION"]
+        elif provider == 'anthropic':
+            required_vars = ["ANTHROPIC_API_KEY"]
+            # Check if langchain-anthropic is installed
+            try:
+                from langchain_anthropic import ChatAnthropic
+            except ImportError:
+                logger.error("Missing required package: langchain-anthropic. Install with: pip install langchain-anthropic")
+                return False
         elif provider == 'ollama':
             # Ollama just needs a running server, no keys required
             required_vars = []
