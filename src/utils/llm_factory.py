@@ -134,9 +134,16 @@ class LLMFactory:
             
         elif provider == 'snowflake' or provider == 'cortex':
             try:
-                from langchain.llms import SnowflakeLLM
+                # First try to import directly from langchain
+                from langchain.llms import SnowflakeConnection
+                logger.info("Using SnowflakeConnection from langchain")
             except ImportError:
-                raise ImportError("SnowflakeLLM not available. Install with 'pip install langchain-snowflake'")
+                try:
+                    # Try from community module
+                    from langchain_community.llms import SnowflakeConnection
+                    logger.info("Using SnowflakeConnection from langchain_community")
+                except ImportError:
+                    raise ImportError("SnowflakeConnection not available. Install with: pip install snowflake-connector-python langchain langchain-community")
                 
             # Get Snowflake connection parameters from environment
             account = os.getenv('SNOWFLAKE_ACCOUNT')
@@ -148,7 +155,7 @@ class LLMFactory:
             role = os.getenv('SNOWFLAKE_ROLE', 'CORTEX_ROLE')
             
             # Get model from environment or use default
-            model_name = model or os.getenv('SNOWFLAKE_MODEL', 'llama-3-08-70b-instruct')
+            model_name = model or os.getenv('SNOWFLAKE_MODEL', 'llama-3-8b-instruct')
             
             logger.info(f"Using Snowflake Cortex AI with model={model_name}")
             
@@ -156,25 +163,22 @@ class LLMFactory:
             os.environ["OPENAI_API_KEY"] = "sk-valid-cortex-key"
             os.environ["CREW_LLM_PROVIDER"] = "snowflake"
             
-            # Set up Snowflake connection parameters
-            snowflake_configs = {
+            # Create connection parameters
+            connection_kwargs = {
                 "account": account,
                 "user": user,
-                "password": password, 
+                "password": password,
                 "database": database,
                 "schema": schema,
                 "warehouse": warehouse,
-                "role": role
+                "role": role,
             }
             
-            # Set up model kwargs
-            model_kwargs = kwargs.get('model_kwargs', {})
-            if 'temperature' in kwargs and 'temperature' not in model_kwargs:
-                model_kwargs['temperature'] = kwargs['temperature']
-            
-            return SnowflakeLLM(
-                model_name=model_name,
-                snowflake_configs=snowflake_configs,
+            # Create a Snowflake LLM using the connection
+            return SnowflakeConnection(
+                connection_kwargs=connection_kwargs,
+                model_name=model_name, 
+                temperature=temperature,
                 **kwargs
             )
         
@@ -211,11 +215,11 @@ class LLMFactory:
             return True
         elif provider == 'snowflake' or provider == 'cortex':
             required_vars = ["SNOWFLAKE_ACCOUNT", "SNOWFLAKE_USER", "SNOWFLAKE_PASSWORD"]
-            # Check if langchain-snowflake is installed
+            # Check if snowflake-connector-python is installed
             try:
-                from langchain.llms import SnowflakeLLM
+                import snowflake.connector
             except ImportError:
-                logger.error("Missing required package: langchain-snowflake. Install with: pip install langchain-snowflake")
+                logger.error("Missing required package: snowflake-connector-python. Install with: pip install snowflake-connector-python")
                 return False
         else:
             logger.error(f"Unknown provider: {provider}. Valid options are: openai, ollama, bedrock, anthropic, snowflake, cortex")
