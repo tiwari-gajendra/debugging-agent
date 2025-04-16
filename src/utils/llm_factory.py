@@ -15,6 +15,11 @@ from langchain_core.language_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
 from langchain_aws import BedrockLLM
+try:
+    from langchain.llms import SnowflakeLLM
+except ImportError:
+    logger = logging.getLogger(__name__)
+    logger.warning("SnowflakeLLM not available. Install with 'pip install langchain-snowflake'")
 
 # Import boto3 for AWS services
 import boto3
@@ -34,7 +39,7 @@ class LLMFactory:
         Create an LLM instance based on the provider and model.
         
         Args:
-            provider: The LLM provider (openai, bedrock, ollama)
+            provider: The LLM provider (openai, bedrock, ollama, snowflake)
             model: The specific model to use (defaults to env variable)
             **kwargs: Additional arguments for the LLM
             
@@ -126,6 +131,52 @@ class LLMFactory:
                 model_kwargs=model_kwargs,
                 **kwargs
             )
+            
+        elif provider == 'snowflake' or provider == 'cortex':
+            try:
+                from langchain.llms import SnowflakeLLM
+            except ImportError:
+                raise ImportError("SnowflakeLLM not available. Install with 'pip install langchain-snowflake'")
+                
+            # Get Snowflake connection parameters from environment
+            account = os.getenv('SNOWFLAKE_ACCOUNT')
+            user = os.getenv('SNOWFLAKE_USER')
+            password = os.getenv('SNOWFLAKE_PASSWORD')
+            database = os.getenv('SNOWFLAKE_DATABASE', 'CORTEX_DB')
+            schema = os.getenv('SNOWFLAKE_SCHEMA', 'CORTEX_SCHEMA')
+            warehouse = os.getenv('SNOWFLAKE_WAREHOUSE', 'CORTEX_WH')
+            role = os.getenv('SNOWFLAKE_ROLE', 'CORTEX_ROLE')
+            
+            # Get model from environment or use default
+            model_name = model or os.getenv('SNOWFLAKE_MODEL', 'llama-3-08-70b-instruct')
+            
+            logger.info(f"Using Snowflake Cortex AI with model={model_name}")
+            
+            # For CrewAI compatibility
+            os.environ["OPENAI_API_KEY"] = "sk-valid-cortex-key"
+            os.environ["CREW_LLM_PROVIDER"] = "snowflake"
+            
+            # Set up Snowflake connection parameters
+            snowflake_configs = {
+                "account": account,
+                "user": user,
+                "password": password, 
+                "database": database,
+                "schema": schema,
+                "warehouse": warehouse,
+                "role": role
+            }
+            
+            # Set up model kwargs
+            model_kwargs = kwargs.get('model_kwargs', {})
+            if 'temperature' in kwargs and 'temperature' not in model_kwargs:
+                model_kwargs['temperature'] = kwargs['temperature']
+            
+            return SnowflakeLLM(
+                model_name=model_name,
+                snowflake_configs=snowflake_configs,
+                **kwargs
+            )
         
         else:
             raise ValueError(f"Unsupported LLM provider: {provider}")
@@ -158,8 +209,16 @@ class LLMFactory:
             required_vars = []
             logger.info(f"Using Ollama provider, no environment variables required")
             return True
+        elif provider == 'snowflake' or provider == 'cortex':
+            required_vars = ["SNOWFLAKE_ACCOUNT", "SNOWFLAKE_USER", "SNOWFLAKE_PASSWORD"]
+            # Check if langchain-snowflake is installed
+            try:
+                from langchain.llms import SnowflakeLLM
+            except ImportError:
+                logger.error("Missing required package: langchain-snowflake. Install with: pip install langchain-snowflake")
+                return False
         else:
-            logger.error(f"Unknown provider: {provider}. Valid options are: openai, ollama, bedrock, anthropic")
+            logger.error(f"Unknown provider: {provider}. Valid options are: openai, ollama, bedrock, anthropic, snowflake, cortex")
             return False
         
         missing_vars = [var for var in required_vars if not os.getenv(var)]

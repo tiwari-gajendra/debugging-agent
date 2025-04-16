@@ -141,6 +141,7 @@ The LLM Factory provides a unified interface for different LLM providers:
 - OpenAI (GPT-4, etc.)
 - AWS Bedrock (Claude, etc.)
 - Ollama (local models)
+- Snowflake Cortex AI (Llama 3, etc.)
 - Handles provider-specific configuration and API calls
 - Manages environment variables and credentials
 

@@ -86,9 +86,13 @@ debugging-agents/
 
 The application can be configured through environment variables in the `.env` file:
 
-- `LLM_PROVIDER`: LLM provider (openai, ollama, bedrock, anthropic)
+- `LLM_PROVIDER`: LLM provider (openai, ollama, bedrock, anthropic, snowflake, cortex)
 - `OLLAMA_MODEL`: Model name for Ollama (default: deepseek-r1:8b)
 - `OLLAMA_BASE_URL`: Ollama API URL (default: http://localhost:11434)
+- `SNOWFLAKE_ACCOUNT`: Snowflake account identifier
+- `SNOWFLAKE_USER`: Snowflake username
+- `SNOWFLAKE_PASSWORD`: Snowflake password
+- `SNOWFLAKE_MODEL`: Snowflake Cortex AI model name (default: llama-3-08-70b-instruct)
 - `JIRA_URL`: JIRA instance URL
 - `JIRA_USERNAME`: JIRA username
 - `JIRA_API_TOKEN`: JIRA API token

@@ -4,6 +4,7 @@ langchain-core>=0.3.0,<0.4.0
 langchain-ollama>=0.3.0,<0.4.0
 langchain-openai>=0.3.0,<0.4.0
 langchain-aws>=0.2.19,<0.3.0
+langchain-snowflake>=0.0.5
 crewai>=0.11.0
 httpx>=0.26.0
 prophet>=1.1.6
