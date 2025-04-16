@@ -1,5 +1,5 @@
 """
-Document Generator for BIM reports
+Document Generator for BIM reports - Supports generating .doc and .pdf formats
 """
 
 import json
@@ -8,6 +8,8 @@ from datetime import datetime
 from typing import Dict, Any, List
 import time
 import logging
+import os
+from markdown import markdown
 
 logger = logging.getLogger(__name__)
 
@@ -100,85 +102,220 @@ class DocumentGenerator:
         return formatted
         
     def _convert_format(self, input_file: Path, output_format: str) -> Path:
-        """Convert document to desired format."""
+        """Convert document to desired format without external dependencies."""
+        input_file = Path(input_file)
+        output_file = input_file.parent / f"{input_file.stem}.{output_format}"
+        
         try:
-            import pypandoc
-            output_file = input_file.parent / f"{input_file.stem}.{output_format}"
+            # If input is already in the requested format, just return it
+            if input_file.suffix[1:] == output_format:
+                return input_file
+                
+            # Read the input file content - use binary mode first to detect encoding issues
+            try:
+                # First try UTF-8 encoding
+                with open(input_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+            except UnicodeDecodeError:
+                # If UTF-8 fails, try with latin-1 (which accepts any byte value)
+                with open(input_file, 'r', encoding='latin-1') as f:
+                    content = f.read()
             
-            # Convert using pandoc
-            pypandoc.convert_file(
-                str(input_file),
-                output_format,
-                outputfile=str(output_file),
-                format=input_file.suffix[1:]  # Remove the dot from suffix
-            )
-            
-            return output_file
-        except ImportError:
-            logger.error("pypandoc not installed. Please install it for format conversion.")
-            raise
+            # Handle different output formats
+            if output_format == 'pdf':
+                # Use WeasyPrint for PDF conversion (pure Python)
+                try:
+                    from weasyprint import HTML
+                    HTML(string=content).write_pdf(output_file)
+                    return output_file
+                except ImportError:
+                    logger.error("WeasyPrint not installed. Please install it with: pip install weasyprint")
+                    raise
+                except Exception as e:
+                    logger.error(f"Error converting to PDF: {str(e)}")
+                    raise
+                    
+            elif output_format == 'doc' or output_format == 'docx':
+                # Use python-docx for DOCX creation (pure Python)
+                try:
+                    from docx import Document
+                    from docx.shared import Inches
+                    
+                    # Create a new Document
+                    doc = Document()
+                    
+                    # Add a title
+                    doc.add_heading('Debug Report', 0)
+                    
+                    # Simple HTML parsing to extract content and ignore CSS
+                    # Split into lines and process
+                    in_style_block = False
+                    in_pre_block = False
+                    clean_content = []
+                    
+                    for line in content.split('\n'):
+                        # Skip CSS/style content
+                        if line.strip().startswith('body {') or line.strip().startswith('h1 {') or line.strip().startswith('.section {') or line.strip().startswith('pre {'):
+                            in_style_block = True
+                            continue
+                        
+                        if in_style_block and line.strip().endswith('}'):
+                            in_style_block = False
+                            continue
+                            
+                        if in_style_block:
+                            continue
+                            
+                        # Check for pre blocks (code blocks)
+                        if line.strip() == '<pre>':
+                            in_pre_block = True
+                            continue
+                            
+                        if line.strip() == '</pre>':
+                            in_pre_block = False
+                            continue
+                        
+                        # Skip most HTML tags but keep content
+                        if (line.strip().startswith('<') and line.strip().endswith('>')) and not ('</' in line and '>' in line):
+                            continue
+                            
+                        # Add line to our cleaned content
+                        clean_content.append(line)
+                    
+                    # Now process the cleaned content
+                    current_text = ""
+                    
+                    for line in clean_content:
+                        # Try to detect headings
+                        if line.strip().startswith('**') and line.strip().endswith('**'):
+                            # If we have accumulated text, add it as a paragraph
+                            if current_text.strip():
+                                doc.add_paragraph(current_text)
+                                current_text = ""
+                            
+                            # Add the heading (remove ** markers)
+                            heading_text = line.strip().replace('**', '')
+                            if heading_text.strip():
+                                doc.add_heading(heading_text, level=2)
+                        elif line.strip().startswith('# '):
+                            if current_text.strip():
+                                doc.add_paragraph(current_text)
+                                current_text = ""
+                            doc.add_heading(line[2:], level=1)
+                        elif line.strip().startswith('## '):
+                            if current_text.strip():
+                                doc.add_paragraph(current_text)
+                                current_text = ""
+                            doc.add_heading(line[3:], level=2)
+                        elif line.strip().startswith('### '):
+                            if current_text.strip():
+                                doc.add_paragraph(current_text)
+                                current_text = ""
+                            doc.add_heading(line[4:], level=3)
+                        elif line.strip().startswith('- '):
+                            # Handle list items
+                            if current_text.strip():
+                                doc.add_paragraph(current_text)
+                                current_text = ""
+                            doc.add_paragraph(line.strip(), style='List Bullet')
+                        elif line.strip().startswith('1.') or line.strip().startswith('2.') or line.strip().startswith('3.'):
+                            # Handle numbered list items
+                            if current_text.strip():
+                                doc.add_paragraph(current_text)
+                                current_text = ""
+                            doc.add_paragraph(line.strip(), style='List Number')
+                        elif not line.strip():
+                            # Empty line - add paragraph break
+                            if current_text.strip():
+                                doc.add_paragraph(current_text)
+                                current_text = ""
+                        else:
+                            # Add to current paragraph text
+                            if current_text:
+                                current_text += " " + line.strip()
+                            else:
+                                current_text = line.strip()
+                    
+                    # Add any remaining text
+                    if current_text.strip():
+                        doc.add_paragraph(current_text)
+                    
+                    # Save the document
+                    doc.save(str(output_file))
+                    return output_file
+                except ImportError:
+                    logger.error("python-docx not installed. Please install it with: pip install python-docx")
+                    raise
+                except Exception as e:
+                    logger.error(f"Error converting to DOCX: {str(e)}")
+                    raise
+            else:
+                logger.error(f"Unsupported output format: {output_format}")
+                raise ValueError(f"Unsupported output format: {output_format}")
+                
         except Exception as e:
-            logger.error(f"Error converting document format: {str(e)}")
-            raise
+            logger.error(f"Document conversion failed: {str(e)}")
+            # Return original file if conversion fails
+            return input_file
     
-    def generate_bim_doc(self, ticket_data: dict, output_format: str = 'doc') -> str:
+    def generate_bim_doc(self, ticket_data, format='doc'):
         """
-        Generate a BIM document from ticket data.
+        Generate a BIM document from ticket data in either doc or pdf format.
+        
+        The method uses HTML as an intermediate format internally for conversion
+        purposes, but only doc and pdf are supported as final output formats.
         
         Args:
-            ticket_data: Dictionary containing ticket data or template
-            output_format: Output format (doc, pdf, markdown)
+            ticket_data (dict): Data from a JIRA ticket.
+            format (str): Output format for the document (only 'doc' or 'pdf').
             
         Returns:
-            Path to generated document
+            str: Path to the generated document.
         """
-        try:
-            # Check if we're using a template
-            if 'template' in ticket_data:
-                content = ticket_data['template']
-            else:
-                # Try to use ticket data
-                template_path = Path("data/templates/bim_template.md")
-                if not template_path.exists():
-                    raise FileNotFoundError("BIM template not found")
-                
-                with open(template_path, 'r') as f:
-                    template = f.read()
-                
-                # Replace placeholders with ticket data
-                content = template.format(
-                    ticket_id=ticket_data.get('key', 'UNKNOWN'),
-                    summary=ticket_data.get('summary', 'No summary available'),
-                    description=ticket_data.get('description', 'No description available'),
-                    status=ticket_data.get('status', 'Unknown'),
-                    priority=ticket_data.get('priority', 'Unknown'),
-                    created=ticket_data.get('created', 'Unknown'),
-                    updated=ticket_data.get('updated', 'Unknown')
-                )
+        # Load template
+        template_content = self._load_template()
+        
+        # Format content
+        filled_content = template_content.format(
+            ticket_id=ticket_data.get('id', 'Unknown'),
+            summary=ticket_data.get('summary', 'No summary available'),
+            description=ticket_data.get('description', 'No description available'),
+            status=ticket_data.get('status', 'Unknown'),
+            priority=ticket_data.get('priority', 'Unknown'),
+            created=ticket_data.get('created', 'Unknown'),
+            updated=ticket_data.get('updated', 'Unknown')
+        )
+        
+        # Ensure output directory exists
+        output_dir = self.reports_path
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Generate filename with timestamp
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        ticket_id = ticket_data.get('id', 'unknown')
+        
+        # Always save as HTML first for conversion
+        html_file = output_dir / f"bim_report_{ticket_id}_{timestamp}.html"
+        
+        # Write content to html file
+        with open(html_file, 'w', encoding='utf-8') as f:
+            f.write(filled_content)
             
-            # Create output directory if it doesn't exist
-            output_dir = Path("data/reports")
-            output_dir.mkdir(parents=True, exist_ok=True)
+        # Validate format
+        if format not in ['doc', 'pdf']:
+            logger.warning(f"Unsupported format '{format}'. Defaulting to 'doc'")
+            format = 'doc'
             
-            # Generate output filename
-            timestamp = int(time.time())
-            ticket_id = ticket_data.get('key', 'UNKNOWN')
-            
-            # First save as markdown
-            md_file = output_dir / f"BIM_{ticket_id}_{timestamp}.md"
-            with open(md_file, 'w', encoding='utf-8') as f:
-                f.write(content)
-            
-            # Convert to desired format if different from markdown
-            if output_format != 'md':
-                output_file = self._convert_format(md_file, output_format)
+        # Convert to requested format if different from HTML
+        if format != 'html':
+            try:
+                output_file = self._convert_format(html_file, format)
                 return str(output_file)
-            
-            return str(md_file)
-            
-        except Exception as e:
-            logger.error(f"Error generating BIM document: {str(e)}")
-            raise RuntimeError(f"Failed to generate document: {str(e)}")
+            except Exception as e:
+                logger.error(f"Error converting to {format}: {e}")
+                return str(html_file)
+        
+        return str(html_file)
     
     def get_task_description(self, issue_id: str) -> str:
         """

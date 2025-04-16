@@ -29,12 +29,6 @@ class UIComponents:
         st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
     
     @staticmethod
-    def show_header():
-        """Show application header"""
-        st.title("🔍 JIRA Debugging Agents")
-        st.markdown("### Enter JIRA Ticket Details")
-    
-    @staticmethod
     def show_input_section():
         """Show JIRA ticket input section"""
         col1, col2 = st.columns([3, 1])
@@ -97,7 +91,7 @@ class UIComponents:
         with col1:
             doc_format = st.selectbox(
                 "Document Format",
-                options=["doc", "pdf", "markdown"],
+                options=["doc", "pdf"],
                 index=0,
                 help="Select the output format for the BIM document",
                 key="doc_format",
@@ -118,9 +112,10 @@ class UIComponents:
                 if report_files:
                     latest_report = max(report_files, key=lambda x: x.stat().st_mtime)
                     with open(latest_report, 'rb') as f:
+                        file_data = f.read()
                         st.download_button(
                             label="📥 Download",
-                            data=f,
+                            data=file_data,
                             file_name=f"{jira_id}_report.{doc_format}",
                             mime=f"application/{doc_format}",
                             help=f"Download the generated document in {doc_format.upper()} format",

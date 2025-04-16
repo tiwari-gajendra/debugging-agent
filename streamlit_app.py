@@ -95,7 +95,8 @@ class DebugAssistant:
                 'initialized': True,
                 'jira_id': '',  # Store the actual JIRA ID value
                 'debug_state': 'ready',  # Add debug state initialization
-                'doc_format': 'doc'  # Default document format
+                'doc_format': 'doc',  # Default document format
+                'needs_refresh': False  # Flag to trigger UI refresh
             }
             for key, value in defaults.items():
                 st.session_state[key] = value
@@ -147,11 +148,26 @@ class DebugAssistant:
             # Run the debug process
             result = await crew.run(jira_id)
             
-            # Set success state in multiple places to ensure persistence
+            # CRITICAL: Set success states in proper order and log each step
+            self.logger.info("Debug analysis completed successfully - setting success states")
+            
+            # First, set is_debugging to False BEFORE anything else
+            st.session_state.is_debugging = False
+            self.logger.info("is_debugging set to False")
+            
+            # Then update all success indicators
             st.session_state.debug_state = 'success'
-            st.session_state.app_state.success = True
+            self.logger.info("debug_state set to 'success'")
+            
             st.session_state.app_state.set_success(True)
+            self.logger.info("app_state.success set to True")
+            
             st.session_state.success = True
+            self.logger.info("success flag set to True")
+            
+            # Set flag to force refresh UI on next cycle
+            st.session_state.needs_refresh = True
+            self.logger.info("needs_refresh set to True - will trigger rerun")
             
             # Log success
             self.logger.info(f"Debug analysis completed successfully for {jira_id}")
@@ -163,15 +179,25 @@ class DebugAssistant:
             self.logger.error(f"Error running debug analysis: {str(e)}", exc_info=True)
             st.session_state.app_state.set_error(str(e))
             st.session_state.debug_state = 'error'
+            
+            # Also ensure is_debugging is set to False on error
+            st.session_state.is_debugging = False
+            
             raise
     
     def render_ui(self):
         """Render UI components"""
         ui = UIComponents(st.session_state.app_state)
         ui.apply_styles()
-        UIComponents.show_header()
+        
+        # Display header directly instead of calling non-existent show_header method
+        st.title("🔍 Agentic Debugger")
         
         st.markdown("### ➡️ Enter JIRA Ticket ID")
+        
+        # Display validation error in a consistent location
+        if 'jira_validation_error' in st.session_state:
+            st.error(f"{st.session_state.jira_validation_error}", icon="⚠️")
         
         # Handle JIRA ID input state - only lock when debug is actually running
         if st.session_state.is_debugging or st.session_state.app_state.success:
@@ -194,6 +220,14 @@ class DebugAssistant:
             ).strip().upper()
             # Update session state through direct assignment
             st.session_state.jira_id = jira_id
+
+        # Clear validation error if valid JIRA entered - but don't add this check inside the layout
+        if jira_id and st.session_state.get("jira_validation_error"):
+            jira_client = JiraClient()
+            validation_check = asyncio.run(jira_client.validate_ticket_exists(jira_id))
+            if validation_check.get("exists"):
+                del st.session_state.jira_validation_error
+                st.rerun()  # Rerun to refresh UI without the error message
         
         col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
         
@@ -223,8 +257,8 @@ class DebugAssistant:
         # Add some spacing before the document section
         st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
         
-        # Always show document section after debug buttons
-        UIComponents.show_document_section()
+        # Show document section, completely separate from validation warnings
+        self.show_document_section()
         
         # Handle abort request
         if st.session_state.abort_requested:
@@ -237,71 +271,131 @@ class DebugAssistant:
         
         return jira_id, start_clicked
     
-    def handle_document_config(self):
-        """Handle document configuration and document download"""
-        if not st.session_state.app_state.success:
-            return None
+    def show_document_section(self):
+        """Show a single, consolidated document section"""
+        # Always show the document section header
+        st.markdown("### 📄 Download RCA")
         
-        st.markdown("### ➡️ Configure Document Generation")
-        st.markdown("Select the output format for your debug document:")
-        doc_format = st.selectbox(
-            "Document Format",
-            options=["doc", "md", "pdf"],
-            index=0,
-            help="Choose the format for your debug document:\n- DOC: Microsoft Word format\n- MD: Markdown format\n- PDF: Portable Document Format",
-            key="doc_format_select"
-        )
-
-        # Add download section
-        jira_id = st.session_state.jira_id.strip().upper()
-        if jira_id:
+        # Create columns for side by side layout (same as before)
+        col1, col2 = st.columns([3, 1])
+        
+        # Format selector in first column
+        with col1:
+            # Only disable during active debugging, not success state
+            is_debugging_active = st.session_state.get('is_debugging', False)
+            
+            st.selectbox(
+                "Document Format",
+                options=["doc", "pdf"],
+                index=0,
+                key="doc_format_selector",  # Use a different key to avoid conflicts
+                disabled=is_debugging_active,
+            )
+            
+            # Update the format in session state for use elsewhere
+            if "doc_format_selector" in st.session_state:
+                st.session_state.doc_format = st.session_state.doc_format_selector
+        
+        # Download button in second column
+        with col2:
+            # Add spacing to align with dropdown
+            st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
+            
+            # If debugging is active, always show disabled button
+            is_debugging_active = st.session_state.get('is_debugging', False)
+            if is_debugging_active:
+                st.button(
+                    "📥 Download Not Available",
+                    disabled=True,
+                    use_container_width=True,
+                )
+                return
+            
             reports_dir = Path("data/reports")
-            reports_dir.mkdir(parents=True, exist_ok=True)
+            jira_id = st.session_state.jira_id.strip().upper()
+            format = st.session_state.get('doc_format', 'doc')
             
-            # Try to find the report with any extension first
+            # Find reports for this JIRA ID
             all_report_files = []
-            for ext in ["doc", "md", "pdf"]:
-                # Look for both BIM_ and debug_report_ prefixes
-                all_report_files.extend(reports_dir.glob(f"BIM_{jira_id}*.{ext}"))
-                all_report_files.extend(reports_dir.glob(f"debug_report_{jira_id}*.{ext}"))
+            download_available = False
             
+            if jira_id:
+                reports_dir.mkdir(parents=True, exist_ok=True)
+                
+                # First check for all available formats (including html which is the default output)
+                for ext in ["html", "doc", "pdf"]:
+                    # Look for both prefixes
+                    for prefix in ["BIM_", "debug_report_"]:
+                        all_report_files.extend(reports_dir.glob(f"{prefix}{jira_id}*.{ext}"))
+            
+            # Show download button if files exist
             if all_report_files:
-                # Get the most recent file
+                # Get the latest report file, regardless of format
                 latest_report = max(all_report_files, key=lambda x: x.stat().st_mtime)
                 
-                # If the requested format is different from the existing file
-                if latest_report.suffix[1:] != doc_format:
-                    st.info(f"Converting document to {doc_format.upper()} format...")
-                    # The DocumentGenerator will handle the conversion
-                    
-                try:
-                    with open(latest_report, 'rb') as file:
+                # If the latest report isn't in the requested format, we need to convert it
+                if latest_report.suffix[1:] != format:
+                    try:
+                        # Use the document generator to convert
+                        doc_generator = DocumentGenerator()
+                        converted_file = doc_generator._convert_format(latest_report, format)
+                        if Path(converted_file).exists():
+                            latest_report = Path(converted_file)
+                            download_available = True
+                    except Exception:
+                        # Silently handle any conversion errors - don't show technical details
+                        download_available = False
+                else:
+                    download_available = True
+                
+                # Only try to download if conversion was successful or file already exists in correct format
+                if download_available:
+                    try:
+                        # Read the file after conversion attempt
+                        with open(latest_report, 'rb') as f:
+                            report_data = f.read()
+                        
+                        # Set mime type based on final format
+                        if format == "doc":
+                            mime_type = "application/msword"
+                        elif format == "pdf":
+                            mime_type = "application/pdf"
+                        else:  # default for html
+                            mime_type = "text/html"
+                        
+                        # Show download button with appropriate file name
                         st.download_button(
-                            label=f"📥 Download Debug Report ({doc_format.upper()})",
-                            data=file,
-                            file_name=f"debug_report_{jira_id}.{doc_format}",
-                            mime=self._get_mime_type(doc_format),
-                            key="download_button",
+                            label="📥 Download",
+                            data=report_data,
+                            file_name=f"{jira_id}_report.{latest_report.suffix[1:]}",
+                            mime=mime_type,
                             use_container_width=True,
                         )
-                        st.caption("Click the button above to download your report")
-                except Exception as e:
-                    st.error(f"Error preparing download: {str(e)}")
-                    self.logger.error(f"Download error: {str(e)}", exc_info=True)
+                    except Exception:
+                        # If any error occurs during file reading or button creation, show not available
+                        st.button(
+                            "📥 Download Not Available",
+                            disabled=True,
+                            use_container_width=True,
+                        )
+                else:
+                    # Show not available if conversion failed
+                    st.button(
+                        "📥 Download Not Available",
+                        disabled=True,
+                        use_container_width=True,
+                    )
             else:
-                st.info("⏳ Document generation in progress. Please wait...")
-                self.logger.info(f"No report files found in {reports_dir} for JIRA ID {jira_id}")
+                # Always show a disabled button when no files are available
+                st.button(
+                    "📥 Download Not Available",
+                    disabled=True,
+                    use_container_width=True,
+                )
         
-        return doc_format
-    
-    def _get_mime_type(self, doc_format):
-        """Get the appropriate MIME type for the document format"""
-        mime_types = {
-            "doc": "application/msword",
-            "pdf": "application/pdf",
-            "md": "text/markdown"
-        }
-        return mime_types.get(doc_format, "application/octet-stream")
+        # Add spacing after the document section
+        st.write("")
+        st.write("")
     
     def run(self):
         """Main application loop"""
@@ -313,8 +407,13 @@ class DebugAssistant:
             if 'app_state' not in st.session_state:
                 st.session_state.app_state = AppState()
             
+            # Check if we need to force refresh the UI after debugging completes
+            if st.session_state.get('needs_refresh', False):
+                st.session_state.needs_refresh = False
+                st.rerun()
+            
+            # Get UI values - this handles all UI rendering including document sections
             jira_id, start_clicked = self.render_ui()
-            doc_format = self.handle_document_config()
             
             if start_clicked and jira_id and not st.session_state.is_debugging:
                 st.session_state.app_state.reset()
@@ -322,6 +421,20 @@ class DebugAssistant:
                 st.session_state.jira_id = jira_id  # Store JIRA ID in session state
                 
                 try:
+                    # Validate if the JIRA ticket exists before proceeding
+                    jira_client = JiraClient()
+                    validation_result = asyncio.run(jira_client.validate_ticket_exists(jira_id))
+                    
+                    if not validation_result["exists"]:
+                        # Show friendly warning but don't proceed with debugging
+                        self.logger.warning(f"Invalid ticket: {validation_result['message']}")
+                        # Store validation error in session state for UI display
+                        st.session_state.jira_validation_error = validation_result['message']
+                        st.session_state.is_debugging = False  # Reset debugging state
+                        st.rerun()  # Rerun to display the error
+                        return  # Exit early without starting debug
+                    
+                    # Only run debug analysis if ticket exists
                     asyncio.run(self.run_debug_analysis(jira_id, "doc", st.session_state.app_state))
                 except Exception as e:
                     self.logger.error(f"Error running debug analysis: {str(e)}", exc_info=True)
