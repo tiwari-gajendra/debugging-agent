@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 from langchain_core.language_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
-from langchain_aws import BedrockLLM
+from langchain_aws import ChatBedrock
 try:
     from langchain_anthropic import ChatAnthropic
 except ImportError:
@@ -23,6 +23,16 @@ except ImportError:
 
 # Import boto3 for AWS services
 import boto3
+
+# Import LiteLLM for CrewAI compatibility
+try:
+    import litellm
+    from crewai.llm import LLM as CrewLLM
+    LITELLM_AVAILABLE = True
+except ImportError:
+    LITELLM_AVAILABLE = False
+    logger = logging.getLogger(__name__)
+    logger.warning("LiteLLM or CrewAI not available. Some integration features may be limited.")
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -127,35 +137,41 @@ class LLMFactory:
             
             logger.info(f"Using AWS Bedrock with model={model_name}, region={region}")
             
-            # For CrewAI compatibility
-            os.environ["OPENAI_API_KEY"] = "sk-valid-bedrock-key"
-            os.environ["CREW_LLM_PROVIDER"] = "bedrock"
+            # Check if LiteLLM is available (required for CrewAI)
+            if not LITELLM_AVAILABLE:
+                raise ImportError("LiteLLM is required for Bedrock integration. Install with: pip install litellm crewai")
             
-            # Set up AWS session
+            # Set up credentials for LiteLLM
             aws_access_key = os.getenv('AWS_ACCESS_KEY_ID')
             aws_secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
             
-            session_kwargs = {}
+            # Set essential environment variables for LiteLLM
+            os.environ["CREW_LLM_PROVIDER"] = "bedrock"
+            os.environ["BEDROCK_MODEL_ID"] = model_name
+            
+            # Create a properly configured CrewAI-compatible LLM using LiteLLM
+            # This uses the correct provider format for LiteLLM
+            bedrock_model = f"bedrock/{model_name}"
+            
+            logger.info(f"Creating CrewAI-compatible LLM with provider bedrock, model={bedrock_model}")
+            
+            # Create kwargs dict for litellm
+            litellm_kwargs = {
+                "model": bedrock_model,
+                "temperature": temperature,
+                "aws_region_name": region,
+            }
+            
+            # Add credentials if available
             if aws_access_key and aws_secret_key:
-                session_kwargs = {
-                    'aws_access_key_id': aws_access_key,
-                    'aws_secret_access_key': aws_secret_key,
-                    'region_name': region
-                }
+                litellm_kwargs["aws_access_key_id"] = aws_access_key
+                litellm_kwargs["aws_secret_access_key"] = aws_secret_key
             
-            bedrock_session = boto3.Session(**session_kwargs)
-            bedrock_client = bedrock_session.client('bedrock-runtime', region_name=region)
-            
-            # Set up model kwargs
-            model_kwargs = kwargs.get('model_kwargs', {})
-            if 'temperature' in kwargs and 'temperature' not in model_kwargs:
-                model_kwargs['temperature'] = kwargs['temperature']
-            
-            return BedrockLLM(
-                client=bedrock_client,
-                model_id=model_name,
-                model_kwargs=model_kwargs,
-                **kwargs
+            # Return a CrewLLM instance
+            return CrewLLM(
+                provider="bedrock",
+                model=model_name,
+                config=litellm_kwargs
             )
             
         elif provider == 'snowflake' or provider == 'cortex':
@@ -266,106 +282,4 @@ class LLMFactory:
             logger.error("Please set these variables in your .env file")
             return False
         
-        return True
-        
-    @staticmethod
-    def ollama_chat_completion(
-        messages: List[Dict[str, str]],
-        model: str = None,
-        temperature: float = 0.2,
-        base_url: str = None
-    ) -> str:
-        """
-        Use Ollama API directly without going through LiteLLM or CrewAI
-        
-        Args:
-            messages: List of message dicts with 'role' and 'content' keys
-            model: The model name to use
-            temperature: Temperature setting (0-1)
-            base_url: Base URL for Ollama server
-            
-        Returns:
-            Generated response as string
-        """
-        # Default to environment variables if not provided
-        model = model or os.getenv('OLLAMA_MODEL', 'llama3')
-        
-        # Clean the model name - remove ollama/ prefix if present
-        if model.startswith('ollama/'):
-            model = model[len('ollama/'):]
-        
-        # Make sure we use the correct model name format - Ollama is sensitive to this
-        if model == 'deepseek-r1' or model == 'deepseek-r1:8b':
-            model = 'deepseek-r1:8b'  # Use the exact format from Ollama
-            
-        base_url = base_url or os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
-        
-        # Remove trailing slash from base_url if present
-        if base_url.endswith('/'):
-            base_url = base_url[:-1]
-            
-        # Format the request 
-        api_url = f"{base_url}/api/generate"
-        
-        # Convert chat messages to a single prompt
-        prompt = ""
-        system_prompt = None
-        
-        for message in messages:
-            role = message.get("role", "").lower()
-            content = message.get("content", "")
-            
-            if role == "system":
-                system_prompt = content
-            elif role == "user":
-                prompt += f"User: {content}\n\n"
-            elif role == "assistant":
-                prompt += f"Assistant: {content}\n\n"
-            else:
-                prompt += f"{content}\n\n"
-                
-        # Add final assistant prompt
-        prompt += "Assistant: "
-        
-        request_data = {
-            "model": model,
-            "prompt": prompt,
-            "temperature": temperature,
-        }
-        
-        # Add system prompt if available
-        if system_prompt:
-            request_data["system"] = system_prompt
-        
-        try:
-            logger.info(f"Calling Ollama Generate API directly with model={model}")
-            
-            # Make the API call
-            with httpx.Client(timeout=120.0) as client:
-                response = client.post(api_url, json=request_data)
-                response.raise_for_status()
-                
-                # Ollama's generate endpoint returns streaming responses
-                # We'll collect all the text from the response
-                all_text = ""
-                for line in response.iter_lines():
-                    if not line:
-                        continue
-                    
-                    try:
-                        response_part = json.loads(line)
-                        response_text = response_part.get("response", "")
-                        all_text += response_text
-                        
-                        # Check for done flag
-                        if response_part.get("done", False):
-                            break
-                    except json.JSONDecodeError:
-                        logger.warning(f"Failed to decode Ollama response line: {line}")
-                
-                logger.debug(f"Ollama response length: {len(all_text)} chars")
-                return all_text
-        
-        except Exception as e:
-            logger.error(f"Error calling Ollama API: {str(e)}")
-            return f"Error: {str(e)}" 
+        return True 

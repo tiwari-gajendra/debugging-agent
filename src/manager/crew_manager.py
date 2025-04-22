@@ -7,6 +7,7 @@ import sys
 import json
 import logging
 import httpx
+import boto3
 from typing import List, Dict, Any, Optional
 from dotenv import load_dotenv
 from datetime import datetime
@@ -29,55 +30,27 @@ class DebugCrew:
         Args:
             llm_provider_or_model: The LLM provider or model name to use (defaults to env var LLM_PROVIDER)
         """
-        # Clean provider string
-        raw_provider = llm_provider_or_model or os.getenv('LLM_PROVIDER', 'openai')
-        self.provider = raw_provider.split('#')[0].strip().lower()
-        
+        # Get the provider and create LLM instance using factory
+        self.provider = (llm_provider_or_model or os.getenv('LLM_PROVIDER', 'openai')).split('#')[0].strip().lower()
         logger.info(f"Initializing DebugCrew with LLM provider: {self.provider}")
         
-        # If using Ollama, create a pre-configured LLM instance that works with CrewAI
-        if self.provider == 'ollama':
-            # Get Ollama settings
-            model_name = os.getenv('OLLAMA_MODEL', 'deepseek-r1:8b')
-            # Remove 'ollama/' prefix if present
-            if model_name.startswith('ollama/'):
-                model_name = model_name[len('ollama/'):]
-            
-            base_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
-            
-            # For CrewAI compatibility
-            os.environ["OPENAI_API_KEY"] = "sk-valid-ollama-key"
-            
-            # Import CrewAI LLM to create a pre-configured instance
-            try:
-                from crewai.llm import LLM
-                self.llm = LLM(
-                    model="ollama/"+model_name,     # Format expected by LiteLLM
-                    base_url=base_url,              # Ollama API
-                    api_key="sk-valid-ollama-key",  # Placeholder key
-                    temperature=float(os.getenv('TEMPERATURE', 0.2)),
-                    custom_llm_provider="ollama"    # Force provider type
-                )
-                logger.info(f"Created pre-configured CrewAI LLM for Ollama with model={model_name}")
-                self.use_direct_api = False         # Use standard CrewAI flow now
-            except ImportError:
-                logger.warning("Could not import crewai.llm, falling back to direct API implementation")
-                # Create an LLM instance using our utility
-                self.llm = LLMFactory.create_llm(provider=self.provider, model=model_name)
-                self.use_direct_api = True          # Still use direct API as fallback
-        else:
-            # Create an LLM instance using the LLMFactory
-            self.llm = LLMFactory.create_llm(provider=self.provider)
+        # Create LLM from factory (or directly for bedrock)
+        self.llm = LLMFactory.create_llm(provider=self.provider)
+        
+        # Determine if we need to use direct API calls
+        if self.provider == 'bedrock':
+            logger.info("Using direct Bedrock API integration")
             self.use_direct_api = False
-        
-        # Set up environment variables for CrewAI compatibility
-        if self.provider == 'bedrock' or self.provider == 'anthropic':
-            os.environ["OPENAI_API_KEY"] = "sk-valid-bedrock-key"
-            os.environ["CREW_LLM_PROVIDER"] = "bedrock"
+            self.use_direct_bedrock = True
         elif self.provider == 'ollama':
-            os.environ["OPENAI_API_KEY"] = "sk-valid-ollama-key"
-            os.environ["CREW_LLM_PROVIDER"] = "ollama"
+            logger.info("Using direct Ollama API integration")
+            self.use_direct_api = True
+            self.use_direct_bedrock = False
+        else:
+            self.use_direct_api = False
+            self.use_direct_bedrock = False
         
+        # Initialize empty agent and task lists
         self.agents = []
         self.tasks = []
     
@@ -101,9 +74,12 @@ class DebugCrew:
                 "role": f"{agent_role} Specialist",
                 "goal": f"Provide expert {agent_role.lower()} support for debugging issues",
                 "backstory": f"You are an expert in {agent_role.lower()} for software systems, "
-                           f"with years of experience diagnosing and fixing complex issues.",
-                "llm": self.llm
+                           f"with years of experience diagnosing and fixing complex issues."
             }
+            
+            # Only add the LLM to the agent config if we're not using direct API
+            if not self.use_direct_api:
+                agent_config["llm"] = self.llm
             
             # Create the agent with the appropriate config
             from crewai import Agent
@@ -191,6 +167,98 @@ class DebugCrew:
             return f"HTTP Error: {str(e)}"
         except Exception as e:
             logger.error(f"Unexpected error calling Ollama API: {str(e)}")
+            return f"Error: {str(e)}"
+    
+    def call_bedrock_directly(self, prompt, system_message=None):
+        """
+        Call Bedrock API directly without using any abstractions.
+        
+        Args:
+            prompt: The prompt to send
+            system_message: Optional system message
+            
+        Returns:
+            Generated text
+        """
+        messages = []
+        
+        # Add system message if provided
+        if system_message:
+            messages.append({"role": "system", "content": system_message})
+        
+        # Add user prompt
+        messages.append({"role": "user", "content": prompt})
+        
+        # Call Bedrock API directly
+        # Default to environment variables if not provided
+        model = os.getenv('BEDROCK_MODEL', 'anthropic.claude-3-sonnet-20240229-v1:0')
+        region = os.getenv('AWS_DEFAULT_REGION', 'us-east-1')
+        temperature = 0.2
+        
+        logger.info(f"Calling AWS Bedrock directly with model={model}")
+        
+        # Set up AWS session
+        aws_access_key = os.getenv('AWS_ACCESS_KEY_ID')
+        aws_secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
+        
+        session_kwargs = {}
+        if aws_access_key and aws_secret_key:
+            session_kwargs = {
+                'aws_access_key_id': aws_access_key,
+                'aws_secret_access_key': aws_secret_key,
+                'region_name': region
+            }
+        
+        # Create Bedrock client
+        session = boto3.Session(**session_kwargs)
+        client = session.client('bedrock-runtime', region_name=region)
+        
+        try:
+            # Extract system and user messages
+            system_message = None
+            user_message = None
+            
+            for msg in messages:
+                if msg.get("role") == "system":
+                    system_message = msg.get("content", "")
+                elif msg.get("role") == "user":
+                    user_message = msg.get("content", "")
+            
+            # Create the request payload for Claude
+            anthropic_messages = []
+            
+            if system_message:
+                anthropic_messages.append({
+                    "role": "system", 
+                    "content": system_message
+                })
+            
+            if user_message:
+                anthropic_messages.append({
+                    "role": "user",
+                    "content": user_message
+                })
+            
+            # Create request body for Claude
+            request_body = {
+                "anthropic_version": "bedrock-2023-05-31",
+                "max_tokens": 4096,
+                "temperature": temperature,
+                "messages": anthropic_messages
+            }
+            
+            # Invoke the model
+            response = client.invoke_model(
+                modelId=model,
+                body=json.dumps(request_body)
+            )
+            
+            # Parse the response
+            response_body = json.loads(response['body'].read().decode('utf-8'))
+            
+            return response_body.get('content', [{}])[0].get('text', '')
+        except Exception as e:
+            logger.error(f"Error calling Bedrock API: {str(e)}")
             return f"Error: {str(e)}"
     
     def run_direct_ollama(self, issue_id: str) -> Dict[str, Any]:
@@ -312,6 +380,125 @@ Include key insights, root causes identified, and recommendations."""
         
         return crew_output
     
+    def run_direct_bedrock(self, issue_id: str) -> Dict[str, Any]:
+        """
+        Run the debugging process directly using Bedrock API
+        
+        Args:
+            issue_id: The issue ID to debug
+            
+        Returns:
+            Dict with results information
+        """
+        logger.info(f"Running direct Bedrock debugging for issue {issue_id}")
+        
+        # Create context to send to the model
+        context = {
+            "issue_id": issue_id,
+            "timestamp": datetime.now().isoformat(),
+            "environment": {
+                "python_version": sys.version,
+                "os": sys.platform
+            }
+        }
+        
+        # Use our agent descriptions to create task list
+        task_descriptions = []
+        for agent_pair in self.agents:
+            agent_obj = agent_pair["agent_obj"]
+            agent_name = agent_pair["agent_name"]
+            
+            # Get the task description from agent if available
+            task_description = f"Analyze and process the issue {issue_id}"
+            if hasattr(agent_obj, "get_task_description"):
+                task_description = agent_obj.get_task_description(issue_id)
+                
+            task_descriptions.append({
+                "agent_name": agent_name,
+                "description": task_description
+            })
+        
+        # Execute each task in sequence
+        task_results = []
+        previous_results = []
+        
+        for i, task in enumerate(task_descriptions):
+            agent_name = task["agent_name"]
+            task_description = task["description"]
+            
+            logger.info(f"Running task {i+1}/{len(task_descriptions)}: {agent_name}")
+            
+            # Create system message for the agent
+            system_message = f"""You are {agent_name}, an expert in software debugging and analysis.
+Your goal is to provide detailed technical expertise to solve complex software issues.
+Respond with detailed, actionable information."""
+            
+            # Create prompt with task description and context
+            prompt = f"""# Task: {task_description}
+
+## Context Information:
+Issue ID: {issue_id}
+
+"""
+            
+            # Add previous results if any
+            if previous_results:
+                prompt += "\n## Previous Analysis Results:\n"
+                for prev in previous_results:
+                    prompt += f"\n### {prev['agent']} Results:\n{prev['result']}\n"
+            
+            # Call Bedrock directly
+            result = self.call_bedrock_directly(
+                prompt=prompt,
+                system_message=system_message
+            )
+            
+            # Store the result
+            task_result = {
+                "agent": agent_name,
+                "description": task_description,
+                "result": result
+            }
+            task_results.append(task_result)
+            previous_results.append(task_result)
+            
+            logger.info(f"Completed task: {agent_name}")
+        
+        # Generate final summary
+        system_message = """You are a senior software engineer with expertise in debugging and technical documentation.
+Your task is to create a comprehensive executive summary of a debugging report."""
+
+        prompt = f"""# Debug Report Summary Request
+
+## Issue Information:
+Issue ID: {issue_id}
+
+## Task Results:
+"""
+        for result in task_results:
+            prompt += f"\n### {result['agent']} Results:\n{result['result']}\n"
+            
+        prompt += """
+# Request:
+Please provide a concise executive summary of the debugging process and findings.
+Include key insights, root causes identified, and recommendations."""
+
+        # Generate final summary
+        final_summary = self.call_bedrock_directly(
+            prompt=prompt,
+            system_message=system_message
+        )
+        
+        # Generate final output string
+        crew_output = "\n\n".join([
+            f"## {result['agent']} Results:\n{result['result']}"
+            for result in task_results
+        ])
+        
+        crew_output += f"\n\n## Executive Summary:\n{final_summary}"
+        
+        return crew_output
+
     async def run(self, issue_id: str) -> Dict[str, Any]:
         """
         Run the debugging process.
@@ -325,6 +512,61 @@ Include key insights, root causes identified, and recommendations."""
         logger.info(f"Running debugging process for issue {issue_id}")
         
         try:
+            # If using direct API implementations
+            if self.use_direct_api:
+                logger.info("Using direct Ollama API implementation")
+                result = self.run_direct_ollama(issue_id)
+                return {"crew_output": result, "document_url": ""}
+            
+            # If using direct Bedrock implementation
+            if self.use_direct_bedrock:
+                logger.info("Using direct Bedrock API implementation")
+                result = self.run_direct_bedrock(issue_id)
+                
+                # Get the path to the project root (two levels up from this file)
+                src_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                project_root = os.path.dirname(src_dir)
+                
+                # Ensure reports directory exists
+                reports_dir = os.path.join(project_root, "data", "reports")
+                os.makedirs(reports_dir, exist_ok=True)
+                
+                # Create report filename
+                timestamp = os.environ.get("TEST_TIMESTAMP") or int(datetime.now().timestamp())
+                report_filename = f"debug_report_{issue_id}_{timestamp}.html"
+                report_path = os.path.join(reports_dir, report_filename)
+                
+                logger.info(f"Generating report at {report_path}")
+                
+                # Write a basic HTML report with the crew output
+                with open(report_path, "w") as f:
+                    f.write(f"""<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Report: {issue_id}</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 40px; }}
+        h1 {{ color: #333; }}
+        .section {{ margin-bottom: 20px; }}
+        pre {{ background-color: #f5f5f5; padding: 10px; border-radius: 5px; }}
+    </style>
+</head>
+<body>
+    <h1>Debug Report: {issue_id}</h1>
+    <div class="section">
+        <h2>Debugging Results</h2>
+        <pre>{result}</pre>
+    </div>
+</body>
+</html>""")
+                
+                logger.info(f"Report generated at {report_path}")
+                
+                return {
+                    "crew_output": result,
+                    "document_url": report_path
+                }
+            
             # Import Task here to avoid circular imports
             from crewai import Task, Crew, Process
             
@@ -404,4 +646,4 @@ Include key insights, root causes identified, and recommendations."""
             
         except Exception as e:
             logger.error(f"Error running debugging process: {str(e)}")
-            raise 
+            raise
