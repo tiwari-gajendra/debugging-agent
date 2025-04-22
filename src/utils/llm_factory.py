@@ -160,6 +160,7 @@ class LLMFactory:
                 "model": bedrock_model,
                 "temperature": temperature,
                 "aws_region_name": region,
+                "verify_ssl": False,  # Disable SSL verification to fix certificate errors
             }
             
             # Add credentials if available

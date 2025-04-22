@@ -211,7 +211,7 @@ class DebugCrew:
         
         # Create Bedrock client
         session = boto3.Session(**session_kwargs)
-        client = session.client('bedrock-runtime', region_name=region)
+        client = session.client('bedrock-runtime', region_name=region, verify=False)  # Disable SSL verification
         
         try:
             # Extract system and user messages
