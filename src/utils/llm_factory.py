@@ -144,6 +144,7 @@ class LLMFactory:
             # Set up credentials for LiteLLM
             aws_access_key = os.getenv('AWS_ACCESS_KEY_ID')
             aws_secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
+            aws_session_token = os.getenv('AWS_SESSION_TOKEN')
             
             # Set essential environment variables for LiteLLM
             os.environ["CREW_LLM_PROVIDER"] = "bedrock"
@@ -167,6 +168,10 @@ class LLMFactory:
             if aws_access_key and aws_secret_key:
                 litellm_kwargs["aws_access_key_id"] = aws_access_key
                 litellm_kwargs["aws_secret_access_key"] = aws_secret_key
+                
+                # Add session token if available
+                if aws_session_token:
+                    litellm_kwargs["aws_session_token"] = aws_session_token
             
             # Return a CrewLLM instance
             return CrewLLM(
